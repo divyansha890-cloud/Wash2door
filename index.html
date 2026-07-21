@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wash2Door Live</title>
+    <title>Wash2Door</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Firebase SDKs -->
@@ -31,7 +31,7 @@
                 <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Wash2Door</span>
             </div>
             <div id="auth-header-status" class="flex items-center space-x-3">
-                <!-- Dynamic Auth Indicators -->
+                <!-- User Custom App State / Status -->
             </div>
         </div>
     </header>
@@ -39,30 +39,30 @@
     <!-- Main Workspace -->
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
         
-        <!-- Welcome Banner / App View Container -->
         <div id="app-view" class="space-y-6">
+            <!-- Your Original Project Interface Container -->
             <div class="bg-gradient-to-r from-slate-900 to-slate-900/40 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
                 <div class="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2">Doorstep Car Care & Detailing</h1>
-                <p class="text-slate-400 text-sm sm:text-base max-w-xl">Professional car washing and subscription services delivered right to your location. Fast, secure, and reliable booking system.</p>
+                <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2">Wash2Door Portal</h1>
+                <p class="text-slate-400 text-sm sm:text-base max-w-xl">Your customized full-featured car care management system with Firebase sync.</p>
                 
                 <div class="mt-6 flex flex-wrap gap-4">
                     <button onclick="switchView('booking')" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg shadow-cyan-500/20 transition-all flex items-center space-x-2">
                         <i class="fa-solid fa-calendar-check"></i>
-                        <span>Book a Wash</span>
+                        <span>Customer Booking</span>
                     </button>
                     <button onclick="switchView('admin')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-xl border border-slate-700 transition-all flex items-center space-x-2">
                         <i class="fa-solid fa-shield-halved"></i>
-                        <span>Admin / Worker Portal</span>
+                        <span>Admin / Worker Dashboard</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Dynamic Interactive Views injected here via JS controllers -->
+            <!-- Dynamic View Panel -->
             <div id="dynamic-content-area" class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
                 <div class="text-center py-12">
                     <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-cyan-500 border-t-transparent mb-4"></div>
-                    <p class="text-slate-400 text-sm">Initializing Firebase & App Modules...</p>
+                    <p class="text-slate-400 text-sm">Restoring your custom project environment...</p>
                 </div>
             </div>
         </div>
@@ -71,12 +71,11 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
-        &copy; 2026 Wash2Door Services. Real-time Firebase Cloud Sync Enabled.
+        &copy; 2026 Wash2Door Services. All rights reserved.
     </footer>
 
     <!-- Core App Logic Script -->
     <script>
-        // Firebase Configuration Template Setup
         const firebaseConfig = {
             apiKey: "AIzaSyDummyKeyForTemplateValidation_Wash2Door",
             authDomain: "wash2door-app.firebaseapp.com",
@@ -86,42 +85,40 @@
             appId: "1:123456:web:abcdef"
         };
 
-        // Initialize Firebase safely
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // Simple View Router Controller
         function switchView(viewName) {
             const container = document.getElementById('dynamic-content-area');
             if (viewName === 'booking') {
                 container.innerHTML = `
                     <div class="max-w-xl mx-auto space-y-4">
                         <h2 class="text-xl font-bold flex items-center space-x-2 text-cyan-400">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>Quick Service Booking</span>
+                            <i class="fa-solid fa-car"></i>
+                            <span>Book Your Car Wash Service</span>
                         </h2>
                         <form id="booking-form" onsubmit="handleBookingSubmission(event)" class="space-y-4">
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Your Name</label>
-                                <input type="text" id="bk-name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500" placeholder="John Doe">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Full Name</label>
+                                <input type="text" id="bk-name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500" placeholder="Enter your name">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Vehicle Model / No.</label>
-                                <input type="text" id="bk-vehicle" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500" placeholder="Hyundai Creta / Black Wolf">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Vehicle Details</label>
+                                <input type="text" id="bk-vehicle" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500" placeholder="e.g. Hyundai Creta / Kia Seltos">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Service Type</label>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Select Service Package</label>
                                 <select id="bk-service" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500">
-                                    <option value="Standard Wash">Standard Foam Wash</option>
-                                    <option value="Detailed Interior & Exterior">Detailed Interior & Exterior</option>
-                                    <option value="Ceramic Coating Prep">Ceramic Coating Prep</option>
+                                    <option value="Exterior Foam Wash">Exterior Foam Wash</option>
+                                    <option value="Full Interior & Exterior Detail">Full Interior & Exterior Detail</option>
+                                    <option value="Subscription Plan">Monthly Subscription Plan</option>
                                 </select>
                             </div>
                             <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-cyan-500/20">
-                                Submit Booking Request
+                                Confirm Booking Request
                             </button>
                         </form>
                     </div>
@@ -131,13 +128,13 @@
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <h2 class="text-xl font-bold flex items-center space-x-2 text-cyan-400">
-                                <i class="fa-solid fa-lock"></i>
-                                <span>Admin Panel & Live Requests</span>
+                                <i class="fa-solid fa-list-check"></i>
+                                <span>Admin / Worker Dashboard</span>
                             </h2>
-                            <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-3 py-1 rounded-full font-medium">Real-time Synced</span>
+                            <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-3 py-1 rounded-full font-medium">Real-Time Database Sync</span>
                         </div>
                         <div id="admin-bookings-list" class="space-y-3">
-                            <p class="text-slate-400 text-sm italic">Loading incoming real-time queue from Firestore...</p>
+                            <p class="text-slate-400 text-sm italic">Loading incoming real-time queue...</p>
                         </div>
                     </div>
                 `;
@@ -158,7 +155,7 @@
                 status: "Pending",
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
-                alert("Booking request submitted successfully! Synced to cloud database.");
+                alert("Booking request submitted successfully! Synced across devices.");
                 document.getElementById('booking-form').reset();
             }).catch((err) => {
                 alert("Error recording request: " + err.message);
@@ -170,17 +167,17 @@
                 const list = document.getElementById('admin-bookings-list');
                 if (!list) return;
                 if (snapshot.empty) {
-                    list.innerHTML = `<p class="text-slate-500 text-sm">No bookings in queue right now.</p>`;
+                    list.innerHTML = `<p class="text-slate-500 text-sm">No bookings in queue.</p>`;
                     return;
                 }
                 let html = '';
                 snapshot.forEach((doc) => {
                     const data = doc.data();
                     html += `
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between shadow-md">
                             <div>
                                 <h4 class="font-bold text-slate-200">${data.name} <span class="text-xs font-normal text-cyan-400 ml-2">(${data.vehicle})</span></h4>
-                                <p class="text-xs text-slate-400 mt-1">Service: ${data.service}</p>
+                                <p class="text-xs text-slate-400 mt-1">Package: ${data.service}</p>
                             </div>
                             <span class="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-lg text-xs font-semibold">${data.status}</span>
                         </div>
@@ -190,7 +187,6 @@
             });
         }
 
-        // Initialize default view on load
         window.onload = function() {
             switchView('booking');
         };
