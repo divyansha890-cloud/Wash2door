@@ -11,23 +11,6 @@
         :root{--primary:#0066FF;--primary-dark:#0052CC;--primary-light:#E6F0FF;--secondary:#00C9A7;--accent:#FF6B35;--dark:#1a1a2e;--gray:#6c757d;--light-gray:#f0f2f5;--white:#fff;--shadow:0 4px 20px rgba(0,0,0,.08);--radius:16px;--radius-sm:10px;--transition:all .3s cubic-bezier(.4,0,.2,1);}
         *{margin:0;padding:0;box-sizing:border-box;}
         body{font-family:'Poppins',sans-serif;background:var(--light-gray);color:var(--dark);overflow-x:hidden;}
-        
-        .lang-switch-btn {
-            background: rgba(255,255,255,0.2);
-            color: #fff;
-            border: 1.5px solid rgba(255,255,255,0.4);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: var(--transition);
-        }
-        .lang-switch-btn:hover { background: rgba(255,255,255,0.35); }
-
         .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0066FF,#0052CC,#003d99);display:flex;align-items:center;justify-content:center;z-index:10000;transition:opacity .6s,visibility .6s;}
         .splash-screen.hidden{opacity:0;visibility:hidden;}
         .splash-content{text-align:center;animation:splashIn .8s ease-out;}
@@ -38,470 +21,1398 @@
         .splash-loader span:nth-child(2){animation-delay:.2s;}.splash-loader span:nth-child(3){animation-delay:.4s;}
         @keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.5;}40%{transform:scale(1);opacity:1;}}
         @keyframes splashIn{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
-        
+        .auth-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--light-gray);display:none;z-index:9000;overflow-y:auto;}
+        .auth-screen.show{display:block;}
+        .auth-container{max-width:430px;margin:0 auto;min-height:100vh;background:var(--white);}
+        .auth-header{background:linear-gradient(135deg,#0066FF,#003d99);padding:50px 30px 40px;text-align:center;border-radius:0 0 40px 40px;}
+        .auth-logo{font-size:2.5rem;font-weight:900;color:#fff;letter-spacing:2px;margin-bottom:5px;}
+        .auth-tagline{color:rgba(255,255,255,.8);font-size:.88rem;}
+        .auth-tabs{display:flex;margin:25px 25px 0;gap:5px;}
+        .auth-tab{flex:1;padding:12px;text-align:center;border:none;border-radius:12px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);background:var(--light-gray);color:var(--gray);}
+        .auth-tab.active{background:var(--primary);color:#fff;}
+        .auth-body{padding:25px;}
+        .auth-form{display:none;animation:fadeIn .3s ease;}.auth-form.active{display:block;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+        .auth-role-group{margin-bottom:18px;}
+        .auth-role-group>label{font-size:.83rem;font-weight:600;margin-bottom:8px;display:block;}
+        .auth-role-group>label i{color:var(--primary);margin-right:5px;}
+        .role-options{display:flex;gap:8px;}
+        .role-opt{flex:1;padding:12px 8px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:var(--transition);}
+        .role-opt:hover{border-color:var(--primary);}
+        .role-opt.selected{border-color:var(--primary);background:var(--primary-light);}
+        .role-opt .ro-emoji{font-size:1.5rem;display:block;margin-bottom:4px;}
+        .role-opt .ro-name{font-size:.72rem;font-weight:600;}
+        .f-group{margin-bottom:15px;}
+        .f-group label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;}
+        .f-group label i{color:var(--primary);margin-right:5px;}
+        .f-input-wrap{position:relative;}
+        .f-input-wrap input{width:100%;padding:13px 45px 13px 15px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-size:.88rem;font-family:'Poppins',sans-serif;outline:none;transition:var(--transition);}
+        .f-input-wrap input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(0,102,255,.08);}
+        .eye-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray);font-size:.95rem;}
+        .f-error{color:#FF4757;font-size:.72rem;margin-top:4px;display:none;}.f-error.show{display:block;}
+        .auth-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;border-radius:var(--radius);font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);margin-top:5px;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .auth-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,102,255,.4);}
+        .auth-btn:disabled{opacity:.6;pointer-events:none;}
+        .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none;}
+        .auth-btn.loading .spinner{display:block;}.auth-btn.loading .btn-text{display:none;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        .forgot-link{text-align:right;margin-bottom:15px;}
+        .forgot-link a{color:var(--primary);font-size:.78rem;font-weight:600;text-decoration:none;cursor:pointer;}
+        .auth-divider{text-align:center;margin:18px 0;color:var(--gray);font-size:.78rem;}
+        .forgot-panel{display:none;animation:fadeIn .3s ease;}.forgot-panel.active{display:block;}
+        .back-to-login{display:flex;align-items:center;gap:8px;color:var(--primary);font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:20px;background:none;border:none;font-family:'Poppins',sans-serif;}
         .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);padding:12px 22px;border-radius:12px;font-size:.82rem;font-weight:500;z-index:99999;transition:transform .4s ease;max-width:380px;text-align:center;color:#fff;}
         .toast.show{transform:translateX(-50%) translateY(0);}
         .toast.success{background:#00C9A7;}.toast.error{background:#FF4757;}.toast.info{background:var(--primary);}
-        
-        .app-container{max-width:430px;margin:0 auto;min-height:100vh;background:var(--white);position:relative;box-shadow:0 0 60px rgba(0,0,0,.1);}
+        .app-container{max-width:430px;margin:0 auto;min-height:100vh;background:var(--white);position:relative;box-shadow:0 0 60px rgba(0,0,0,.1);display:none;}
+        .app-container.visible{display:block;}
         .page{display:none;min-height:100vh;padding-bottom:90px;animation:fadeIn .3s ease;}.page.active{display:block;}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-
         .header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));padding:20px 20px 25px;color:#fff;border-radius:0 0 30px 30px;position:relative;overflow:hidden;}
+        .header::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%;}
         .header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;position:relative;z-index:1;}
         .greeting h2{font-size:1rem;font-weight:400;opacity:.9;}
         .greeting h1{font-size:1.35rem;font-weight:700;}
-        .header-actions{display:flex;gap:8px;align-items:center;}
-
-        .section-title{display:flex;justify-content:space-between;align-items:center;padding:0 20px;margin-bottom:12px;margin-top:20px;}
+        .role-badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.62rem;font-weight:700;margin-top:3px;letter-spacing:1px;}
+        .role-badge.admin{background:rgba(108,52,131,.3);color:#d7a8f0;}
+        .role-badge.worker{background:rgba(17,122,101,.3);color:#7dcea0;}
+        .role-badge.customer{background:rgba(255,255,255,.2);color:#fff;}
+        .header-actions{display:flex;gap:8px;}
+        .header-btn{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);position:relative;}
+        .header-btn:hover{background:rgba(255,255,255,.25);}
+        .notification-badge{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:var(--accent);border-radius:50%;font-size:.6rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+        .search-bar{position:relative;z-index:1;}
+        .search-bar input{width:100%;padding:13px 20px 13px 44px;border:none;border-radius:14px;font-size:.87rem;font-family:'Poppins',sans-serif;background:rgba(255,255,255,.15);color:#fff;outline:none;}
+        .search-bar input::placeholder{color:rgba(255,255,255,.6);}
+        .search-bar i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.6);}
+        .promo-section{padding:16px 20px 8px;}
+        .promo-banner{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:var(--radius);padding:18px;color:#fff;position:relative;overflow:hidden;cursor:pointer;transition:var(--transition);}
+        .promo-banner:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(102,126,234,.4);}
+        .promo-banner::after{content:'🎉';position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:2.8rem;opacity:.25;}
+        .promo-tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px;font-size:.67rem;font-weight:700;margin-bottom:5px;letter-spacing:1px;}
+        .promo-banner h3{font-size:1.15rem;font-weight:800;margin-bottom:3px;}
+        .promo-banner p{font-size:.78rem;opacity:.85;}
+        .promo-code-chip{display:inline-block;background:rgba(255,255,255,.25);border:1.5px dashed rgba(255,255,255,.6);padding:4px 12px;border-radius:8px;font-size:.78rem;font-weight:700;margin-top:7px;letter-spacing:1px;}
+        .section-title{display:flex;justify-content:space-between;align-items:center;padding:0 20px;margin-bottom:12px;}
         .section-title h3{font-size:1.05rem;font-weight:700;}
-
-        .subscription-card {
-            background: var(--white);
-            border: 2px solid var(--light-gray);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin: 0 20px 15px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-        .subscription-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
-        .subscription-card.popular { border-color: var(--primary); background: linear-gradient(135deg, #f8fbff, #eef4ff); }
-        .sub-badge { position: absolute; top: 15px; right: 15px; background: var(--secondary); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-        .sub-title { font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
-        .sub-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
-        .sub-price span { font-size: 0.75rem; font-weight: 500; color: var(--gray); }
-        .sub-features { list-style: none; margin-bottom: 16px; }
-        .sub-features li { font-size: 0.78rem; color: var(--gray); padding: 4px 0; display: flex; align-items: center; gap: 8px; }
-        .sub-features li i { color: var(--secondary); }
-        .sub-btn { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: var(--transition); }
-        .sub-btn:hover { background: var(--primary-dark); }
-
+        .section-title a{color:var(--primary);text-decoration:none;font-size:.8rem;font-weight:600;}
+        .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 20px;margin-bottom:20px;}
+        .service-item{text-align:center;cursor:pointer;transition:var(--transition);}
+        .service-item:hover{transform:translateY(-3px);}
+        .service-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 6px;}
+        .service-item span{font-size:.68rem;font-weight:500;color:var(--gray);}
+        .si-blue{background:#E6F0FF;}.si-green{background:#E6FFF5;}.si-orange{background:#FFF3E6;}.si-purple{background:#F0E6FF;}.si-red{background:#FFE6E6;}
+        .packages-scroll{display:flex;gap:13px;padding:0 20px;overflow-x:auto;margin-bottom:20px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+        .packages-scroll::-webkit-scrollbar{display:none;}
+        .package-card{min-width:245px;background:var(--white);border-radius:var(--radius);border:2px solid var(--light-gray);padding:18px;scroll-snap-align:start;transition:var(--transition);cursor:pointer;position:relative;overflow:hidden;}
+        .package-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-3px);}
+        .package-card.popular{border-color:var(--primary);background:linear-gradient(135deg,#f8fbff,#eef4ff);}
+        .popular-tag{position:absolute;top:10px;right:-28px;background:var(--accent);color:#fff;font-size:.57rem;padding:3px 30px;font-weight:700;transform:rotate(45deg);letter-spacing:1px;}
+        .package-emoji{font-size:1.7rem;margin-bottom:7px;}
+        .package-name{font-size:.95rem;font-weight:700;margin-bottom:4px;}
+        .package-desc{font-size:.73rem;color:var(--gray);margin-bottom:9px;line-height:1.5;}
+        .package-features{list-style:none;margin-bottom:11px;}
+        .package-features li{font-size:.72rem;color:var(--gray);padding:2px 0;}
+        .package-features li::before{content:'✓ ';color:var(--secondary);font-weight:700;}
+        .package-bottom{display:flex;justify-content:space-between;align-items:center;}
+        .package-price{font-size:1.2rem;font-weight:800;color:var(--primary);}
+        .package-price small{font-size:.67rem;font-weight:400;color:var(--gray);}
+        .book-btn{padding:7px 15px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:.76rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);}
+        .book-btn:hover{background:var(--primary-dark);}
+        .bookings-list{padding:0 20px;margin-bottom:20px;}
+        .booking-card{background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:13px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:var(--transition);cursor:pointer;}
+        .booking-card:hover{border-color:var(--primary);box-shadow:var(--shadow);}
+        .booking-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+        .booking-info{flex:1;}
+        .booking-info h4{font-size:.86rem;font-weight:600;margin-bottom:2px;}
+        .booking-info p{font-size:.7rem;color:var(--gray);}
+        .booking-status{padding:4px 10px;border-radius:8px;font-size:.67rem;font-weight:600;white-space:nowrap;}
+        .status-completed{background:#E6FFF5;color:#00C9A7;}.status-upcoming{background:#E6F0FF;color:#0066FF;}.status-cancelled{background:#FFE6E6;color:#FF4757;}
+        .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid #eee;display:flex;justify-content:space-around;padding:8px 0;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.05);}
+        .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:7px 10px;border-radius:12px;transition:var(--transition);border:none;background:none;font-family:'Poppins',sans-serif;}
+        .nav-item i{font-size:1.1rem;color:var(--gray);transition:var(--transition);}
+        .nav-item span{font-size:.6rem;font-weight:500;color:var(--gray);}
+        .nav-item.active i,.nav-item.active span{color:var(--primary);font-weight:600;}
+        .nav-center{width:50px;height:50px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:-20px;box-shadow:0 4px 15px rgba(0,102,255,.4);border:4px solid var(--white);cursor:pointer;transition:var(--transition);}
+        .nav-center:hover{transform:scale(1.1);}
+        .nav-center i{color:#fff!important;font-size:1.15rem;}
+        .booking-page-header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));padding:17px 20px;color:#fff;display:flex;align-items:center;gap:13px;border-radius:0 0 22px 22px;}
+        .back-btn{width:37px;height:37px;border-radius:11px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);}
+        .back-btn:hover{background:rgba(255,255,255,.25);}
+        .booking-page-header h2{font-size:1.1rem;font-weight:700;}
         .form-section{padding:16px 20px;}
         .form-group{margin-bottom:15px;}
         .form-group label{display:block;font-size:.82rem;font-weight:600;margin-bottom:7px;}
         .form-group label i{margin-right:5px;color:var(--primary);}
         .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-size:.87rem;font-family:'Poppins',sans-serif;transition:var(--transition);outline:none;background:var(--white);}
         .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(0,102,255,.08);}
-
+        .form-group textarea{resize:none;height:72px;}
+        .vehicle-types{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+        .vehicle-type{text-align:center;padding:12px 5px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);}
+        .vehicle-type:hover{border-color:var(--primary);}
+        .vehicle-type.selected{border-color:var(--primary);background:var(--primary-light);}
+        .vehicle-type .v-name{font-size:.7rem;font-weight:600;}
+        .vehicle-type .v-svg{transition:var(--transition);}
+        .vehicle-type:hover .v-svg,.vehicle-type.selected .v-svg{color:var(--primary);filter:drop-shadow(0 2px 6px rgba(0,102,255,.3));}
+        .time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+        .time-slot{text-align:center;padding:10px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);font-size:.78rem;font-weight:500;}
+        .time-slot:hover{border-color:var(--primary);}
+        .time-slot.selected{border-color:var(--primary);background:var(--primary);color:#fff;}
+        .time-slot.disabled{opacity:.4;pointer-events:none;}
+        .service-options{display:flex;flex-direction:column;gap:9px;}
+        .service-option{display:flex;align-items:center;padding:12px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);gap:10px;}
+        .service-option:hover{border-color:var(--primary);}
+        .service-option.selected{border-color:var(--primary);background:var(--primary-light);}
+        .service-option.disabled{opacity:.38;pointer-events:none;background:#f8f9fa;filter:grayscale(.5);}
+        .service-option .s-emoji{font-size:1.35rem;}
+        .service-option .s-info{flex:1;}
+        .service-option .s-name{font-size:.84rem;font-weight:600;}
+        .service-option .s-desc{font-size:.68rem;color:var(--gray);}
+        .service-option .s-price{font-size:.92rem;font-weight:700;color:var(--primary);}
+        .addon-options{display:flex;flex-direction:column;gap:7px;}
+        .addon-option{display:flex;align-items:center;padding:10px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);gap:9px;}
+        .addon-option:hover{border-color:var(--secondary);}
+        .addon-option.selected{border-color:var(--secondary);background:#E6FFF5;}
+        .addon-option .a-check{width:20px;height:20px;border:2px solid #ddd;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0;}
+        .addon-option.selected .a-check{background:var(--secondary);border-color:var(--secondary);color:#fff;}
+        .addon-option .a-info{flex:1;}
+        .addon-option .a-name{font-size:.82rem;font-weight:600;}
+        .addon-option .a-price{font-size:.83rem;font-weight:700;color:var(--secondary);}
+        .instant-wash-box{border:2px solid var(--light-gray);border-radius:var(--radius-sm);padding:13px 15px;cursor:pointer;transition:var(--transition);}
+        .instant-wash-box.available{border-color:#FF6B35;background:#FFF8F5;}
+        .instant-wash-box.unavailable{opacity:.4;pointer-events:none;background:#f8f9fa;}
+        .instant-wash-box.selected{border-color:#FF6B35;background:#FFF3EE;box-shadow:0 0 0 3px rgba(255,107,53,.15);}
+        .instant-wash-header{display:flex;justify-content:space-between;align-items:center;}
+        .instant-wash-title{font-size:.88rem;font-weight:700;}
+        .instant-badge{background:#FF6B35;color:#fff;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:20px;}
+        .instant-badge.grey{background:#aaa;}
+        .instant-wash-desc{font-size:.72rem;color:var(--gray);margin-top:4px;}
+        .instant-wash-price{font-size:.82rem;font-weight:700;color:#FF6B35;margin-top:4px;}
+        .coupon-box{margin:0 20px 12px;}
+        .coupon-label{font-size:.82rem;font-weight:600;display:block;margin-bottom:7px;}
+        .coupon-label i{color:var(--primary);margin-right:5px;}
+        .coupon-row{display:flex;gap:8px;}
+        .coupon-row input{flex:1;padding:12px 13px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-size:.87rem;font-family:'Poppins',sans-serif;outline:none;transition:var(--transition);text-transform:uppercase;}
+        .coupon-row input:focus{border-color:var(--primary);}
+        .apply-btn{padding:12px 16px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;}
+        .coupon-msg{margin-top:7px;padding:8px 12px;border-radius:var(--radius-sm);font-size:.78rem;font-weight:600;display:none;}
+        .coupon-msg.success{background:#E6FFF5;color:#00C9A7;border:1.5px solid #00C9A7;display:block;}
+        .coupon-msg.error{background:#FFE6E6;color:#FF4757;border:1.5px solid #FF4757;display:block;}
+        .price-summary{background:var(--light-gray);border-radius:var(--radius);padding:15px;margin:0 20px 12px;}
+        .price-row{display:flex;justify-content:space-between;font-size:.82rem;padding:5px 0;color:var(--gray);}
+        .price-row.discount{color:#00C9A7;font-weight:600;}
+        .price-row.total{border-top:2px solid #ddd;margin-top:7px;padding-top:10px;font-size:1rem;font-weight:700;color:var(--dark);}
         .submit-btn{display:block;width:calc(100% - 40px);margin:10px 20px 22px;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;border-radius:var(--radius);font-size:.92rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);}
         .submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,102,255,.4);}
-
-        /* Admin Dashboard & Management UI */
-        .admin-toggle-bar { display: flex; padding: 0 20px; gap: 8px; margin-bottom: 15px; }
-        .admin-tab-btn { flex: 1; padding: 8px; border: none; border-radius: 8px; background: var(--light-gray); font-size: 0.75rem; font-weight: 600; cursor: pointer; color: var(--gray); transition: var(--transition); }
-        .admin-tab-btn.active { background: var(--primary); color: #fff; }
-
-        .booking-manage-card { background: var(--white); border: 1.5px solid var(--light-gray); border-radius: var(--radius); padding: 15px; margin: 0 20px 12px; }
-        .bmc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .bmc-title { font-size: 0.9rem; font-weight: 700; }
-        .bmc-status { font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
-        .status-pending { background: #FFF3E6; color: #FF9F43; }
-        .status-upcoming { background: #E6F0FF; color: var(--primary); }
-        .status-completed { background: #E6FFF5; color: var(--secondary); }
-        .bmc-details { font-size: 0.75rem; color: var(--gray); margin-bottom: 10px; line-height: 1.5; }
-        .bmc-actions { display: flex; gap: 8px; }
-        .bmc-btn { flex: 1; padding: 6px; border: none; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; color: #fff; }
-        .btn-approve { background: var(--primary); }
-        .btn-complete { background: var(--secondary); }
-
-        .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid #eee;display:flex;justify-content:space-around;padding:8px 0;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.05);}
-        .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:7px 10px;border-radius:12px;transition:var(--transition);border:none;background:none;font-family:'Poppins',sans-serif;}
-        .nav-item i{font-size:1.1rem;color:var(--gray);transition:var(--transition);}
-        .nav-item span{font-size:.6rem;font-weight:500;color:var(--gray);}
-        .nav-item.active i,.nav-item.active span{color:var(--primary);font-weight:600;}
+        .tabs{display:flex;padding:0 20px;gap:5px;margin-bottom:13px;}
+        .tab{flex:1;padding:9px;text-align:center;background:var(--light-gray);border:none;border-radius:10px;font-size:.76rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);color:var(--gray);}
+        .tab.active{background:var(--primary);color:#fff;}
+        .empty-state{text-align:center;padding:40px 20px;}
+        .empty-state .empty-emoji{font-size:3.2rem;margin-bottom:10px;}
+        .empty-state h3{font-size:.95rem;margin-bottom:5px;}
+        .empty-state p{font-size:.8rem;color:var(--gray);}
+        .detail-booking-card{margin:0 20px 11px;background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);overflow:hidden;}
+        .dbc-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--light-gray);}
+        .dbc-id{font-size:.72rem;color:var(--gray);}
+        .dbc-body{padding:12px 14px;}
+        .dbc-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}
+        .dbc-row i{color:var(--primary);width:15px;text-align:center;font-size:.8rem;margin-top:2px;}
+        .dbc-row span{font-size:.78rem;color:var(--gray);}
+        .dbc-footer{padding:10px 14px;background:var(--light-gray);display:flex;justify-content:space-between;align-items:center;}
+        .dbc-price{font-weight:700;color:var(--primary);font-size:.92rem;}
+        .cancel-btn{padding:5px 12px;background:#FFE6E6;color:#FF4757;border:none;border-radius:8px;font-size:.7rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);}
+        .cancel-btn:hover{background:#FF4757;color:#fff;}
+        .profile-header{padding:27px 20px;text-align:center;color:#fff;border-radius:0 0 28px 28px;}
+        .profile-avatar{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.9rem;margin:0 auto 10px;border:3px solid rgba(255,255,255,.3);}
+        .profile-header h2{font-size:1.15rem;font-weight:700;}
+        .profile-header p{font-size:.8rem;opacity:.8;}
+        .profile-stats{display:flex;justify-content:center;gap:25px;margin-top:16px;}
+        .stat-item{text-align:center;}.stat-num{font-size:1.15rem;font-weight:800;}.stat-label{font-size:.65rem;opacity:.7;}
+        .profile-menu{padding:16px;}
+        .menu-item{display:flex;align-items:center;padding:12px;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);gap:12px;margin-bottom:4px;}
+        .menu-item:hover{background:var(--light-gray);}
+        .menu-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.95rem;}
+        .menu-text{flex:1;}.menu-text h4{font-size:.85rem;font-weight:600;}.menu-text p{font-size:.68rem;color:var(--gray);}
+        .menu-arrow{color:var(--gray);font-size:.78rem;}
+        .menu-item.logout .menu-text h4{color:#FF4757;}
+        .menu-item.delete-acc .menu-text h4{color:#FF4757;}
+        .notification-item{display:flex;gap:10px;padding:13px 20px;border-bottom:1px solid var(--light-gray);cursor:pointer;transition:var(--transition);}
+        .notification-item:hover{background:var(--light-gray);}
+        .notification-item.unread{background:#f8fbff;}
+        .notif-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+        .notif-content{flex:1;}.notif-content h4{font-size:.82rem;font-weight:600;margin-bottom:2px;}.notif-content p{font-size:.72rem;color:var(--gray);line-height:1.4;}
+        .notif-time{font-size:.67rem;color:var(--gray);white-space:nowrap;}
+        .step-indicator{display:flex;justify-content:center;gap:7px;padding:12px 20px;}
+        .step-dot{width:7px;height:7px;border-radius:50%;background:#ddd;transition:var(--transition);}
+        .step-dot.active{width:22px;border-radius:4px;background:var(--primary);}
+        .step-dot.done{background:var(--secondary);}
+        .admin-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:0 20px;margin-bottom:18px;}
+        .admin-stat-card{background:var(--white);border-radius:var(--radius);padding:16px;border:1.5px solid var(--light-gray);}
+        .admin-stat-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:8px;}
+        .admin-stat-num{font-size:1.5rem;font-weight:800;}.admin-stat-label{font-size:.7rem;color:var(--gray);}
+        .revenue-card{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:14px;}
+        .revenue-card h3{font-size:.82rem;opacity:.8;margin-bottom:4px;}.rev-amt{font-size:1.9rem;font-weight:800;}
+        .revenue-card p{font-size:.72rem;opacity:.7;margin-top:2px;}
+        .admin-section{padding:0 20px;margin-bottom:18px;}.admin-section h3{font-size:.95rem;font-weight:700;margin-bottom:11px;}
+        .worker-status-card{margin:0 20px 16px;background:var(--white);border-radius:var(--radius);padding:16px;border:2px solid var(--light-gray);}
+        .worker-status-card h3{font-size:.92rem;font-weight:700;margin-bottom:11px;}
+        .status-options{display:flex;gap:8px;}
+        .status-option{flex:1;padding:10px 6px;text-align:center;border:2px solid var(--light-gray);border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);font-size:.72rem;font-weight:600;}
+        .status-option:hover{border-color:var(--primary);}
+        .status-option.active-available{border-color:#00C9A7;background:#E6FFF5;color:#00C9A7;}
+        .status-option.active-busy{border-color:#FF9F43;background:#FFF3E6;color:#FF9F43;}
+        .status-option.active-offline{border-color:#bbb;background:#f5f5f5;color:#bbb;}
+        .worker-earnings{margin:0 20px 14px;background:linear-gradient(135deg,#117A65,#0E6655);border-radius:var(--radius);padding:17px;color:#fff;}
+        .worker-earnings h3{font-size:.8rem;opacity:.8;}.earn-amount{font-size:1.7rem;font-weight:800;}.worker-earnings p{font-size:.7rem;opacity:.7;}
+        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(5px);}
+        .modal-overlay.show{display:flex;}
+        .modal{background:#fff;border-radius:22px;padding:30px;text-align:center;max-width:330px;width:90%;animation:modalIn .4s ease;}
+        @keyframes modalIn{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+        .success-icon{width:72px;height:72px;background:linear-gradient(135deg,#00C9A7,#00B894);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.7rem;color:#fff;animation:checkBounce .6s ease .3s both;}
+        @keyframes checkBounce{0%{transform:scale(0);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+        .modal h2{font-size:1.15rem;margin-bottom:6px;}.modal p{color:var(--gray);font-size:.83rem;margin-bottom:6px;}
+        .booking-id-chip{background:var(--light-gray);padding:8px;border-radius:10px;font-size:.8rem;font-weight:600;margin-bottom:16px;color:var(--primary);}
+        .modal-btn{width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+        .email-status{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:.78rem;font-weight:600;margin-top:10px;margin-bottom:5px;}
+        .email-status.sending{background:#E6F0FF;color:var(--primary);}
+        .email-status.sent{background:#E6FFF5;color:#00C9A7;}
+        .email-status.failed{background:#FFF3E6;color:#FF9F43;}
+        .delete-modal{background:#fff;border-radius:22px;padding:28px;text-align:center;max-width:330px;width:90%;animation:modalIn .4s ease;}
+        .delete-icon{width:68px;height:68px;background:linear-gradient(135deg,#FF4757,#c0392b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.6rem;color:#fff;}
+        .delete-modal h2{font-size:1.1rem;margin-bottom:8px;color:var(--dark);}
+        .delete-modal p{font-size:.8rem;color:var(--gray);margin-bottom:14px;line-height:1.6;}
+        .delete-warning{background:#FFE6E6;border:1.5px solid #FF4757;border-radius:10px;padding:10px 14px;font-size:.75rem;color:#FF4757;margin-bottom:16px;text-align:left;line-height:1.7;}
+        .delete-confirm-input{width:100%;padding:11px 14px;border:2px solid #FF4757;border-radius:var(--radius-sm);font-size:.85rem;font-family:'Poppins',sans-serif;outline:none;margin-bottom:14px;text-align:center;}
+        .delete-btn{width:100%;padding:13px;background:#FF4757;color:#fff;border:none;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:8px;transition:var(--transition);}
+        .delete-btn:hover{background:#c0392b;}
+        .cancel-delete-btn{width:100%;padding:11px;background:var(--light-gray);color:var(--gray);border:none;border-radius:12px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+        .address-chip{padding:6px 12px;background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);border-radius:20px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);white-space:nowrap;}
+        .address-chip:hover{background:var(--primary);color:#fff;}
+        .approval-card{background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+        .approval-info h4{font-size:.88rem;font-weight:700;color:var(--dark);}
+        .approval-info p{font-size:.72rem;color:var(--gray);}
+        .approval-actions{display:flex;gap:6px;}
+        .approve-btn{padding:6px 12px;background:#00C9A7;color:#fff;border:none;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);}
+        .approve-btn:hover{background:#00b093;}
+        .reject-btn{padding:6px 12px;background:#FF4757;color:#fff;border:none;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);}
+        .reject-btn:hover{background:#d63031;}
+        .worker-card{background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+        .worker-status-badge{font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:12px;}
+        .worker-status-badge.available{background:#E6FFF5;color:#00C9A7;}
+        .worker-status-badge.busy{background:#FFF3E6;color:#FF9F43;}
+        .worker-status-badge.offline{background:#f5f5f5;color:#888;}
+        
+        /* FOOTER CSS ADDED HERE */
+        .app-footer{text-align:center;padding:24px 15px 100px;font-size:.72rem;color:var(--gray);border-top:1px solid var(--light-gray);margin-top:30px;}
+        .app-footer p{margin-bottom:2px;}
+        .app-footer .owner-title{font-weight:600;color:var(--dark);}
+        .auth-footer{padding:20px 15px;margin-top:15px;border-top:none;padding-bottom:30px;}
+        
+        @media(min-width:431px){body{background:linear-gradient(135deg,#667eea,#764ba2);}}
     </style>
 </head>
 <body>
 
-    <!-- Splash Screen -->
-    <div class="splash-screen" id="splash">
-        <div class="splash-content">
-            <div class="splash-title">Wash2Door</div>
-            <div class="splash-sub" data-i18n="tagline">Doorstep Car Care Delivered</div>
-            <div class="splash-loader"><span></span><span></span><span></span></div>
-        </div>
+<script>
+    window._signupRole = 'customer';
+    window.selectSignupRole = function(el, role) {
+        document.querySelectorAll('.role-opt').forEach(r => r.classList.remove('selected'));
+        el.classList.add('selected');
+        window._signupRole = role;
+        const passGroup = document.getElementById('adminPassGroup');
+        if (passGroup) passGroup.style.display = (role === 'admin') ? 'block' : 'none';
+    };
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+    <symbol id="icon-sedan" viewBox="0 0 100 50"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 35C10 35 12 20 25 18L35 10C38 7 45 5 55 5L65 5C70 5 75 8 78 12L85 20C92 22 95 28 95 35" fill="rgba(0,102,255,.08)"/><line x1="5" y1="35" x2="95" y2="35"/><circle cx="25" cy="35" r="7" fill="rgba(0,102,255,.15)"/><circle cx="25" cy="35" r="3" fill="currentColor"/><circle cx="75" cy="35" r="7" fill="rgba(0,102,255,.15)"/><circle cx="75" cy="35" r="3" fill="currentColor"/><line x1="40" y1="8" x2="40" y2="18"/><path d="M35 18L85 18"/><rect x="42" y="10" width="12" height="7" rx="1" fill="rgba(0,102,255,.1)"/><rect x="58" y="10" width="16" height="7" rx="1" fill="rgba(0,102,255,.1)"/><circle cx="88" cy="25" r="2" fill="currentColor" opacity=".5"/><circle cx="14" cy="25" r="2" fill="currentColor" opacity=".5"/></g></symbol>
+    <symbol id="icon-hatchback" viewBox="0 0 100 50"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 35C10 30 14 22 22 20L32 10C36 6 42 5 50 5L60 5C65 5 70 7 72 12L80 20C85 20 90 22 92 28L92 35" fill="rgba(0,102,255,.08)"/><line x1="5" y1="35" x2="95" y2="35"/><circle cx="24" cy="35" r="7" fill="rgba(0,102,255,.15)"/><circle cx="24" cy="35" r="3" fill="currentColor"/><circle cx="76" cy="35" r="7" fill="rgba(0,102,255,.15)"/><circle cx="76" cy="35" r="3" fill="currentColor"/><path d="M32 18L80 18"/><line x1="38" y1="8" x2="38" y2="18"/><rect x="40" y="9" width="12" height="8" rx="1" fill="rgba(0,102,255,.1)"/><rect x="56" y="9" width="14" height="8" rx="1" fill="rgba(0,102,255,.1)"/><path d="M80 18L88 28"/></g></symbol>
+    <symbol id="icon-compact-suv" viewBox="0 0 100 55"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40L8 30C8 26 10 22 15 20L28 12C32 8 38 5 48 5L62 5C68 5 74 8 78 14L88 22C94 24 96 30 96 40" fill="rgba(0,102,255,.08)"/><line x1="4" y1="40" x2="96" y2="40"/><circle cx="24" cy="40" r="8" fill="rgba(0,102,255,.15)"/><circle cx="24" cy="40" r="3.5" fill="currentColor"/><circle cx="76" cy="40" r="8" fill="rgba(0,102,255,.15)"/><circle cx="76" cy="40" r="3.5" fill="currentColor"/><path d="M28 20L88 20"/><line x1="35" y1="8" x2="35" y2="20"/><rect x="37" y="9" width="12" height="10" rx="1.5" fill="rgba(0,102,255,.1)"/><rect x="52" y="9" width="14" height="10" rx="1.5" fill="rgba(0,102,255,.1)"/><line x1="30" y1="5" x2="70" y2="5" stroke-width="1.5" opacity=".3"/></g></symbol>
+    <symbol id="icon-big-suv" viewBox="0 0 110 60"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 45L6 28C6 24 8 20 14 18L25 8C30 4 38 2 50 2L70 2C78 2 84 5 88 10L98 20C104 22 108 28 108 36L108 45" fill="rgba(0,102,255,.08)"/><line x1="2" y1="45" x2="108" y2="45"/><circle cx="26" cy="45" r="9" fill="rgba(0,102,255,.15)"/><circle cx="26" cy="45" r="4" fill="currentColor"/><circle cx="84" cy="45" r="9" fill="rgba(0,102,255,.15)"/><circle cx="84" cy="45" r="4" fill="currentColor"/><path d="M25 20L98 20"/><line x1="33" y1="6" x2="33" y2="20"/><rect x="35" y="7" width="23" height="12" rx="2" fill="rgba(0,102,255,.1)"/><rect x="62" y="7" width="17" height="12" rx="2" fill="rgba(0,102,255,.1)"/><line x1="28" y1="2" x2="80" y2="2" stroke-width="2" opacity=".3"/><line x1="18" y1="42" x2="38" y2="42" stroke-width="1.5" opacity=".3"/><line x1="72" y1="42" x2="92" y2="42" stroke-width="1.5" opacity=".3"/></g></symbol>
+    <symbol id="icon-bike" viewBox="0 0 100 60"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="45" r="12" fill="rgba(0,102,255,.1)"/><circle cx="22" cy="45" r="4" fill="currentColor"/><circle cx="78" cy="45" r="12" fill="rgba(0,102,255,.1)"/><circle cx="78" cy="45" r="4" fill="currentColor"/><path d="M22 45L35 28L55 20L70 15L78 45"/><path d="M35 28L55 28L78 45"/><ellipse cx="50" cy="22" rx="10" ry="5" fill="rgba(0,102,255,.15)" stroke-width="2"/><path d="M42 20C42 16 58 14 62 16" stroke-width="3"/><path d="M70 15L72 8M68 8L76 8"/><circle cx="76" cy="12" r="3" fill="rgba(255,200,0,.4)" stroke-width="1.5"/><rect x="38" y="30" width="12" height="10" rx="2" fill="rgba(0,102,255,.08)" stroke-width="1.5"/></g></symbol>
+</svg>
+
+<div class="toast" id="toast"></div>
+
+<!-- SPLASH -->
+<div class="splash-screen" id="splashScreen">
+    <div class="splash-content">
+        <div class="splash-title">WASH2DOOR</div>
+        <div class="splash-sub">Premium Wash at Your Doorstep</div>
+        <div class="splash-loader"><span></span><span></span><span></span></div>
     </div>
+</div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
-
-    <div class="app-container">
-        
-        <!-- HOME PAGE (CUSTOMER) -->
-        <div class="page active" id="page-home">
-            <div class="header">
-                <div class="header-top">
-                    <div class="greeting">
-                        <h2 data-i18n="welcome">Welcome Back</h2>
-                        <h1>Wash2Door</h1>
-                    </div>
-                    <div class="header-actions">
-                        <button class="lang-switch-btn" onclick="toggleLanguage()">
-                            <i class="fa-solid fa-globe"></i>
-                            <span id="lang-label">हिंदी</span>
-                        </button>
+<!-- AUTH -->
+<div class="auth-screen" id="authScreen">
+    <div class="auth-container">
+        <div class="auth-header"><div class="auth-logo">WASH2DOOR</div><div class="auth-tagline">Premium Car Wash at Your Doorstep</div></div>
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+            <button class="auth-tab" onclick="switchAuthTab('signup')">Create Account</button>
+        </div>
+        <div class="auth-body">
+            <div class="auth-form active" id="loginForm">
+                <div class="f-group"><label><i class="fas fa-envelope"></i>Email</label><div class="f-input-wrap"><input type="email" id="loginEmail" placeholder="Enter your email" oninput="clearErr('loginEmailErr')"></div><div class="f-error" id="loginEmailErr"></div></div>
+                <div class="f-group"><label><i class="fas fa-lock"></i>Password</label><div class="f-input-wrap"><input type="password" id="loginPassword" placeholder="Enter your password" oninput="clearErr('loginPassErr')"><button class="eye-btn" onclick="togglePass('loginPassword',this)"><i class="fas fa-eye"></i></button></div><div class="f-error" id="loginPassErr"></div></div>
+                <div class="forgot-link"><a onclick="showForgot()">Forgot Password?</a></div>
+                <button class="auth-btn" id="loginBtn" onclick="doLogin()"><div class="spinner"></div><span class="btn-text"><i class="fas fa-sign-in-alt"></i> Sign In</span></button>
+                <div class="auth-divider">No account? <a onclick="switchAuthTab('signup')" style="color:var(--primary);cursor:pointer;font-weight:600;">Sign Up</a></div>
+            </div>
+            <div class="auth-form" id="signupForm">
+                <div class="auth-role-group">
+                    <label><i class="fas fa-user-tag"></i>I am a...</label>
+                    <div class="role-options">
+                        <div class="role-opt selected" onclick="selectSignupRole(this,'customer')"><span class="ro-emoji">👤</span><span class="ro-name">Customer</span></div>
+                        <div class="role-opt" onclick="selectSignupRole(this,'worker')"><span class="ro-emoji">🧹</span><span class="ro-name">Worker</span></div>
+                        <div class="role-opt" onclick="selectSignupRole(this,'admin')"><span class="ro-emoji">👑</span><span class="ro-name">Admin</span></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="section-title">
-                <h3 data-i18n="quick_booking">Quick Doorstep Booking</h3>
-            </div>
-
-            <form id="bookingForm" onsubmit="handleRequestToBook(event)">
-                <div class="form-section">
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-user"></i> <span data-i18n="lbl_name">Full Name</span></label>
-                        <input type="text" id="custName" placeholder="Enter your full name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-phone"></i> <span data-i18n="lbl_phone">Phone Number</span></label>
-                        <input type="tel" id="custPhone" placeholder="Enter your mobile number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-car"></i> <span data-i18n="lbl_vehicle">Vehicle Type & Model</span></label>
-                        <select id="vehicleType" required>
-                            <option value="" disabled selected>Select vehicle model</option>
-                            <option value="Hatchback / Sedan">Hatchback / Sedan</option>
-                            <option value="Compact SUV">Compact SUV</option>
-                            <option value="Big-Size SUV">Big-Size SUV</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-location-dot"></i> <span data-i18n="lbl_address">Doorstep Address</span></label>
-                        <textarea id="custAddress" placeholder="Enter complete address with landmark" required></textarea>
+                <!-- FIXED ADMIN PASS GROUP -->
+                <div class="f-group" id="adminPassGroup" style="display:none;">
+                    <label><i class="fas fa-key"></i>Admin Secret Key</label>
+                    <div class="f-input-wrap">
+                        <input type="password" id="signupAdminPass" placeholder="Enter security key">
+                        <button class="eye-btn" onclick="togglePass('signupAdminPass', this)"><i class="fas fa-eye"></i></button>
                     </div>
                 </div>
-
-                <button type="submit" class="submit-btn" data-i18n="btn_request_book">Request to Book</button>
-            </form>
-        </div>
-
-        <!-- SUBSCRIPTIONS PAGE -->
-        <div class="page" id="page-subscriptions">
-            <div class="header">
-                <div class="header-top">
-                    <div class="greeting">
-                        <h1 data-i18n="sub_title_page">Monthly Subscriptions</h1>
-                        <h2>Unlimited Care for Your Vehicle</h2>
-                    </div>
-                    <div class="header-actions">
-                        <button class="lang-switch-btn" onclick="toggleLanguage()">
-                            <i class="fa-solid fa-globe"></i>
-                            <span id="lang-label-sub">हिंदी</span>
-                        </button>
-                    </div>
-                </div>
+                <div class="f-group"><label><i class="fas fa-user"></i>Full Name</label><div class="f-input-wrap"><input type="text" id="signupName" placeholder="Enter your full name" oninput="clearErr('signupNameErr')"></div><div class="f-error" id="signupNameErr"></div></div>
+                <div class="f-group"><label><i class="fas fa-envelope"></i>Email</label><div class="f-input-wrap"><input type="email" id="signupEmail" placeholder="Enter your email" oninput="clearErr('signupEmailErr')"></div><div class="f-error" id="signupEmailErr"></div></div>
+                <div class="f-group"><label><i class="fas fa-lock"></i>Password</label><div class="f-input-wrap"><input type="password" id="signupPassword" placeholder="Minimum 6 characters" oninput="clearErr('signupPassErr')"><button class="eye-btn" onclick="togglePass('signupPassword',this)"><i class="fas fa-eye"></i></button></div><div class="f-error" id="signupPassErr"></div></div>
+                <div class="f-group"><label><i class="fas fa-lock"></i>Confirm Password</label><div class="f-input-wrap"><input type="password" id="signupConfirm" placeholder="Re-enter password" oninput="clearErr('signupConfirmErr')"><button class="eye-btn" onclick="togglePass('signupConfirm',this)"><i class="fas fa-eye"></i></button></div><div class="f-error" id="signupConfirmErr"></div></div>
+                <button class="auth-btn" id="signupBtn" onclick="doSignup()"><div class="spinner"></div><span class="btn-text"><i class="fas fa-user-plus"></i> Create Account</span></button>
+                <div class="auth-divider">Have account? <a onclick="switchAuthTab('login')" style="color:var(--primary);cursor:pointer;font-weight:600;">Sign In</a></div>
             </div>
-
-            <div class="section-title">
-                <h3 data-i18n="sub_choose_plan">Choose Your Monthly Plan</h3>
+            <div class="forgot-panel" id="forgotPanel">
+                <button class="back-to-login" onclick="hideForgot()"><i class="fas fa-arrow-left"></i> Back</button>
+                <div class="f-group"><label><i class="fas fa-envelope"></i>Registered Email</label><div class="f-input-wrap"><input type="email" id="forgotEmail" placeholder="Enter your email"></div></div>
+                <button class="auth-btn" onclick="doForgotPassword()"><span class="btn-text"><i class="fas fa-paper-plane"></i> Send Reset Link</span></button>
             </div>
-
-            <div class="subscription-card">
-                <span class="sub-badge">POPULAR</span>
-                <div class="sub-title" data-i18n="plan_hatch_title">Hatchback & Sedan</div>
-                <div class="sub-price">₹1,500 <span>/ month</span></div>
-                <ul class="sub-features">
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_1">30 Days Basic Wash</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_2">30 Days Basic Interior Clean</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_3">3 Times Premium Wash in a month</span></li>
-                </ul>
-                <button class="sub-btn" onclick="requestSubscription('Hatchback & Sedan', '1500')" data-i18n="btn_subscribe">Subscribe Now</button>
-            </div>
-
-            <div class="subscription-card popular">
-                <span class="sub-badge">BEST VALUE</span>
-                <div class="sub-title" data-i18n="plan_csuv_title">Compact SUV</div>
-                <div class="sub-price">₹1,649 <span>/ month</span></div>
-                <ul class="sub-features">
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_1">30 Days Basic Wash</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_2">30 Days Basic Interior Clean</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_3">3 Times Premium Wash in a month</span></li>
-                </ul>
-                <button class="sub-btn" onclick="requestSubscription('Compact SUV', '1649')" data-i18n="btn_subscribe">Subscribe Now</button>
-            </div>
-
-            <div class="subscription-card">
-                <span class="sub-badge">PREMIUM</span>
-                <div class="sub-title" data-i18n="plan_bsuv_title">Big-Size SUV</div>
-                <div class="sub-price">₹1,829 <span>/ month</span></div>
-                <ul class="sub-features">
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_1">30 Days Basic Wash</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_2">30 Days Basic Interior Clean</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_3">3 Times Premium Wash in a month</span></li>
-                </ul>
-                <button class="sub-btn" onclick="requestSubscription('Big-Size SUV', '1829')" data-i18n="btn_subscribe">Subscribe Now</button>
-            </div>
-        </div>
-
-        <!-- ADMIN DASHBOARD PAGE -->
-        <div class="page" id="page-admin">
-            <div class="header">
-                <div class="header-top">
-                    <div class="greeting">
-                        <h2>Admin Dashboard</h2>
-                        <h1 data-i18n="admin_title">Manage Bookings</h1>
-                    </div>
-                    <div class="header-actions">
-                        <button class="lang-switch-btn" onclick="toggleLanguage()">
-                            <i class="fa-solid fa-globe"></i>
-                            <span id="lang-label-admin">हिंदी</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-title">
-                <h3>Live Bookings Control</h3>
-            </div>
-
-            <!-- Operational Status Switches -->
-            <div class="admin-toggle-bar">
-                <button class="admin-tab-btn active" id="tab-pending" onclick="filterAdminBookings('pending')">Pending</button>
-                <button class="admin-tab-btn" id="tab-upcoming" onclick="filterAdminBookings('upcoming')">Upcoming</button>
-                <button class="admin-tab-btn" id="tab-completed" onclick="filterAdminBookings('completed')">Completed</button>
-            </div>
-
-            <!-- Dynamic Admin Booking Container -->
-            <div id="adminBookingsList">
-                <!-- Rendered dynamically by JavaScript -->
-            </div>
-        </div>
-
-        <!-- BOTTOM NAVIGATION -->
-        <div class="bottom-nav">
-            <button class="nav-item active" onclick="switchPage('page-home', this)">
-                <i class="fa-solid fa-house"></i>
-                <span data-i18n="nav_home">Home</span>
-            </button>
-            <button class="nav-item" onclick="switchPage('page-subscriptions', this)">
-                <i class="fa-solid fa-calendar-check"></i>
-                <span data-i18n="nav_subscriptions">Subscriptions</span>
-            </button>
-            <button class="nav-item" onclick="switchPage('page-admin', this)">
-                <i class="fa-solid fa-user-shield"></i>
-                <span>Admin</span>
-            </button>
-        </div>
-
-    </div>
-
-    <script>
-        const ADMIN_PHONE = "919876543210"; 
-        
-        // --- TRANSLATION DICTIONARY ---
-        const translations = {
-            en: {
-                tagline: "Doorstep Car Care Delivered",
-                welcome: "Welcome Back",
-                quick_booking: "Quick Doorstep Booking",
-                lbl_name: "Full Name",
-                lbl_phone: "Phone Number",
-                lbl_vehicle: "Vehicle Type & Model",
-                lbl_address: "Doorstep Address",
-                btn_request_book: "Request to Book",
-                sub_title_page: "Monthly Subscriptions",
-                sub_choose_plan: "Choose Your Monthly Plan",
-                plan_hatch_title: "Hatchback & Sedan",
-                plan_csuv_title: "Compact SUV",
-                plan_bsuv_title: "Big-Size SUV",
-                plan_feat_1: "30 Days Basic Wash",
-                plan_feat_2: "30 Days Basic Interior Clean",
-                plan_feat_3: "3 Times Premium Wash in a month",
-                btn_subscribe: "Subscribe Now",
-                nav_home: "Home",
-                nav_subscriptions: "Subscriptions",
-                admin_title: "Manage Bookings",
-                lang_toggle_btn: "हिंदी"
-            },
-            hi: {
-                tagline: "डोरस्टेप कार केयर सेवा",
-                welcome: "नमस्ते",
-                quick_booking: "डोरस्टेप बुकिंग करें",
-                lbl_name: "पूरा नाम",
-                lbl_phone: "फोन नंबर",
-                lbl_vehicle: "गाड़ी का प्रकार और मॉडल",
-                lbl_address: "आपका पता",
-                btn_request_book: "बुकिंग का अनुरोध करें",
-                sub_title_page: "मासिक सब्सक्रिप्शन",
-                sub_choose_plan: "अपना मासिक प्लान चुनें",
-                plan_hatch_title: "हैचबैक और सेडान",
-                plan_csuv_title: "कॉम्पैक्ट एसयूवी",
-                plan_bsuv_title: "बड़ी एसयूवी",
-                plan_feat_1: "30 दिन बेसिक वॉश",
-                plan_feat_2: "30 दिन बेसिक इंटीरियर सफाई",
-                plan_feat_3: "महीने में 3 बार प्रीमियम वॉश",
-                btn_subscribe: "अभी सब्सक्रिप्शन लें",
-                nav_home: "होम",
-                nav_subscriptions: "सब्सक्रिप्शन",
-                admin_title: "बुकिंग प्रबंधित करें",
-                lang_toggle_btn: "English"
-            }
-        };
-
-        let currentLang = 'en';
-
-        // --- IN-APP BOOKINGS DATABASE STATE ---
-        let appBookings = [
-            { id: 'W2D-101', name: 'Rahul Sharma', phone: '9876543210', vehicle: 'Compact SUV', address: 'Sector 18, Near Mall', status: 'pending' },
-            { id: 'W2D-102', name: 'Amit Verma', phone: '9123456780', vehicle: 'Hatchback / Sedan', address: 'Block C, Main Street', status: 'upcoming' }
-        ];
-
-        let currentAdminFilter = 'pending';
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'hi' : 'en';
             
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[currentLang][key]) {
-                    el.innerText = translations[currentLang][key];
+            <!-- AUTH FOOTER -->
+            <div class="app-footer auth-footer">
+                <p>© 2026 Wash2Door. All rights reserved.</p>
+                <p class="owner-title">Owner : Divyansh Arora</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- APP CONTAINER -->
+<div class="app-container" id="appContainer">
+
+    <!-- CUSTOMER HOME -->
+    <div class="page" id="homePage">
+        <div class="header">
+            <div class="header-top">
+                <div class="greeting"><h2 id="greetText">Good Morning 👋</h2><h1 id="userName">...</h1><span class="role-badge customer" id="roleBadge">CUSTOMER</span></div>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge" id="notifCount">0</span></button>
+                    <button class="header-btn" onclick="showPage('profilePage')"><i class="fas fa-user"></i></button>
+                </div>
+            </div>
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search services, packages..."></div>
+        </div>
+        <div class="promo-section"><div class="promo-banner" onclick="showPage('bookingPage')"><div class="promo-tag">🎉 FIRST WASH OFFER</div><h3>Flat 20% OFF!</h3><p>Use code at checkout</p><div class="promo-code-chip">FIRST20W2D</div></div></div>
+        <div class="section-title"><h3>Our Services</h3><a href="#" onclick="showPage('bookingPage')">See All</a></div>
+        <div class="services-grid">
+            <div class="service-item" onclick="selectServiceAndBook('Basic Wash')"><div class="service-icon si-blue">🧽</div><span>Basic Wash</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Premium Wash')"><div class="service-icon si-green">✨</div><span>Premium</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Premium Plus')"><div class="service-icon si-orange">💎</div><span>Premium Plus</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Interior Clean')"><div class="service-icon si-purple">🪥</div><span>Interior</span></div>
+        </div>
+        <div class="section-title"><h3>Popular Packages</h3></div>
+        <div class="packages-scroll">
+            <div class="package-card" onclick="selectServiceAndBook('Basic Wash')"><div class="package-emoji">🧽</div><div class="package-name">Basic Wash</div><div class="package-desc">Exterior hand wash + tyre clean</div><ul class="package-features"><li>Hand wash exterior</li><li>Tyre cleaning</li><li>Window wipe</li></ul><div class="package-bottom"><div class="package-price">₹249<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Basic Wash')">Book</button></div></div>
+            <div class="package-card popular" onclick="selectServiceAndBook('Premium Wash')"><div class="popular-tag">POPULAR</div><div class="package-emoji">✨</div><div class="package-name">Premium Wash</div><div class="package-desc">Full interior & exterior</div><ul class="package-features"><li>Full exterior wash</li><li>Interior vacuum</li><li>Dashboard polish</li><li>Air freshener</li></ul><div class="package-bottom"><div class="package-price">₹499<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Premium Wash')">Book</button></div></div>
+            <div class="package-card" onclick="selectServiceAndBook('Premium Plus')"><div class="package-emoji">💎</div><div class="package-name">Premium Plus</div><div class="package-desc">Ultimate detailing</div><ul class="package-features"><li>Everything in Premium</li><li>Trim wax coating</li><li>Door hinge greasing</li><li>Leather seats cleaning</li></ul><div class="package-bottom"><div class="package-price">₹699<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Premium Plus')">Book</button></div></div>
+        </div>
+        <div class="section-title"><h3>Recent Bookings</h3><a href="#" onclick="showPage('myBookingsPage')">View All</a></div>
+        <div class="bookings-list" id="recentBookings"></div>
+        
+        <!-- DASHBOARD FOOTER -->
+        <div class="app-footer">
+            <p>© 2026 Wash2Door. All rights reserved.</p>
+            <p class="owner-title">Owner : Divyansh Arora</p>
+        </div>
+    </div>
+
+    <!-- BOOKING PAGE -->
+    <div class="page" id="bookingPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2>Book a Wash</h2></div>
+        <div class="step-indicator"><div class="step-dot active" id="step1"></div><div class="step-dot" id="step2"></div><div class="step-dot" id="step3"></div><div class="step-dot" id="step4"></div></div>
+        <div class="form-section">
+            <div class="form-group"><label><i class="fas fa-car-side"></i>Vehicle Type</label>
+                <div class="vehicle-types">
+                    <div class="vehicle-type" onclick="selectVehicle(this,'Sedan')"><svg class="v-svg" width="60" height="30" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-sedan"/></svg><span class="v-name">Sedan</span></div>
+                    <div class="vehicle-type" onclick="selectVehicle(this,'Hatchback')"><svg class="v-svg" width="60" height="30" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-hatchback"/></svg><span class="v-name">Hatchback</span></div>
+                    <div class="vehicle-type" onclick="selectVehicle(this,'Compact SUV')"><svg class="v-svg" width="60" height="32" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-compact-suv"/></svg><span class="v-name">Compact SUV</span></div>
+                    <div class="vehicle-type" onclick="selectVehicle(this,'Big-size SUV')"><svg class="v-svg" width="65" height="34" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-big-suv"/></svg><span class="v-name">Big-size SUV</span></div>
+                    <div class="vehicle-type" onclick="selectVehicle(this,'Bike')"><svg class="v-svg" width="60" height="34" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-bike"/></svg><span class="v-name">Bike</span></div>
+                </div>
+            </div>
+            <div class="form-group"><label><i class="fas fa-concierge-bell"></i>Select Service</label>
+                <div class="service-options">
+                    <div class="service-option" data-base="249" onclick="selectService(this,'Basic Wash')"><span class="s-emoji">🧽</span><div class="s-info"><div class="s-name">Basic Wash</div><div class="s-desc">Exterior hand wash + tyre clean</div></div><span class="s-price">₹249</span></div>
+                    <div class="service-option" data-base="499" onclick="selectService(this,'Premium Wash')"><span class="s-emoji">✨</span><div class="s-info"><div class="s-name">Premium Wash</div><div class="s-desc">Interior + Exterior full clean</div></div><span class="s-price">₹499</span></div>
+                    <div class="service-option" data-base="699" onclick="selectService(this,'Premium Plus')"><span class="s-emoji">💎</span><div class="s-info"><div class="s-name">Premium Plus</div><div class="s-desc">Trim wax, door hinge, leather seats</div></div><span class="s-price">₹699</span></div>
+                    <div class="service-option" data-base="349" onclick="selectService(this,'Interior Clean')"><span class="s-emoji">🪥</span><div class="s-info"><div class="s-name">Interior Only</div><div class="s-desc">Deep interior vacuum & wipe</div></div><span class="s-price">₹349</span></div>
+                </div>
+            </div>
+            <div class="form-group"><label><i class="fas fa-plus-circle"></i>Add-ons (Optional)</label>
+                <div class="addon-options">
+                    <div class="addon-option" onclick="toggleAddon(this,'Air Freshener',65)"><div class="a-check"><i class="fas fa-check" style="font-size:.62rem"></i></div><div class="a-info"><div class="a-name">🌸 Air Freshener</div></div><span class="a-price">+₹65</span></div>
+                    <div class="addon-option" onclick="toggleAddon(this,'Tyre Shine',20)"><div class="a-check"><i class="fas fa-check" style="font-size:.62rem"></i></div><div class="a-info"><div class="a-name">🛞 Tyre Shine</div></div><span class="a-price">+₹20</span></div>
+                </div>
+            </div>
+            <div class="form-group"><label><i class="fas fa-calendar-alt"></i>Select Date</label><input type="date" id="bookingDate" onchange="updateSteps()"></div>
+            <div class="form-group"><label><i class="fas fa-clock"></i>Select Time</label>
+                <div class="time-slots">
+                    <div class="time-slot" onclick="selectTime(this,'8:00 AM')">8:00 AM</div><div class="time-slot" onclick="selectTime(this,'9:00 AM')">9:00 AM</div><div class="time-slot" onclick="selectTime(this,'10:00 AM')">10:00 AM</div>
+                    <div class="time-slot" onclick="selectTime(this,'11:00 AM')">11:00 AM</div><div class="time-slot" onclick="selectTime(this,'12:00 PM')">12:00 PM</div><div class="time-slot disabled">1:00 PM</div>
+                    <div class="time-slot" onclick="selectTime(this,'2:00 PM')">2:00 PM</div><div class="time-slot" onclick="selectTime(this,'3:00 PM')">3:00 PM</div><div class="time-slot" onclick="selectTime(this,'4:00 PM')">4:00 PM</div>
+                    <div class="time-slot" onclick="selectTime(this,'5:00 PM')">5:00 PM</div><div class="time-slot disabled">6:00 PM</div><div class="time-slot" onclick="selectTime(this,'7:00 PM')">7:00 PM</div>
+                </div>
+            </div>
+            <div class="form-group"><label><i class="fas fa-bolt"></i>Instant Wash (Emergency)</label>
+                <div class="instant-wash-box available" id="instantWashBox" onclick="toggleInstantWash()">
+                    <div class="instant-wash-header"><span class="instant-wash-title">⚡ Instant Wash</span><span class="instant-badge" id="instantBadge">Checking...</span></div>
+                    <div class="instant-wash-desc">Skip schedule — worker reaches ASAP</div><div class="instant-wash-price">+₹70 Emergency</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i>Your Address</label>
+                <div id="savedAddressChips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;"></div>
+                <textarea id="bookingAddress" placeholder="Enter your full address or select a saved address above..." onkeyup="updateSteps()"></textarea>
+            </div>
+            <div class="form-group"><label><i class="fas fa-phone"></i>Phone Number</label><input type="tel" id="bookingPhone" placeholder="Enter phone number" onkeyup="updateSteps()"></div>
+            <div class="form-group"><label><i class="fas fa-sticky-note"></i>Notes (Optional)</label><textarea id="bookingNotes" placeholder="Special instructions..."></textarea></div>
+        </div>
+        <div class="coupon-box"><label class="coupon-label"><i class="fas fa-tag"></i>Coupon Code</label><div class="coupon-row"><input type="text" id="couponInput" placeholder="e.g. FIRST20W2D" maxlength="20"><button class="apply-btn" onclick="applyCoupon()">Apply</button></div><div class="coupon-msg" id="couponMsg"></div></div>
+        <div class="price-summary">
+            <div class="price-row"><span>Service</span><span id="summaryService">₹0</span></div>
+            <div class="price-row" id="addonsRow" style="display:none"><span>Add-ons</span><span id="summaryAddons">₹0</span></div>
+            <div class="price-row" id="instantRow" style="display:none"><span>⚡ Instant</span><span>₹70</span></div>
+            <div class="price-row"><span>Convenience Fee</span><span>₹30</span></div>
+            <div class="price-row discount" id="discountRow" style="display:none"><span>🎉 Discount</span><span id="discountAmt">-₹0</span></div>
+            <div class="price-row total"><span>Total</span><span id="summaryTotal">₹30</span></div>
+        </div>
+        <button class="submit-btn" onclick="confirmBooking()"><i class="fas fa-check-circle"></i> Confirm Booking</button>
+    </div>
+
+    <!-- MY BOOKINGS -->
+    <div class="page" id="myBookingsPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2>My Bookings</h2></div>
+        <div class="tabs" style="margin-top:13px;"><button class="tab active" onclick="filterBookings('all',this)">All</button><button class="tab" onclick="filterBookings('upcoming',this)">Upcoming</button><button class="tab" onclick="filterBookings('completed',this)">Completed</button><button class="tab" onclick="filterBookings('cancelled',this)">Cancelled</button></div>
+        <div id="bookingsList"></div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="page" id="notificationsPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2>Notifications</h2></div>
+        <div id="notifList"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="page" id="profilePage">
+        <div class="profile-header" id="profileHeaderDiv" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));">
+            <div class="profile-avatar" id="profileAvatar">👤</div>
+            <h2 id="profileName">...</h2><p id="profileEmail">...</p>
+            <div class="profile-stats">
+                <div class="stat-item"><div class="stat-num" id="totalWashes">0</div><div class="stat-label">Washes</div></div>
+                <div class="stat-item"><div class="stat-num" id="profileRating">⭐ --</div><div class="stat-label">Rating</div></div>
+                <div class="stat-item"><div class="stat-num" id="savedAmount">₹0</div><div class="stat-label">Saved</div></div>
+            </div>
+        </div>
+        <div class="profile-menu" id="profileMenuDiv"></div>
+        
+        <!-- PROFILE FOOTER -->
+        <div class="app-footer">
+            <p>© 2026 Wash2Door. All rights reserved.</p>
+            <p class="owner-title">Owner : Divyansh Arora</p>
+        </div>
+    </div>
+
+    <!-- SAVED ADDRESSES -->
+    <div class="page" id="addressesPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2>Saved Addresses</h2></div>
+        <div style="padding:16px 20px;">
+            <button onclick="showAddAddressForm()" style="width:100%;padding:14px;background:var(--primary-light);color:var(--primary);border:2px dashed var(--primary);border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:15px;">
+                <i class="fas fa-plus-circle"></i> Add New Address
+            </button>
+            <div id="addAddressForm" style="display:none;margin-bottom:18px;background:var(--light-gray);border-radius:var(--radius);padding:18px;">
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:.8rem;font-weight:600;margin-bottom:5px;display:block;"><i class="fas fa-tag" style="color:var(--primary);margin-right:5px;"></i>Label</label>
+                    <select id="addressLabel" style="width:100%;padding:11px 14px;border:2px solid #ddd;border-radius:var(--radius-sm);font-size:.85rem;font-family:'Poppins',sans-serif;outline:none;background:#fff;">
+                        <option value="Home">🏠 Home</option>
+                        <option value="Office">🏢 Office</option>
+                        <option value="Other">📍 Other</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:.8rem;font-weight:600;margin-bottom:5px;display:block;"><i class="fas fa-map-marker-alt" style="color:var(--primary);margin-right:5px;"></i>Full Address</label>
+                    <textarea id="newAddressText" placeholder="Enter complete address with landmark..." style="width:100%;padding:11px 14px;border:2px solid #ddd;border-radius:var(--radius-sm);font-size:.85rem;font-family:'Poppins',sans-serif;outline:none;resize:none;height:80px;background:#fff;"></textarea>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <button onclick="saveNewAddress()" style="flex:1;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;"><i class="fas fa-check"></i> Save</button>
+                    <button onclick="hideAddAddressForm()" style="flex:1;padding:12px;background:#FFE6E6;color:#FF4757;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;">Cancel</button>
+                </div>
+            </div>
+            <div id="addressesList"></div>
+        </div>
+    </div>
+
+    <!-- PAYMENT METHODS -->
+    <div class="page" id="paymentPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2>Payment Methods</h2></div>
+        <div style="padding:16px 20px;">
+            <div style="background:var(--white);border:2px solid var(--secondary);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;">
+                <div style="width:48px;height:48px;border-radius:14px;background:#E6FFF5;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">💵</div>
+                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">Cash After Wash</div><div style="font-size:.72rem;color:var(--gray);">Pay in cash after your wash is completed</div></div>
+                <div style="background:#E6FFF5;color:#00C9A7;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700;">ACTIVE</div>
+            </div>
+            <div style="background:var(--white);border:2px solid var(--light-gray);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;opacity:.45;pointer-events:none;">
+                <div style="width:48px;height:48px;border-radius:14px;background:#F0E6FF;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">📱</div>
+                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">UPI Payment</div><div style="font-size:.72rem;color:var(--gray);">Google Pay, PhonePe, Paytm</div></div>
+                <div style="background:var(--light-gray);color:var(--gray);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;">SOON</div>
+            </div>
+            <div style="background:var(--white);border:2px solid var(--light-gray);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;opacity:.45;pointer-events:none;">
+                <div style="width:48px;height:48px;border-radius:14px;background:#E6F0FF;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">💳</div>
+                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">Credit / Debit Card</div><div style="font-size:.72rem;color:var(--gray);">Visa, Mastercard, RuPay</div></div>
+                <div style="background:var(--light-gray);color:var(--gray);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;">SOON</div>
+            </div>
+            <div style="background:var(--white);border:2px solid var(--light-gray);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;opacity:.45;pointer-events:none;">
+                <div style="width:48px;height:48px;border-radius:14px;background:#FFF3E6;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">👛</div>
+                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">Wallet</div><div style="font-size:.72rem;color:var(--gray);">Paytm Wallet, Amazon Pay</div></div>
+                <div style="background:var(--light-gray);color:var(--gray);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;">SOON</div>
+            </div>
+            <div style="background:#f8fbff;border:1.5px solid #ddeeff;border-radius:var(--radius-sm);padding:14px;margin-top:5px;">
+                <p style="font-size:.78rem;color:var(--gray);line-height:1.7;margin:0;"><i class="fas fa-info-circle" style="color:var(--primary);margin-right:5px;"></i><strong>Currently only Cash After Wash is available.</strong><br>UPI, Cards and Wallet options are coming soon!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WORKER JOB HISTORY PAGE -->
+    <div class="page" id="workerJobHistoryPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2>Job History</h2></div>
+        <div style="padding:16px 20px;">
+            <div id="workerJobHistoryList">
+                <div class="empty-state"><p style="font-size:.8rem;color:var(--gray);">Loading job history...</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MANAGE WORKERS PAGE -->
+    <div class="page" id="manageWorkersPage">
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('adminHomePage')"><i class="fas fa-arrow-left"></i></button><h2>Manage Workers</h2></div>
+        <div style="padding:16px 20px;">
+            <div id="manageWorkersList">
+                <div class="empty-state"><p style="font-size:.8rem;color:var(--gray);">Loading workers...</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN HOME -->
+    <div class="page" id="adminHomePage">
+        <div class="header" style="background:linear-gradient(135deg,#6C3483,#5B2C6F);">
+            <div class="header-top"><div class="greeting"><h2>Admin Panel</h2><h1>Wash2Door HQ</h1><span class="role-badge admin">ADMIN</span></div>
+                <div class="header-actions"><button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge">0</span></button></div>
+            </div>
+        </div>
+        
+        <!-- PENDING APPROVALS TAB -->
+        <div class="admin-section" style="margin-top:16px;">
+            <h3>⏳ Pending Approvals</h3>
+            <div id="adminApprovalsList">
+                <div class="empty-state" style="padding:15px 0;">
+                    <p style="font-size:.8rem;color:var(--gray);">No pending requests</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding:0 20px 8px;"><div class="revenue-card"><h3>Total Revenue</h3><div class="rev-amt" id="adminRevenue">₹0</div><p>📈 From all bookings</p></div></div>
+        <div class="admin-stats-grid">
+            <div class="admin-stat-card"><div class="admin-stat-icon si-blue">📋</div><div class="admin-stat-num" id="statTotal">0</div><div class="admin-stat-label">Total Bookings</div></div>
+            <div class="admin-stat-card"><div class="admin-stat-icon si-orange">⏳</div><div class="admin-stat-num" id="statUpcoming">0</div><div class="admin-stat-label">Upcoming</div></div>
+            <div class="admin-stat-card"><div class="admin-stat-icon si-green">✅</div><div class="admin-stat-num" id="statCompleted">0</div><div class="admin-stat-label">Completed</div></div>
+            <div class="admin-stat-card" style="cursor:pointer;" onclick="showPage('manageWorkersPage');renderManageWorkers();"><div class="admin-stat-icon si-purple">👷</div><div class="admin-stat-num" id="statWorkers">0</div><div class="admin-stat-label">Workers</div></div>
+        </div>
+        <div class="admin-section"><h3>📋 All Bookings</h3><div id="adminBookingsList"><div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3><p>Customer bookings appear here</p></div></div></div>
+        
+        <!-- DASHBOARD FOOTER -->
+        <div class="app-footer">
+            <p>© 2026 Wash2Door. All rights reserved.</p>
+            <p class="owner-title">Owner : Divyansh Arora</p>
+        </div>
+    </div>
+
+    <!-- WORKER HOME -->
+    <div class="page" id="workerHomePage">
+        <div class="header" style="background:linear-gradient(135deg,#117A65,#0E6655);">
+            <div class="header-top"><div class="greeting"><h2>Worker Dashboard</h2><h1 id="workerName">...</h1><span class="role-badge worker">WORKER</span></div>
+                <div class="header-actions"><button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge">0</span></button></div>
+            </div>
+        </div>
+        <div style="padding:16px 20px 8px;"><div class="worker-earnings"><h3>Today's Earnings</h3><div class="earn-amount">₹0</div><p>0 jobs completed today</p></div></div>
+        <div class="worker-status-card"><h3>My Availability</h3>
+            <div class="status-options">
+                <div class="status-option active-available" id="optAvailable" onclick="setWorkerStatus(this,'available')">🟢 Available</div>
+                <div class="status-option" id="optBusy" onclick="setWorkerStatus(this,'busy')">🟡 Busy</div>
+                <div class="status-option" id="optOffline" onclick="setWorkerStatus(this,'offline')">⚫ Offline</div>
+            </div>
+        </div>
+        <div style="padding:0 20px;"><div class="section-title" style="padding:0;margin-bottom:11px;"><h3>Assigned Jobs</h3></div></div>
+        <div id="workerJobsList"><div class="empty-state"><div class="empty-emoji">📋</div><h3>No jobs yet</h3><p>Jobs will appear when admin assigns them</p></div></div>
+        
+        <!-- DASHBOARD FOOTER -->
+        <div class="app-footer">
+            <p>© 2026 Wash2Door. All rights reserved.</p>
+            <p class="owner-title">Owner : Divyansh Arora</p>
+        </div>
+    </div>
+
+    <div class="bottom-nav" id="bottomNav"></div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h2>Booking Confirmed! 🎉</h2><p>Your car wash has been scheduled</p>
+        <div class="booking-id-chip" id="modalBookingId">Booking ID: #W2D-0001</div>
+        <p style="font-size:.75rem;margin-bottom:5px;color:var(--gray);">Our washer will arrive on time!</p>
+        <div class="email-status sending" id="emailStatus"><i class="fas fa-paper-plane"></i> Sending confirmation email...</div>
+        <br>
+        <button class="modal-btn" onclick="closeModal()"><i class="fas fa-home"></i> Back to Home</button>
+    </div>
+</div>
+
+<!-- DELETE ACCOUNT MODAL -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="delete-modal">
+        <div class="delete-icon">🗑️</div>
+        <h2>Delete Account</h2>
+        <p>This action is <strong>permanent</strong> and cannot be undone.</p>
+        <div class="delete-warning">
+            ⚠️ All your data will be deleted:<br>
+            • All your bookings<br>
+            • Saved addresses<br>
+            • Account information
+        </div>
+        <p style="font-size:.78rem;color:var(--gray);margin-bottom:10px;">Type <strong>DELETE</strong> to confirm:</p>
+        <input type="text" class="delete-confirm-input" id="deleteConfirmInput" placeholder="Type DELETE here">
+        <button class="delete-btn" onclick="confirmDeleteAccount()"><i class="fas fa-trash"></i> Permanently Delete Account</button>
+        <button class="cancel-delete-btn" onclick="closeDeleteModal()">Cancel — Keep My Account</button>
+    </div>
+</div>
+
+<!-- FIREBASE MODULE -->
+<script type="module">
+    import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail,updateProfile,deleteUser}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import{getFirestore,doc,setDoc,getDoc,updateDoc,deleteDoc,collection,query,where,getDocs,onSnapshot}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig={apiKey:"AIzaSyBwjJ6gMf4l2q5_JFQ5zcOwrmFApphhb8M",authDomain:"wash2door-b3849.firebaseapp.com",projectId:"wash2door-b3849",storageBucket:"wash2door-b3849.firebasestorage.app",messagingSenderId:"414893596739",appId:"1:414893596739:web:6e75e66e11c8480351b4f6",measurementId:"G-6YCXL63Q7N"};
+    const app=initializeApp(firebaseConfig);
+    const auth=getAuth(app);
+    const db=getFirestore(app);
+
+    window.doLogin=async function(){
+        const email=document.getElementById('loginEmail').value.trim(),pass=document.getElementById('loginPassword').value;
+        let ok=true;
+        if(!email||!email.includes('@')){showFieldErr('loginEmailErr','Enter a valid email');ok=false;}
+        if(!pass||pass.length<6){showFieldErr('loginPassErr','Min 6 characters');ok=false;}
+        if(!ok)return;
+        setLoading('loginBtn',true);
+        try{
+            const cred=await signInWithEmailAndPassword(auth,email,pass);
+            const userDoc=await getDoc(doc(db,"users",cred.user.uid));
+            if(userDoc.exists()){
+                const data=userDoc.data();
+                if(data.status==='pending_approval'){
+                    await signOut(auth);
+                    setLoading('loginBtn',false);
+                    showToast('Your account is pending admin approval ⏳','error');
+                    return;
                 }
+            }
+            showToast('Welcome back! 👋','success');
+        }catch(e){
+            setLoading('loginBtn',false);
+            if(e.code==='auth/user-not-found'||e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'){
+                showFieldErr('loginEmailErr','Invalid email or password');
+            }else showToast('Login failed. Try again.','error');
+        }
+    };
+
+    window.doSignup=async function(){
+        const name=document.getElementById('signupName').value.trim(),email=document.getElementById('signupEmail').value.trim(),pass=document.getElementById('signupPassword').value,confirm=document.getElementById('signupConfirm').value;
+        const requestedRole=window._signupRole||'customer';
+        const adminSecretKey=document.getElementById('signupAdminPass')?.value.trim();
+        let ok=true;
+        if(!name){showFieldErr('signupNameErr','Enter your name');ok=false;}
+        if(!email||!email.includes('@')){showFieldErr('signupEmailErr','Enter a valid email');ok=false;}
+        if(!pass||pass.length<6){showFieldErr('signupPassErr','Min 6 characters');ok=false;}
+        if(pass!==confirm){showFieldErr('signupConfirmErr','Passwords do not match');ok=false;}
+        if(!ok)return;
+
+        let role='customer';
+        let status='active';
+
+        if(requestedRole==='admin'){
+            if(adminSecretKey==='Wash2DoorAdmin2026'){
+                role='admin';
+                status='active';
+            }else{
+                role='admin';
+                status='pending_approval';
+            }
+        }else if(requestedRole==='worker'){
+            role='worker';
+            status='pending_approval';
+        }else{
+            role='customer';
+            status='active';
+        }
+
+        window._pendingSignupRole = role;
+
+        setLoading('signupBtn',true);
+        try{
+            const cred=await createUserWithEmailAndPassword(auth,email,pass);
+            await updateProfile(cred.user,{displayName:name});
+
+            await setDoc(doc(db,"users",cred.user.uid),{
+                uid:cred.user.uid,
+                name:name,
+                email:email,
+                role:role,
+                status:status,
+                workerStatus: role === 'worker' ? 'available' : 'offline',
+                createdAt:new Date().toISOString()
             });
 
-            const langLabels = ['lang-label', 'lang-label-sub', 'lang-label-admin'];
-            langLabels.forEach(id => {
-                const lbl = document.getElementById(id);
-                if(lbl) lbl.innerText = translations[currentLang].lang_toggle_btn;
+            localStorage.setItem('w2d_role_'+cred.user.uid,role);
+            localStorage.setItem('w2d_name_'+cred.user.uid,name);
+
+            if(status==='pending_approval'){
+                await signOut(auth);
+                setLoading('signupBtn',false);
+                showToast('Account created! Awaiting admin approval ⏳','info');
+            }else{
+                if(typeof window.sendWelcomeEmail === 'function'){
+                    await window.sendWelcomeEmail(name,email,role);
+                }
+                showToast('Account created successfully! 🎉','success');
+            }
+        }catch(e){
+            setLoading('signupBtn',false);
+            if(e.code==='auth/email-already-in-use')showFieldErr('signupEmailErr','Email already registered');
+            else showToast('Signup failed. Try again.','error');
+        }
+    };
+
+    window.doForgotPassword=async function(){
+        const email=document.getElementById('forgotEmail').value.trim();
+        if(!email||!email.includes('@')){showToast('Enter a valid email','error');return;}
+        try{await sendPasswordResetEmail(auth,email);showToast('Reset link sent! ✉️','success');hideForgot();}
+        catch(e){showToast('Failed to send reset email','error');}
+    };
+
+    window.loadPendingApprovals=async function(){
+        const container=document.getElementById('adminApprovalsList');
+        if(!container)return;
+        try{
+            const q=query(collection(db,"users"),where("status","==","pending_approval"));
+            const querySnapshot=await getDocs(q);
+            if(querySnapshot.empty){
+                container.innerHTML='<div class="empty-state" style="padding:15px 0;"><p style="font-size:.8rem;color:var(--gray);">No pending requests</p></div>';
+                return;
+            }
+            let html='';
+            querySnapshot.forEach((docSnap)=>{
+                const data=docSnap.data();
+                html+=`
+                <div class="approval-card">
+                    <div class="approval-info">
+                        <h4>${data.name} (${data.role.toUpperCase()})</h4>
+                        <p>${data.email}</p>
+                    </div>
+                    <div class="approval-actions">
+                        <button class="approve-btn" onclick="approveUser('${data.uid}')"><i class="fas fa-check"></i> Approve</button>
+                        <button class="reject-btn" onclick="rejectUser('${data.uid}')"><i class="fas fa-times"></i> Reject</button>
+                    </div>
+                </div>`;
             });
+            container.innerHTML=html;
+        }catch(e){
+            console.error("Error loading pending approvals:",e);
         }
+    };
 
-        function switchPage(pageId, btnEl) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            btnEl.classList.add('active');
+    window.approveUser=async function(uid){
+        try{
+            const userDoc=await getDoc(doc(db,"users",uid));
+            if(!userDoc.exists())return;
+            const userData=userDoc.data();
 
-            if(pageId === 'page-admin') {
-                renderAdminBookings();
+            await updateDoc(doc(db,"users",uid),{status:'active'});
+            showToast('User approved! ✅','success');
+            loadPendingApprovals();
+
+            if(typeof window.sendApprovalEmail === 'function'){
+                await window.sendApprovalEmail(userData.name,userData.email);
+            }
+        }catch(e){
+            console.error("Approval error:",e);
+            showToast('Failed to approve user','error');
+        }
+    };
+
+    window.rejectUser=async function(uid){
+        try{
+            await updateDoc(doc(db,"users",uid),{status:'rejected'});
+            showToast('User rejected ❌','info');
+            loadPendingApprovals();
+        }catch(e){
+            showToast('Failed to reject user','error');
+        }
+    };
+
+    // WORKER AVAILABILITY FUNCTION
+    window.setWorkerStatus = async function(el, status) {
+        document.querySelectorAll('.status-option').forEach(s=>s.className='status-option');
+        if(el) el.classList.add(`active-${status}`);
+        
+        const uid = window._currentUID;
+        if(uid){
+            try{
+                await updateDoc(doc(db, "users", uid), { workerStatus: status });
+                showToast(`Status updated to ${status.toUpperCase()}!`, 'success');
+            }catch(e){
+                console.error("Worker status update error:", e);
             }
         }
+    };
 
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            toast.innerText = message;
-            toast.className = `toast show ${type}`;
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    // RENDER WORKER JOB HISTORY
+    window.renderWorkerJobHistory = function(){
+        const container = document.getElementById('workerJobHistoryList');
+        if(!container) return;
+
+        const uid = window._currentUID;
+        const historyBookings = window.bookings || [];
+
+        if(!historyBookings.length){
+            container.innerHTML = '<div class="empty-state"><div class="empty-emoji">🧹</div><h3>No Completed Jobs Yet</h3><p>Your completed wash history will show up here.</p></div>';
+            return;
         }
 
-        function handleRequestToBook(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const vehicle = document.getElementById('vehicleType').value;
-            const address = document.getElementById('custAddress').value;
-
-            // Generate In-App Booking Item
-            const newBooking = {
-                id: 'W2D-' + Math.floor(100 + Math.random() * 900),
-                name,
-                phone,
-                vehicle,
-                address,
-                status: 'pending'
-            };
-
-            appBookings.unshift(newBooking);
-
-            // WhatsApp Notification Trigger
-            const message = `🚨 *NEW BOOKING REQUEST - Wash2Door*\n\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n🚗 *Vehicle:* ${vehicle}\n📍 *Address:* ${address}\n\nApp notification logged successfully!`;
-            const whatsappUrl = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(message)}`;
-            
-            showToast("Booking request sent & saved in Admin panel!", "success");
-            document.getElementById('bookingForm').reset();
-
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-            }, 800);
-        }
-
-        function requestSubscription(planName, price) {
-            const name = prompt("Enter your name:");
-            const phone = prompt("Enter your phone number:");
-
-            if (!name || !phone) {
-                showToast("Name and phone number are required!", "error");
-                return;
-            }
-
-            const newBooking = {
-                id: 'SUB-' + Math.floor(100 + Math.random() * 900),
-                name,
-                phone,
-                vehicle: `Subscription: ${planName} (₹${price})`,
-                address: 'Monthly Active Service',
-                status: 'pending'
-            };
-
-            appBookings.unshift(newBooking);
-
-            const message = `⭐ *NEW SUBSCRIPTION REQUEST - Wash2Door*\n\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n📦 *Plan:* ${planName}\n💰 *Price:* ₹${price}/month`;
-            const whatsappUrl = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(message)}`;
-            
-            showToast("Subscription request logged in Admin panel!", "success");
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-            }, 800);
-        }
-
-        // --- ADMIN FILTER & SWITCH LOGIC ---
-        function filterAdminBookings(status) {
-            currentAdminFilter = status;
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`tab-${status}`).classList.add('active');
-            renderAdminBookings();
-        }
-
-        function updateBookingStatus(id, newStatus) {
-            const booking = appBookings.find(b => b.id === id);
-            if(booking) {
-                booking.status = newStatus;
-                showToast(`Booking ${id} moved to ${newStatus}!`, "success");
-                renderAdminBookings();
-            }
-        }
-
-        function renderAdminBookings() {
-            const container = document.getElementById('adminBookingsList');
-            const filtered = appBookings.filter(b => b.status === currentAdminFilter);
-
-            if(filtered.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--gray); font-size:0.8rem;">No ${currentAdminFilter} bookings found.</div>`;
-                return;
-            }
-
-            container.innerHTML = filtered.map(b => `
-                <div class="booking-manage-card">
-                    <div class="bmc-header">
-                        <span class="bmc-title">${b.name} (${b.id})</span>
-                        <span class="bmc-status status-${b.status}">${b.status.toUpperCase()}</span>
-                    </div>
-                    <div class="bmc-details">
-                        <p><i class="fa-solid fa-phone"></i> ${b.phone}</p>
-                        <p><i class="fa-solid fa-car"></i> ${b.vehicle}</p>
-                        <p><i class="fa-solid fa-location-dot"></i> ${b.address}</p>
-                    </div>
-                    <div class="bmc-actions">
-                        ${b.status === 'pending' ? `<button class="bmc-btn btn-approve" onclick="updateBookingStatus('${b.id}', 'upcoming')">Accept / Upcoming</button>` : ''}
-                        ${b.status === 'upcoming' ? `<button class="bmc-btn btn-complete" onclick="updateBookingStatus('${b.id}', 'completed')">Mark Completed</button>` : ''}
-                        ${b.status === 'completed' ? `<span style="font-size:0.7rem; color:var(--secondary); font-weight:600;"><i class="fa-solid fa-circle-check"></i> Service Completed</span>` : ''}
-                    </div>
+        container.innerHTML = historyBookings.map(b => `
+            <div class="detail-booking-card">
+                <div class="dbc-header">
+                    <span class="dbc-id">#${b.id}${b.instant?' ⚡':''}</span>
+                    <span class="booking-status status-${b.status}">${b.status.toUpperCase()}</span>
                 </div>
-            `).join('');
-        }
+                <div class="dbc-body">
+                    <div class="dbc-row"><i class="fas fa-concierge-bell"></i><span><strong>${b.service}</strong> • ${b.vehicle}</span></div>
+                    <div class="dbc-row"><i class="fas fa-calendar"></i><span>${b.date} at ${b.time}</span></div>
+                    <div class="dbc-row"><i class="fas fa-map-marker-alt"></i><span>${b.address}</span></div>
+                    <div class="dbc-row"><i class="fas fa-phone"></i><span>${b.phone}</span></div>
+                </div>
+                <div class="dbc-footer">
+                    <span class="dbc-price">Earned: ₹${b.total}</span>
+                </div>
+            </div>
+        `).join('');
+    };
 
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('splash').classList.add('hidden');
-            }, 1000);
-        });
-    </script>
+    // MANAGE WORKERS FUNCTION FOR ADMIN
+    window.renderManageWorkers = async function(){
+        const container = document.getElementById('manageWorkersList');
+        if(!container) return;
+        try{
+            const q = query(collection(db, "users"), where("role", "==", "worker"), where("status", "==", "active"));
+            const querySnapshot = await getDocs(q);
+            
+            const statW = document.getElementById('statWorkers');
+            if(statW) statW.textContent = querySnapshot.size;
+
+            if(querySnapshot.empty){
+                container.innerHTML = '<div class="empty-state"><div class="empty-emoji">👷</div><h3>No Active Workers</h3><p>Approved worker profiles will appear here.</p></div>';
+                return;
+            }
+
+            let html = '';
+            querySnapshot.forEach((docSnap) => {
+                const w = docSnap.data();
+                const st = w.workerStatus || 'available';
+                html += `
+                <div class="worker-card">
+                    <div style="flex:1;">
+                        <h4 style="font-size:.88rem;font-weight:700;">${w.name}</h4>
+                        <p style="font-size:.72rem;color:var(--gray);margin-bottom:4px;">${w.email}</p>
+                        <span class="worker-status-badge ${st}">${st.toUpperCase()}</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:5px;">
+                        <button onclick="toggleWorkerStatus('${w.uid}', '${st}')" style="padding:5px 10px;background:var(--primary-light);color:var(--primary);border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Toggle Status</button>
+                        <button onclick="removeWorker('${w.uid}')" style="padding:5px 10px;background:#FFE6E6;color:#FF4757;border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Remove</button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }catch(e){
+            console.error("Manage workers error:", e);
+        }
+    };
+
+    window.toggleWorkerStatus = async function(uid, currentSt){
+        const nextSt = currentSt === 'available' ? 'busy' : (currentSt === 'busy' ? 'offline' : 'available');
+        try{
+            await updateDoc(doc(db, "users", uid), { workerStatus: nextSt });
+            showToast(`Worker status updated to ${nextSt.toUpperCase()}`, 'success');
+            window.renderManageWorkers();
+        }catch(e){
+            showToast('Failed to toggle status', 'error');
+        }
+    };
+
+    window.removeWorker = async function(uid){
+        if(!confirm('Remove this worker account?')) return;
+        try{
+            await updateDoc(doc(db, "users", uid), { status: 'rejected', workerStatus: 'offline' });
+            showToast('Worker removed', 'info');
+            window.renderManageWorkers();
+        }catch(e){
+            showToast('Failed to remove worker', 'error');
+        }
+    };
+
+    // LIVE INSTANT WASH WORKER AVAILABILITY LISTENER
+    window.listenWorkerAvailability = function(){
+        try{
+            const q = query(collection(db, "users"), where("role", "==", "worker"), where("status", "==", "active"), where("workerStatus", "==", "available"));
+            onSnapshot(q, (snapshot) => {
+                const available = !snapshot.empty;
+                window.workerAvailable = available;
+                if(typeof window.setupInstantWash === 'function') window.setupInstantWash();
+            });
+        }catch(e){
+            console.warn("Live worker listener error:", e);
+        }
+    };
+
+    window.doLogout=async function(){
+        if(!confirm('Sign out of Wash2Door?'))return;
+        await signOut(auth);
+        document.getElementById('appContainer').classList.remove('visible');
+        document.getElementById('authScreen').classList.add('show');
+        showToast('Signed out successfully','info');
+    };
+
+    window.confirmDeleteAccount=async function(){
+        const input=document.getElementById('deleteConfirmInput').value.trim();
+        if(input!=='DELETE'){showToast('Please type DELETE to confirm','error');return;}
+        const user=auth.currentUser;
+        if(!user){showToast('No user found','error');return;}
+        try{
+            const uid=user.uid;
+            await deleteDoc(doc(db, "users", uid));
+            localStorage.removeItem('w2d_role_'+uid);
+            localStorage.removeItem('w2d_name_'+uid);
+            localStorage.removeItem('w2d_bookings_'+uid);
+            localStorage.removeItem('w2d_counter_'+uid);
+            localStorage.removeItem('w2d_addresses_'+uid);
+            await deleteUser(user);
+            document.getElementById('deleteModal').classList.remove('show');
+            document.getElementById('appContainer').classList.remove('visible');
+            document.getElementById('authScreen').classList.add('show');
+            showToast('Account deleted permanently','info');
+        }catch(e){
+            if(e.code==='auth/requires-recent-login'){
+                showToast('Please sign out and sign in again before deleting','error');
+            }else{
+                showToast('Failed to delete account. Try again.','error');
+            }
+        }
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+        const splash = document.getElementById('splashScreen');
+        if (splash) splash.classList.add('hidden');
+
+        if (user) {
+            let role = window._pendingSignupRole || localStorage.getItem('w2d_role_' + user.uid);
+            let name = user.displayName || user.email.split('@')[0];
+            let email = user.email;
+
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    if (userData.status === 'pending_approval') {
+                        await signOut(auth);
+                        document.getElementById('authScreen').classList.add('show');
+                        document.getElementById('appContainer').classList.remove('visible');
+                        showToast('Your account is awaiting admin approval ⏳', 'error');
+                        return;
+                    }
+                    role = userData.role || role || 'customer';
+                    name = userData.name || name;
+
+                    if(role === 'worker'){
+                        const wSt = userData.workerStatus || 'available';
+                        const opt = document.getElementById('opt' + wSt.charAt(0).toUpperCase() + wSt.slice(1));
+                        document.querySelectorAll('.status-option').forEach(s=>s.className='status-option');
+                        if(opt) opt.classList.add(`active-${wSt}`);
+                    }
+                }
+            } catch (err) {
+                console.warn("Firestore fetch error fallback:", err);
+            }
+
+            if (!role) role = 'customer';
+
+            window._currentUID = user.uid;
+            window._currentRole = role;
+            window._currentName = name;
+            window._currentEmail = email;
+
+            loadUserData(user.uid);
+            document.getElementById('authScreen').classList.remove('show');
+            document.getElementById('appContainer').classList.add('visible');
+            setupApp(role, name, email, user.uid);
+            window.listenWorkerAvailability();
+        } else {
+            document.getElementById('authScreen').classList.add('show');
+            document.getElementById('appContainer').classList.remove('visible');
+        }
+    });
+</script>
+
+<!-- EMAILJS & APP LOGIC SCRIPT -->
+<script>
+    const EJS_SERVICE   = 'service_s0lrf6e';
+    const EJS_TEMPLATE = 'template_y44y6lw';
+    const EJS_KEY      = 'ilGad_8jFWvCKm8HP';
+    emailjs.init(EJS_KEY);
+
+    async function sendWelcomeEmail(name,email,role){
+        let msg='';
+        if(role==='customer'){
+            msg=`Welcome to Wash2Door! 🎉\n\nYour Customer account has been created successfully.\n\nCoupon Code: FIRST20W2D for 20% OFF!\n\nTeam Wash2Door 🚗✨`;
+        }else if(role==='worker'){
+            msg=`Welcome to Wash2Door! 🎉\n\nYour Worker account is ready.\n\nTeam Wash2Door 🚗✨`;
+        }else{
+            msg=`Welcome Admin! 🎉\n\nYour Wash2Door Admin Panel is active.\n\nTeam Wash2Door 🚗✨`;
+        }
+        try{await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:name,to_email:email,message:msg});}catch(e){}
+    }
+    window.sendWelcomeEmail = sendWelcomeEmail;
+
+    async function sendApprovalEmail(name,email){
+        const msg=`Congratulations ${name}! 🎉\n\nYour Wash2Door account has been APPROVED by the Admin.\n\nYou can now log in to access your dashboard!\n\nTeam Wash2Door 🚗✨`;
+        try{await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:name,to_email:email,message:msg});}catch(e){}
+    }
+    window.sendApprovalEmail=sendApprovalEmail;
+
+    async function sendBookingEmail(booking){
+        const emailEl=document.getElementById('emailStatus');
+        try{
+            if(emailEl){emailEl.className='email-status sending';emailEl.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending confirmation email...';}
+            const addons=booking.addons&&booking.addons.length?booking.addons.map(a=>a.name).join(', '):'None';
+            const msg=`Booking Confirmed! 🎉\n\nID: #${booking.id}\nService: ${booking.service}\nVehicle: ${booking.vehicle}\nDate: ${booking.date}\nTime: ${booking.time}\nAddress: ${booking.address}\nAdd-ons: ${addons}\nTotal: ₹${booking.total}\n\nTeam Wash2Door 🚗✨`;
+            await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:window._currentName,to_email:window._currentEmail,message:msg});
+            if(emailEl){emailEl.className='email-status sent';emailEl.innerHTML='<i class="fas fa-check-circle"></i> Confirmation sent to '+window._currentEmail;}
+        }catch(err){
+            if(emailEl){emailEl.className='email-status failed';emailEl.innerHTML='<i class="fas fa-exclamation-circle"></i> Email notification skipped';}
+        }
+    }
+
+    async function sendCancellationEmail(booking){
+        try{
+            const msg=`Your booking #${booking.id} has been cancelled.\n\nTeam Wash2Door 🚗✨`;
+            await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:window._currentName,to_email:window._currentEmail,message:msg});
+            showToast('Cancellation email sent ✉️','info');
+        }catch(err){}
+    }
+
+    // STATE VARIABLES
+    let bookings=[],bookingCounter=0;
+    let selectedVehicle='',selectedServiceName='',selectedServicePrice=0;
+    let selectedTime='',selectedAddons=[],addonsTotal=0;
+    let instantWash=false,couponApplied=false,discountAmount=0;
+    window.workerAvailable=true;
+
+    const CONVENIENCE_FEE=30,INSTANT_FEE=70;
+    const BASE_PRICES={'Basic Wash':249,'Premium Wash':499,'Premium Plus':699,'Interior Clean':349};
+    const SURCHARGE={'Sedan':0,'Hatchback':0,'Compact SUV':100,'Big-size SUV':200,'Bike':0};
+    const COUPONS={'FIRST20W2D':{type:'percent',value:20,label:'20% OFF — First Booking'}};
+
+    function loadUserData(uid){
+        bookings=JSON.parse(localStorage.getItem('w2d_bookings_'+uid)||'[]');
+        bookingCounter=parseInt(localStorage.getItem('w2d_counter_'+uid)||'0');
+        window.bookings = bookings;
+    }
+    function saveUserData(){
+        const uid=window._currentUID;
+        if(!uid)return;
+        localStorage.setItem('w2d_bookings_'+uid,JSON.stringify(bookings));
+        localStorage.setItem('w2d_counter_'+uid,bookingCounter);
+        window.bookings = bookings;
+    }
+
+    function setupApp(role,name,email,uid){
+        const nav=document.getElementById('bottomNav');
+        setGreeting();setMinDate();
+        ['userName','workerName'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=name;});
+        document.getElementById('profileName').textContent=name;
+        document.getElementById('profileEmail').textContent=email;
+        buildProfileMenu(role);buildNotifications();
+        if(role==='customer'){
+            document.getElementById('profileHeaderDiv').style.background='linear-gradient(135deg,var(--primary),var(--primary-dark))';
+            document.getElementById('profileAvatar').textContent='👤';
+            document.getElementById('roleBadge').textContent='CUSTOMER';
+            nav.innerHTML=`
+                <button class="nav-item active" onclick="navTo('homePage',this)"><i class="fas fa-home"></i><span>Home</span></button>
+                <button class="nav-item" onclick="navTo('myBookingsPage',this)"><i class="fas fa-calendar-alt"></i><span>Bookings</span></button>
+                <button class="nav-center" onclick="navTo('bookingPage',this)"><i class="fas fa-plus"></i></button>
+                <button class="nav-item" onclick="navTo('notificationsPage',this)"><i class="fas fa-bell"></i><span>Alerts</span></button>
+                <button class="nav-item" onclick="navTo('profilePage',this)"><i class="fas fa-user"></i><span>Profile</span></button>`;
+            showPage('homePage');
+        }else if(role==='admin'){
+            document.getElementById('profileHeaderDiv').style.background='linear-gradient(135deg,#6C3483,#5B2C6F)';
+            document.getElementById('profileAvatar').textContent='👑';
+            nav.innerHTML=`
+                <button class="nav-item active" onclick="navTo('adminHomePage',this)"><i class="fas fa-home"></i><span>Dashboard</span></button>
+                <button class="nav-item" onclick="navTo('notificationsPage',this)"><i class="fas fa-bell"></i><span>Alerts</span></button>
+                <button class="nav-item" onclick="navTo('profilePage',this)"><i class="fas fa-user"></i><span>Profile</span></button>`;
+            showPage('adminHomePage');
+            updateAdminStats();
+            if(typeof window.loadPendingApprovals==='function') window.loadPendingApprovals();
+            if(typeof window.renderManageWorkers==='function') window.renderManageWorkers();
+        }else if(role==='worker'){
+            document.getElementById('profileHeaderDiv').style.background='linear-gradient(135deg,#117A65,#0E6655)';
+            document.getElementById('profileAvatar').textContent='🧹';
+            nav.innerHTML=`
+                <button class="nav-item active" onclick="navTo('workerHomePage',this)"><i class="fas fa-home"></i><span>Dashboard</span></button>
+                <button class="nav-item" onclick="navTo('notificationsPage',this)"><i class="fas fa-bell"></i><span>Alerts</span></button>
+                <button class="nav-item" onclick="navTo('profilePage',this)"><i class="fas fa-user"></i><span>Profile</span></button>`;
+            showPage('workerHomePage');
+        }
+        updateRecentBookings();updateProfileStats();setupInstantWash();showAddressChips();
+    }
+
+    function buildProfileMenu(role){
+        const div=document.getElementById('profileMenuDiv');let html='';
+        if(role==='customer'){
+            html=`
+            <div class="menu-item" onclick="showPage('myBookingsPage')"><div class="menu-icon si-green"><i class="fas fa-calendar-check" style="color:#00C9A7"></i></div><div class="menu-text"><h4>My Bookings</h4><p>View all bookings</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>
+            <div class="menu-item" onclick="showPage('addressesPage');renderAddresses();"><div class="menu-icon si-orange"><i class="fas fa-map-marker-alt" style="color:#FF9F43"></i></div><div class="menu-text"><h4>Saved Addresses</h4><p>Manage your locations</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>
+            <div class="menu-item" onclick="showPage('paymentPage')"><div class="menu-icon si-purple"><i class="fas fa-credit-card" style="color:#764ba2"></i></div><div class="menu-text"><h4>Payment Methods</h4><p>Cash after wash • More coming soon</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>`;
+        }else if(role==='admin'){
+            html=`
+            <div class="menu-item" onclick="showPage('manageWorkersPage');renderManageWorkers();"><div class="menu-icon si-purple"><i class="fas fa-users" style="color:#6C3483"></i></div><div class="menu-text"><h4>Manage Workers</h4><p>View & manage worker status</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>`;
+        }else{
+            html=`
+            <div class="menu-item" onclick="showPage('workerJobHistoryPage');renderWorkerJobHistory();"><div class="menu-icon si-green"><i class="fas fa-history" style="color:#00C9A7"></i></div><div class="menu-text"><h4>Job History</h4><p>All completed jobs</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>`;
+        }
+        html+=`<div class="menu-item logout" onclick="doLogout()" style="margin-top:8px;"><div class="menu-icon si-red"><i class="fas fa-sign-out-alt" style="color:#FF4757"></i></div><div class="menu-text"><h4>Logout</h4><p>Sign out of your account</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>`;
+        html+=`
+        <div style="margin:12px 0 0;padding:14px;border:2px solid #FFE6E6;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:12px;background:#fff8f8;" onclick="showDeleteModal()">
+            <div class="menu-icon si-red"><i class="fas fa-user-times" style="color:#FF4757"></i></div>
+            <div class="menu-text"><h4 style="font-size:.85rem;font-weight:600;color:#FF4757;">Delete Account</h4><p style="font-size:.68rem;color:#FF4757;opacity:.7;">Permanently delete your account & data</p></div>
+            <i class="fas fa-chevron-right" style="color:#FF4757;font-size:.78rem;"></i>
+        </div>`;
+        div.innerHTML=html;
+    }
+
+    function buildNotifications(){
+        const div=document.getElementById('notifList');if(!div)return;
+        if(!bookings.length){div.innerHTML='<div class="empty-state"><div class="empty-emoji">🔔</div><h3>No notifications yet</h3><p>Your booking updates will appear here</p></div>';return;}
+        div.innerHTML=bookings.slice(0,10).map(b=>`<div class="notification-item unread"><div class="notif-icon ${b.status==='cancelled'?'si-red':'si-green'}"><i class="${b.status==='cancelled'?'fas fa-times-circle':'fas fa-check-circle'}" style="color:${b.status==='cancelled'?'#FF4757':'#00C9A7'}"></i></div><div class="notif-content"><h4>${b.status==='cancelled'?'Booking Cancelled':'Booking Confirmed'}</h4><p>${b.service} • ${b.vehicle} • ₹${b.total}</p></div></div>`).join('');
+        const badge=document.getElementById('notifCount');if(badge)badge.textContent=bookings.filter(b=>b.status==='upcoming').length||'';
+    }
+
+    function updateProfileStats(){
+        const el1=document.getElementById('totalWashes');if(el1)el1.textContent=bookings.filter(b=>b.status==='completed').length;
+        const el2=document.getElementById('savedAmount');if(el2)el2.textContent=`₹${bookings.reduce((s,b)=>s+(b.discount||0),0)}`;
+        const el3=document.getElementById('profileRating');if(el3)el3.textContent=bookings.length>0?'⭐ 4.9':'⭐ --';
+    }
+
+    function switchAuthTab(tab){
+        document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
+        document.getElementById('forgotPanel').classList.remove('active');
+        if(tab==='login'){document.querySelectorAll('.auth-tab')[0].classList.add('active');document.getElementById('loginForm').classList.add('active');}
+        else{document.querySelectorAll('.auth-tab')[1].classList.add('active');document.getElementById('signupForm').classList.add('active');}
+    }
+    function showForgot(){document.getElementById('loginForm').classList.remove('active');document.getElementById('forgotPanel').classList.add('active');}
+    function hideForgot(){document.getElementById('forgotPanel').classList.remove('active');document.getElementById('loginForm').classList.add('active');}
+    function togglePass(id,btn){const i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.innerHTML='<i class="fas fa-eye-slash"></i>';}else{i.type='password';btn.innerHTML='<i class="fas fa-eye"></i>';}}
+
+    function showFieldErr(id,msg){const el=document.getElementById(id);if(el){el.textContent=msg;el.classList.add('show');}}
+    function clearErr(id){const el=document.getElementById(id);if(el){el.textContent='';el.classList.remove('show');}}
+    function setLoading(btnId,l){const btn=document.getElementById(btnId);if(!btn)return;btn.classList.toggle('loading',l);btn.disabled=l;}
+    function showToast(msg,type='info'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type} show`;setTimeout(()=>t.classList.remove('show'),3500);}
+    function setGreeting(){const h=new Date().getHours();let g='Good Morning 👋';if(h>=12&&h<17)g='Good Afternoon ☀️';else if(h>=17&&h<21)g='Good Evening 🌆';else if(h>=21)g='Good Night 🌙';const el=document.getElementById('greetText');if(el)el.textContent=g;}
+    function setMinDate(){const d=document.getElementById('bookingDate');if(d)d.setAttribute('min',new Date().toISOString().split('T')[0]);}
+
+    function goHome(){const r=window._currentRole;if(r==='customer')showPage('homePage');else if(r==='admin')showPage('adminHomePage');else showPage('workerHomePage');}
+    function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');window.scrollTo(0,0);}if(id==='myBookingsPage')renderBookings();if(id==='adminHomePage')updateAdminStats();}
+    function navTo(id,btn){showPage(id);document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(btn&&!btn.classList.contains('nav-center'))btn.classList.add('active');}
+
+    // INSTANT WASH FUNCTION WITH DYNAMIC WORKER STATUS
+    function setupInstantWash(){
+        const box=document.getElementById('instantWashBox');if(!box)return;
+        const badge=document.getElementById('instantBadge');
+        if(window.workerAvailable){
+            box.className='instant-wash-box available';
+            badge.className='instant-badge';
+            badge.textContent='Worker Available';
+            box.onclick=toggleInstantWash;
+        }else{
+            box.className='instant-wash-box unavailable';
+            badge.className='instant-badge grey';
+            badge.textContent='No Worker Available';
+            box.onclick=null;
+        }
+    }
+    window.setupInstantWash = setupInstantWash;
+
+    function toggleInstantWash(){instantWash=!instantWash;document.getElementById('instantWashBox').classList.toggle('selected',instantWash);document.getElementById('instantRow').style.display=instantWash?'flex':'none';if(instantWash){document.querySelectorAll('.time-slot').forEach(t=>t.classList.remove('selected'));selectedTime='ASAP';}else selectedTime='';updatePriceSummary();updateSteps();}
+
+    // VEHICLE & SERVICES
+    function selectVehicle(el,type){document.querySelectorAll('.vehicle-type').forEach(v=>{v.classList.remove('selected');const s=v.querySelector('.v-svg');if(s)s.style.color='#aaa';});el.classList.add('selected');const svg=el.querySelector('.v-svg');if(svg)svg.style.color='var(--primary)';selectedVehicle=type;updateServicePricesUI();handleBikeRestriction();updateSteps();}
+    function updateServicePricesUI(){const s=SURCHARGE[selectedVehicle]||0;document.querySelectorAll('.service-option').forEach(opt=>{const b=parseInt(opt.dataset.base);opt.querySelector('.s-price').textContent=`₹${b+s}`;});if(selectedServiceName){selectedServicePrice=BASE_PRICES[selectedServiceName]+(SURCHARGE[selectedVehicle]||0);updatePriceSummary();}}
+    function handleBikeRestriction(){document.querySelectorAll('.service-option').forEach(opt=>{const n=opt.querySelector('.s-name').textContent;if(selectedVehicle==='Bike'&&n!=='Basic Wash'){opt.classList.add('disabled');if(opt.classList.contains('selected')){opt.classList.remove('selected');selectedServiceName='';selectedServicePrice=0;updatePriceSummary();}}else opt.classList.remove('disabled');});}
+
+    function selectService(el,name){if(el.classList.contains('disabled'))return;document.querySelectorAll('.service-option').forEach(s=>s.classList.remove('selected'));el.classList.add('selected');selectedServiceName=name;selectedServicePrice=BASE_PRICES[name]+(SURCHARGE[selectedVehicle]||0);updatePriceSummary();updateSteps();}
+    function selectServiceAndBook(name){showPage('bookingPage');setTimeout(()=>{document.querySelectorAll('.service-option').forEach(opt=>{if(opt.querySelector('.s-name').textContent===name&&!opt.classList.contains('disabled'))selectService(opt,name);});},150);}
+
+    function toggleAddon(el,name,price){el.classList.toggle('selected');if(el.classList.contains('selected'))selectedAddons.push({name,price});else selectedAddons=selectedAddons.filter(a=>a.name!==name);addonsTotal=selectedAddons.reduce((s,a)=>s+a.price,0);updatePriceSummary();}
+    function selectTime(el,time){if(el.classList.contains('disabled'))return;if(instantWash){instantWash=false;document.getElementById('instantWashBox').classList.remove('selected');document.getElementById('instantRow').style.display='none';}document.querySelectorAll('.time-slot').forEach(t=>t.classList.remove('selected'));el.classList.add('selected');selectedTime=time;updatePriceSummary();updateSteps();}
+
+    function applyCoupon(){const code=document.getElementById('couponInput').value.trim().toUpperCase();const msg=document.getElementById('couponMsg');if(!code){msg.className='coupon-msg error';msg.textContent='Enter a coupon code';return;}if(COUPONS[code]){couponApplied=true;msg.className='coupon-msg success';msg.textContent=`Applied! ${COUPONS[code].label}`;updatePriceSummary();}else{couponApplied=false;discountAmount=0;msg.className='coupon-msg error';msg.textContent='Invalid. Try FIRST20W2D';updatePriceSummary();}}
+    function updatePriceSummary(){document.getElementById('summaryService').textContent=`₹${selectedServicePrice}`;const ar=document.getElementById('addonsRow');if(addonsTotal>0){ar.style.display='flex';document.getElementById('summaryAddons').textContent=`₹${addonsTotal}`;}else ar.style.display='none';const sub=selectedServicePrice+addonsTotal+(instantWash?INSTANT_FEE:0)+CONVENIENCE_FEE;if(couponApplied){discountAmount=Math.round(sub*.2);document.getElementById('discountRow').style.display='flex';document.getElementById('discountAmt').textContent=`-₹${discountAmount}`;}else{document.getElementById('discountRow').style.display='none';discountAmount=0;}document.getElementById('summaryTotal').textContent=`₹${Math.max(0,sub-discountAmount)}`;}
+    function updateSteps(){const s1=selectedVehicle!=='',s2=selectedServiceName!=='',s3=selectedTime!==''&&document.getElementById('bookingDate').value!=='',s4=document.getElementById('bookingAddress').value.trim()!==''&&document.getElementById('bookingPhone').value.trim()!=='';document.getElementById('step1').className='step-dot '+(s1?'done':'active');document.getElementById('step2').className='step-dot '+(s2?'done':(s1?'active':''));document.getElementById('step3').className='step-dot '+(s3?'done':(s2?'active':''));document.getElementById('step4').className='step-dot '+(s4?'done':(s3?'active':''));}
+
+    async function confirmBooking(){
+        const date=document.getElementById('bookingDate').value,address=document.getElementById('bookingAddress').value.trim(),phone=document.getElementById('bookingPhone').value.trim(),notes=document.getElementById('bookingNotes').value.trim();
+        if(!selectedVehicle){showToast('Select a vehicle','error');return;}
+        if(!selectedServiceName){showToast('Select a service','error');return;}
+        if(!date){showToast('Select a date','error');return;}
+        if(!selectedTime){showToast('Select time or Instant Wash','error');return;}
+        if(!address){showToast('Enter your address','error');return;}
+        if(!phone){showToast('Enter phone number','error');return;}
+        bookingCounter++;
+        const id=`W2D-${String(bookingCounter).padStart(4,'0')}`;
+        const sub=selectedServicePrice+addonsTotal+(instantWash?INSTANT_FEE:0)+CONVENIENCE_FEE;
+        const total=Math.max(0,sub-discountAmount);
+        const booking={id,vehicle:selectedVehicle,service:selectedServiceName,servicePrice:selectedServicePrice,addons:[...selectedAddons],addonsTotal,instant:instantWash,coupon:couponApplied?'FIRST20W2D':'',discount:discountAmount,total,date,time:selectedTime,address,phone,notes,status:'upcoming',createdAt:new Date().toISOString()};
+        bookings.unshift(booking);saveUserData();
+        document.getElementById('modalBookingId').textContent=`Booking ID: #${id}`;
+        document.getElementById('successModal').classList.add('show');
+        resetBookingForm();updateRecentBookings();updateAdminStats();updateProfileStats();buildNotifications();
+        await sendBookingEmail(booking);
+    }
+
+    function resetBookingForm(){selectedVehicle='';selectedServiceName='';selectedServicePrice=0;selectedTime='';selectedAddons=[];addonsTotal=0;instantWash=false;couponApplied=false;discountAmount=0;document.querySelectorAll('.vehicle-type,.service-option,.addon-option,.time-slot').forEach(el=>el.classList.remove('selected'));document.querySelectorAll('.vehicle-type .v-svg').forEach(s=>s.style.color='#aaa');const ib=document.getElementById('instantWashBox');if(ib)ib.classList.remove('selected');['bookingDate','bookingAddress','bookingPhone','bookingNotes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const ci=document.getElementById('couponInput');if(ci)ci.value='';const cm=document.getElementById('couponMsg');if(cm){cm.className='coupon-msg';cm.textContent='';}['instantRow','addonsRow','discountRow'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});updateServicePricesUI();updatePriceSummary();updateSteps();}
+    function closeModal(){document.getElementById('successModal').classList.remove('show');goHome();}
+
+    function updateRecentBookings(){const c=document.getElementById('recentBookings');if(!c)return;const r=bookings.slice(0,2);if(!r.length){c.innerHTML='<div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3><p>Book your first doorstep wash!</p></div>';return;}c.innerHTML=r.map(b=>`<div class="booking-card"><div class="booking-icon si-blue">🧽</div><div class="booking-info"><h4>${b.service}${b.instant?' ⚡':''}</h4><p>${b.date} • ${b.time}</p></div><span class="booking-status ${b.status==='completed'?'status-completed':b.status==='upcoming'?'status-upcoming':'status-cancelled'}">${b.status}</span></div>`).join('');}
+    
+    function renderBookings(filter='all'){const c=document.getElementById('bookingsList');if(!c)return;let f=filter==='all'?bookings:bookings.filter(b=>b.status===filter);if(!f.length){c.innerHTML=`<div class="empty-state"><div class="empty-emoji">📋</div><h3>No ${filter==='all'?'':filter} bookings</h3></div>`;return;}c.innerHTML=f.map(b=>`<div class="detail-booking-card"><div class="dbc-header"><span class="dbc-id">#${b.id}</span><span class="booking-status status-${b.status}">${b.status}</span></div><div class="dbc-body"><div class="dbc-row"><i class="fas fa-concierge-bell"></i><span><strong>${b.service}</strong> • ${b.vehicle}</span></div><div class="dbc-row"><i class="fas fa-calendar"></i><span>${b.date} at ${b.time}</span></div><div class="dbc-row"><i class="fas fa-map-marker-alt"></i><span>${b.address}</span></div></div><div class="dbc-footer"><span class="dbc-price">₹${b.total}</span>${b.status==='upcoming'?`<button class="cancel-btn" onclick="cancelBooking('${b.id}')">Cancel</button>`:''}</div></div>`).join('');}
+    function filterBookings(f,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderBookings(f);}
+
+    async function cancelBooking(id){
+        if(!confirm('Cancel this booking?'))return;
+        const booking=bookings.find(b=>b.id===id);
+        bookings=bookings.map(b=>b.id===id?{...b,status:'cancelled'}:b);
+        saveUserData();renderBookings();updateRecentBookings();updateAdminStats();updateProfileStats();buildNotifications();
+        showToast('Booking cancelled','info');
+        if(booking)await sendCancellationEmail(booking);
+    }
+
+    function updateAdminStats(){
+        const total=bookings.length,upcoming=bookings.filter(b=>b.status==='upcoming').length,completed=bookings.filter(b=>b.status==='completed').length,rev=bookings.filter(b=>b.status!=='cancelled').reduce((s,b)=>s+b.total,0);
+        const st=document.getElementById('statTotal');if(st)st.textContent=total;
+        const su=document.getElementById('statUpcoming');if(su)su.textContent=upcoming;
+        const sc=document.getElementById('statCompleted');if(sc)sc.textContent=completed;
+        const ar=document.getElementById('adminRevenue');if(ar)ar.textContent=`₹${rev}`;
+        const abl=document.getElementById('adminBookingsList');
+        if(abl){
+            if(!bookings.length){abl.innerHTML='<div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3></div>';return;}
+            abl.innerHTML=bookings.slice(0,20).map(b=>`<div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:13px;margin-bottom:9px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;"><h4 style="font-size:.85rem;font-weight:600;">${b.service} — ${b.vehicle}</h4><span class="booking-status status-${b.status}">${b.status}</span></div><div style="font-size:.72rem;color:var(--gray);">📅 ${b.date} ${b.time} | 📍 ${b.address} | ₹${b.total}</div></div>`).join('');
+        }
+    }
+
+    // ADDRESS MANAGEMENT
+    function getSavedAddresses(){const uid=window._currentUID;if(!uid)return[];return JSON.parse(localStorage.getItem('w2d_addresses_'+uid)||'[]');}
+    function saveAddresses(addresses){const uid=window._currentUID;if(!uid)return;localStorage.setItem('w2d_addresses_'+uid,JSON.stringify(addresses));}
+    function showAddAddressForm(){document.getElementById('addAddressForm').style.display='block';document.getElementById('newAddressText').value='';}
+    function hideAddAddressForm(){document.getElementById('addAddressForm').style.display='none';}
+
+    function saveNewAddress(){
+        const label=document.getElementById('addressLabel').value;
+        const text=document.getElementById('newAddressText').value.trim();
+        if(!text){showToast('Please enter an address','error');return;}
+        const addresses=getSavedAddresses();
+        if(addresses.length>=5){showToast('Maximum 5 addresses allowed','error');return;}
+        const emoji=label==='Home'?'🏠':label==='Office'?'🏢':'📍';
+        addresses.push({id:Date.now(),label,emoji,address:text,createdAt:new Date().toISOString()});
+        saveAddresses(addresses);
+        hideAddAddressForm();renderAddresses();showAddressChips();
+        showToast('Address saved! ✅','success');
+    }
+
+    function deleteAddress(id){if(!confirm('Delete address?'))return;let addresses=getSavedAddresses().filter(a=>a.id!==id);saveAddresses(addresses);renderAddresses();showAddressChips();showToast('Address deleted','info');}
+    function useAddress(address){showPage('bookingPage');setTimeout(()=>{const el=document.getElementById('bookingAddress');if(el){el.value=address;updateSteps();}},200);showToast('Address selected! 📍','success');}
+
+    function renderAddresses(){
+        const container=document.getElementById('addressesList');if(!container)return;
+        const addresses=getSavedAddresses();
+        if(!addresses.length){container.innerHTML='<div class="empty-state"><div class="empty-emoji">📍</div><h3>No saved addresses</h3></div>';return;}
+        container.innerHTML=addresses.map(a=>`<div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:15px;margin-bottom:10px;"><div style="display:flex;align-items:flex-start;gap:12px;"><div style="font-size:1.3rem;">${a.emoji}</div><div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:.85rem;font-weight:700;">${a.label}</span><div><button onclick="useAddress('${a.address.replace(/'/g,"\\'")}')" style="padding:4px 11px;background:var(--primary-light);color:var(--primary);border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Use</button> <button onclick="deleteAddress(${a.id})" style="padding:4px 11px;background:#FFE6E6;color:#FF4757;border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Delete</button></div></div><p style="font-size:.78rem;color:var(--gray);">${a.address}</p></div></div></div>`).join('');
+    }
+
+    function showAddressChips(){
+        const container=document.getElementById('savedAddressChips');if(!container)return;
+        const addresses=getSavedAddresses();if(!addresses.length){container.innerHTML='';return;}
+        container.innerHTML=addresses.map(a=>`<button class="address-chip" onclick="document.getElementById('bookingAddress').value='${a.address.replace(/'/g,"\\'")}';updateSteps();showToast('Address selected!','success');">${a.emoji} ${a.label}</button>`).join('');
+    }
+
+    function showDeleteModal(){document.getElementById('deleteConfirmInput').value='';document.getElementById('deleteModal').classList.add('show');}
+    function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('show');}
+
+    // EXPOSE GLOBAL FUNCTIONS
+    window.switchAuthTab=switchAuthTab;
+    window.showForgot=showForgot;
+    window.hideForgot=hideForgot;
+    window.togglePass=togglePass;
+    window.selectVehicle=selectVehicle;
+    window.selectService=selectService;
+    window.selectServiceAndBook=selectServiceAndBook;
+    window.toggleAddon=toggleAddon;
+    window.selectTime=selectTime;
+    window.toggleInstantWash=toggleInstantWash;
+    window.applyCoupon=applyCoupon;
+    window.confirmBooking=confirmBooking;
+    window.closeModal=closeModal;
+    window.filterBookings=filterBookings;
+    window.cancelBooking=cancelBooking;
+    window.showAddAddressForm=showAddAddressForm;
+    window.hideAddAddressForm=hideAddAddressForm;
+    window.saveNewAddress=saveNewAddress;
+    window.deleteAddress=deleteAddress;
+    window.useAddress=useAddress;
+    window.renderAddresses=renderAddresses;
+    window.showDeleteModal=showDeleteModal;
+    window.closeDeleteModal=closeDeleteModal;
+    window.goHome=goHome;
+    window.showPage=showPage;
+    window.navTo=navTo;
+    window.clearErr=clearErr;
+    window.updateSteps=updateSteps;
+</script>
 </body>
 </html>
