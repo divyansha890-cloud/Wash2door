@@ -1196,8 +1196,8 @@
 <!-- EMAILJS & APP LOGIC SCRIPT -->
 <script>
     const EJS_SERVICE   = 'service_s0lrf6e';
-    const EJS_TEMPLATE = 'template_y44y6lw';
-    const EJS_KEY      = 'ilGad_8jFWvCKm8HP';
+    const EJS_TEMPLATE  = 'template_uo5vi52';
+    const EJS_KEY       = 'ilGad_8jFWvCKm8HP';
     emailjs.init(EJS_KEY);
 
     const translations = {
@@ -1383,7 +1383,7 @@
             payment_title: "भुगतान के तरीके",
             pay_cash: "वाश के बाद नकद भुगतान",
             pay_cash_desc: "वॉश पूरा होने के बाद नकद भुगतान करें",
-            pay_note: "वर्तमान में केवल वाश के बाद नकद भुगतान उपलब्ध है।<br>UPI, कार्ड और वॉलेट विकल्प जल्द आ रहे हैं!",
+            pay_note: "वर्तमान में केवल वाश के बाद नकद भुगतान उपलब्ध है。<br>UPI, कार्ड और वॉलेट विकल्प जल्द आ रहे हैं!",
             job_history_title: "जॉब इतिहास",
             loading_jobs: "जॉब इतिहास लोड हो रहा है...",
             manage_workers_title: "वर्कर प्रबंधित करें",
@@ -1458,18 +1458,40 @@
     }
     window.sendApprovalEmail=sendApprovalEmail;
 
-    async function sendBookingEmail(booking){
-        const emailEl=document.getElementById('emailStatus');
+    async function sendBookingConfirmationEmail(booking){
+        const emailEl = document.getElementById('emailStatus');
         try{
-            if(emailEl){emailEl.className='email-status sending';emailEl.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending booking request...';}
-            const msg=`🚨 *NEW BOOKING REQUEST - Wash2Door*\n\n👤 *Customer:* ${window._currentName}\n📞 *Phone:* ${booking.phone}\n🚗 *Vehicle:* ${booking.vehicle}\n🧼 *Service:* ${booking.service}\n📍 *Address:* ${booking.address}\n\nPlease review in Admin Panel.`;
+            if(emailEl){
+                emailEl.className = 'email-status sending';
+                emailEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending booking confirmation...';
+            }
             
-            await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:window._currentName,to_email:window._currentEmail,message:msg});
-            if(emailEl){emailEl.className='email-status sent';emailEl.innerHTML='<i class="fas fa-check-circle"></i> Request sent successfully!';}
+            const templateParams = {
+                to_name: window._currentName || 'Customer',
+                to_email: window._currentEmail,
+                service_name: booking.service,
+                vehicle_type: booking.vehicle,
+                booking_date: booking.date,
+                booking_time: booking.time,
+                address: booking.address,
+                total_amount: booking.total
+            };
+
+            await emailjs.send(EJS_SERVICE, EJS_TEMPLATE, templateParams);
+            
+            if(emailEl){
+                emailEl.className = 'email-status sent';
+                emailEl.innerHTML = '<i class="fas fa-check-circle"></i> Confirmation email sent!';
+            }
         }catch(err){
-            if(emailEl){emailEl.className='email-status failed';emailEl.innerHTML='<i class="fas fa-exclamation-circle"></i> Notification sent via app';}
+            console.error("Booking email error:", err);
+            if(emailEl){
+                emailEl.className = 'email-status failed';
+                emailEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Notification sent via app';
+            }
         }
     }
+    window.sendBookingConfirmationEmail = sendBookingConfirmationEmail;
 
     let bookingCounter=0;
     let selectedVehicle='',selectedServiceName='',selectedServicePrice=0;
@@ -1658,7 +1680,7 @@
             document.getElementById('modalBookingId').textContent=`Booking ID: #${id}`;
             document.getElementById('successModal').classList.add('show');
             resetBookingForm();
-            await sendBookingEmail(booking);
+            await sendBookingConfirmationEmail(booking);
             
             if(typeof updateRecentBookings === 'function') updateRecentBookings();
             if(typeof updateAdminStats === 'function') updateAdminStats();
