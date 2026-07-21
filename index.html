@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wash2Door Live</title>
+    <title>Wash2Door</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -972,6 +972,7 @@
         const uid = window._currentUID;
         if(uid){
             try{
+                // Find worker doc ID
                 const q = query(collection(db, "users"), where("uid", "==", uid));
                 const snap = await getDocs(q);
                 if(!snap.empty){
@@ -1162,17 +1163,19 @@
             window._currentName = name;
             window._currentEmail = email;
 
+            await loadUserData(user.uid);
             document.getElementById('authScreen').classList.remove('show');
             document.getElementById('appContainer').classList.add('visible');
             setupApp(role, name, email, user.uid);
             window.listenWorkerAvailability();
             
-            // Real-time Firestore Booking Stream
+            // Real-time listener for bookings in Firestore
             onSnapshot(collection(db, "bookings"), (snapshot) => {
                 let fetchedBookings = [];
                 snapshot.forEach((docSnap) => {
                     fetchedBookings.push({ docId: docSnap.id, ...docSnap.data() });
                 });
+                // Sort by creation date descending
                 fetchedBookings.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
                 window.bookings = fetchedBookings;
                 
@@ -1192,7 +1195,7 @@
 
 <!-- EMAILJS & APP LOGIC SCRIPT -->
 <script>
-    const EJS_SERVICE    = 'service_s0lrf6e';
+    const EJS_SERVICE   = 'service_s0lrf6e';
     const EJS_TEMPLATE = 'template_y44y6lw';
     const EJS_KEY      = 'ilGad_8jFWvCKm8HP';
     emailjs.init(EJS_KEY);
@@ -1468,6 +1471,49 @@
         }
     }
 
+    async function requestSubscription(planName, price) {
+        const name = prompt("Enter your full name:");
+        const phone = prompt("Enter your phone number:");
+
+        if (!name || !phone) {
+            showToast("Name and phone number are required!", "error");
+            return;
+        }
+
+        const newId = 'SUB-' + Math.floor(100 + Math.random() * 900);
+        const subBooking = {
+            id: newId,
+            uid: window._currentUID,
+            customerName: name,
+            vehicle: `Subscription: ${planName}`,
+            service: `Monthly Plan`,
+            servicePrice: parseInt(price),
+            addons: [],
+            addonsTotal: 0,
+            instant: false,
+            coupon: '',
+            discount: 0,
+            total: parseInt(price),
+            date: new Date().toISOString().split('T')[0],
+            time: 'Monthly Active',
+            address: 'Doorstep Subscription Care',
+            phone: phone,
+            notes: 'Monthly Subscription Request',
+            status: 'pending',
+            createdAt: new Date().toISOString(),
+            assignedWorker: 'Unassigned'
+        };
+
+        try {
+            await window.addDoc(window.collection(window.db, "bookings"), subBooking);
+            showToast("Subscription request logged successfully in Admin panel!", "success");
+        } catch(e) {
+            showToast("Failed to submit subscription", "error");
+        }
+    }
+    window.requestSubscription = requestSubscription;
+
+    // STATE VARIABLES
     let bookings=[],bookingCounter=0;
     let selectedVehicle='',selectedServiceName='',selectedServicePrice=0;
     let selectedTime='',selectedAddons=[],addonsTotal=0;
@@ -1478,6 +1524,13 @@
     const BASE_PRICES={'Basic Wash':249,'Premium Wash':499,'Premium Plus':699,'Interior Clean':349};
     const SURCHARGE={'Sedan':0,'Hatchback':0,'Compact SUV':100,'Big-size SUV':200,'Bike':0};
     const COUPONS={'FIRST20W2D':{type:'percent',value:20,label:'20% OFF — First Booking'}};
+
+    async function loadUserData(uid){
+        // Handled in realtime listener inside onAuthStateChanged
+    }
+    function saveUserData(){
+        // Handled via Firestore writes
+    }
 
     function setupApp(role,name,email,uid){
         const nav=document.getElementById('bottomNav');
@@ -1766,7 +1819,7 @@
     // WORKER JOBS RENDERER
     function renderWorkerJobs() {
         const listEl = document.getElementById('workerJobsList');
-        const earnEl = document.getElementById('workerEarningsAmt');
+        const earnEl = document.querySelector('.earn-amount');
         if(!listEl) return;
 
         const workerAssignedBookings = bookings.filter(b => b.status === 'upcoming');
@@ -1823,7 +1876,7 @@
         const container=document.getElementById('addressesList');if(!container)return;
         const addresses=getSavedAddresses();
         if(!addresses.length){container.innerHTML='<div class="empty-state"><div class="empty-emoji">📍</div><h3>No saved addresses</h3></div>';return;}
-        container.innerHTML=addresses.map(a=>`<div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:15px;margin-bottom:10px;"><div style="display:flex;align-items:flex-start;gap:12px;"><div style="font-size:1.3rem;">${a.emoji}</div><div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:.85rem;font-weight:700;">${a.label}</span><div><button onclick="useAddress('${a.address.replace(/'/g,"\\'")}')" style="padding:4px 11px;background:var(--primary-light);color:var(--primary);border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Use</button> <button onclick="deleteAddress(${a.id})" style="padding:4px 11px;background:#FFE6E6;color:#FF4757;border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Delete</button></div></div><p style="font-size:.78rem;color:var(--gray);">${a.address}</p></div></div></div>`).join('');
+        container.innerHTML=addresses.map(a=>`<div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:15px;margin-bottom:10px;"><div style="display:flex;align-items:flex-start;gap:12px;"><div style="font-size:1.3rem;">${a.emoji}</div><div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:.85rem;font-weight:700;">${a.label}</span><div><button onclick="useAddress('${a.address.replace(/'/g,"\\'")}')" style="padding:4px 11px;background:var(--primary-light);color:var(--primary);border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Use</button> <button onclick="deleteAddress(${a.id})" style="padding:4px 11px;background:#FFE6E6;color:#FF4757;border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Delete</button></div></div><p style="font-size:.78rem;color:var(--gray);${a.address}</p></div></div></div>`).join('');
     }
 
     function showAddressChips(){
