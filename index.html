@@ -794,6 +794,7 @@
     const db=getFirestore(app);
 
     window.db = db;
+    window.auth = auth;
     window.collection = collection;
     window.getDocs = getDocs;
     window.query = query;
@@ -1629,7 +1630,7 @@
         
         const booking={
             id,
-            uid: window._currentUID,
+            uid: window._currentUID || window.auth?.currentUser?.uid,
             customerName: window._currentName || 'Customer',
             vehicle:selectedVehicle,
             service:selectedServiceName,
@@ -1656,7 +1657,11 @@
             document.getElementById('successModal').classList.add('show');
             resetBookingForm();
             await sendBookingEmail(booking);
+            
+            if(typeof updateRecentBookings === 'function') updateRecentBookings();
+            if(typeof updateAdminStats === 'function') updateAdminStats();
         } catch(e) {
+            console.error(e);
             showToast("Failed to submit booking request", "error");
         }
     }
