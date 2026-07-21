@@ -803,6 +803,7 @@
     window.doc = doc;
     window.updateDoc = updateDoc;
     window.onSnapshot = onSnapshot;
+    window.bookings = [];
 
     window.doLogin=async function(){
         const email=document.getElementById('loginEmail').value.trim(),pass=document.getElementById('loginPassword').value;
@@ -1168,7 +1169,7 @@
             setupApp(role, name, email, user.uid);
             window.listenWorkerAvailability();
             
-            // Real-time Firestore Booking Stream
+            // Real-time Firestore Booking Stream with complete UI trigger callbacks
             onSnapshot(collection(db, "bookings"), (snapshot) => {
                 let fetchedBookings = [];
                 snapshot.forEach((docSnap) => {
@@ -1182,6 +1183,7 @@
                 if(typeof updateProfileStats === 'function') updateProfileStats();
                 if(typeof buildNotifications === 'function') buildNotifications();
                 if(typeof renderWorkerJobs === 'function') renderWorkerJobs();
+                if(typeof renderBookings === 'function') renderBookings('all');
             });
 
         } else {
@@ -1469,7 +1471,7 @@
         }
     }
 
-    let bookings=[],bookingCounter=0;
+    let bookingCounter=0;
     let selectedVehicle='',selectedServiceName='',selectedServicePrice=0;
     let selectedTime='',selectedAddons=[],addonsTotal=0;
     let instantWash=false,couponApplied=false,discountAmount=0;
