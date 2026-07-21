@@ -1469,12 +1469,17 @@
             const templateParams = {
                 to_name: window._currentName || 'Customer',
                 to_email: window._currentEmail,
-                service_name: booking.service,
-                vehicle_type: booking.vehicle,
+                booking_id: booking.id,
                 booking_date: booking.date,
                 booking_time: booking.time,
-                address: booking.address,
-                total_amount: booking.total
+                customer_address: booking.address,
+                service_name: booking.service,
+                vehicle_type: booking.vehicle,
+                vehicle_model: booking.vehicle,
+                amount: '₹' + booking.total,
+                payment_status: 'Cash After Wash',
+                year: '2026',
+                booking_link: '#'
             };
 
             await emailjs.send(EJS_SERVICE, EJS_TEMPLATE, templateParams);
