@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wash2Door</title>
+    <title>Wash2Door Live</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -11,6 +11,23 @@
         :root{--primary:#0066FF;--primary-dark:#0052CC;--primary-light:#E6F0FF;--secondary:#00C9A7;--accent:#FF6B35;--dark:#1a1a2e;--gray:#6c757d;--light-gray:#f0f2f5;--white:#fff;--shadow:0 4px 20px rgba(0,0,0,.08);--radius:16px;--radius-sm:10px;--transition:all .3s cubic-bezier(.4,0,.2,1);}
         *{margin:0;padding:0;box-sizing:border-box;}
         body{font-family:'Poppins',sans-serif;background:var(--light-gray);color:var(--dark);overflow-x:hidden;}
+        
+        .lang-switch-btn {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+        .lang-switch-btn:hover { background: rgba(255,255,255,0.35); }
+
         .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0066FF,#0052CC,#003d99);display:flex;align-items:center;justify-content:center;z-index:10000;transition:opacity .6s,visibility .6s;}
         .splash-screen.hidden{opacity:0;visibility:hidden;}
         .splash-content{text-align:center;animation:splashIn .8s ease-out;}
@@ -76,7 +93,7 @@
         .role-badge.admin{background:rgba(108,52,131,.3);color:#d7a8f0;}
         .role-badge.worker{background:rgba(17,122,101,.3);color:#7dcea0;}
         .role-badge.customer{background:rgba(255,255,255,.2);color:#fff;}
-        .header-actions{display:flex;gap:8px;}
+        .header-actions{display:flex;gap:8px;align-items:center;}
         .header-btn{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);position:relative;}
         .header-btn:hover{background:rgba(255,255,255,.25);}
         .notification-badge{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:var(--accent);border-radius:50%;font-size:.6rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
@@ -118,6 +135,20 @@
         .package-price small{font-size:.67rem;font-weight:400;color:var(--gray);}
         .book-btn{padding:7px 15px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:.76rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);}
         .book-btn:hover{background:var(--primary-dark);}
+        
+        .subscription-card { background: var(--white); border: 2px solid var(--light-gray); border-radius: var(--radius); padding: 20px; margin: 0 20px 15px; transition: var(--transition); position: relative; overflow: hidden; }
+        .subscription-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+        .subscription-card.popular { border-color: var(--primary); background: linear-gradient(135deg, #f8fbff, #eef4ff); }
+        .sub-badge { position: absolute; top: 15px; right: 15px; background: var(--secondary); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+        .sub-title { font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+        .sub-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+        .sub-price span { font-size: 0.75rem; font-weight: 500; color: var(--gray); }
+        .sub-features { list-style: none; margin-bottom: 16px; }
+        .sub-features li { font-size: 0.78rem; color: var(--gray); padding: 4px 0; display: flex; align-items: center; gap: 8px; }
+        .sub-features li i { color: var(--secondary); }
+        .sub-btn { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: var(--transition); }
+        .sub-btn:hover { background: var(--primary-dark); }
+
         .bookings-list{padding:0 20px;margin-bottom:20px;}
         .booking-card{background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:13px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:var(--transition);cursor:pointer;}
         .booking-card:hover{border-color:var(--primary);box-shadow:var(--shadow);}
@@ -126,7 +157,7 @@
         .booking-info h4{font-size:.86rem;font-weight:600;margin-bottom:2px;}
         .booking-info p{font-size:.7rem;color:var(--gray);}
         .booking-status{padding:4px 10px;border-radius:8px;font-size:.67rem;font-weight:600;white-space:nowrap;}
-        .status-completed{background:#E6FFF5;color:#00C9A7;}.status-upcoming{background:#E6F0FF;color:#0066FF;}.status-cancelled{background:#FFE6E6;color:#FF4757;}
+        .status-completed{background:#E6FFF5;color:#00C9A7;}.status-upcoming{background:#E6F0FF;color:#0066FF;}.status-cancelled{background:#FFE6E6;color:#FF4757;}.status-pending{background:#FFF3E6;color:#FF9F43;}
         .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid #eee;display:flex;justify-content:space-around;padding:8px 0;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.05);}
         .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:7px 10px;border-radius:12px;transition:var(--transition);border:none;background:none;font-family:'Poppins',sans-serif;}
         .nav-item i{font-size:1.1rem;color:var(--gray);transition:var(--transition);}
@@ -282,9 +313,6 @@
         .delete-modal p{font-size:.8rem;color:var(--gray);margin-bottom:14px;line-height:1.6;}
         .delete-warning{background:#FFE6E6;border:1.5px solid #FF4757;border-radius:10px;padding:10px 14px;font-size:.75rem;color:#FF4757;margin-bottom:16px;text-align:left;line-height:1.7;}
         .delete-confirm-input{width:100%;padding:11px 14px;border:2px solid #FF4757;border-radius:var(--radius-sm);font-size:.85rem;font-family:'Poppins',sans-serif;outline:none;margin-bottom:14px;text-align:center;}
-        .delete-btn{width:100%;padding:13px;background:#FF4757;color:#fff;border:none;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:8px;transition:var(--transition);}
-        .delete-btn:hover{background:#c0392b;}
-        .cancel-delete-btn{width:100%;padding:11px;background:var(--light-gray);color:var(--gray);border:none;border-radius:12px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
         .address-chip{padding:6px 12px;background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);border-radius:20px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);white-space:nowrap;}
         .address-chip:hover{background:var(--primary);color:#fff;}
         .approval-card{background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
@@ -301,12 +329,10 @@
         .worker-status-badge.busy{background:#FFF3E6;color:#FF9F43;}
         .worker-status-badge.offline{background:#f5f5f5;color:#888;}
         
-        /* FOOTER CSS ADDED HERE */
         .app-footer{text-align:center;padding:24px 15px 100px;font-size:.72rem;color:var(--gray);border-top:1px solid var(--light-gray);margin-top:30px;}
         .app-footer p{margin-bottom:2px;}
         .app-footer .owner-title{font-weight:600;color:var(--dark);}
         .auth-footer{padding:20px 15px;margin-top:15px;border-top:none;padding-bottom:30px;}
-        
         @media(min-width:431px){body{background:linear-gradient(135deg,#667eea,#764ba2);}}
     </style>
 </head>
@@ -367,7 +393,6 @@
                         <div class="role-opt" onclick="selectSignupRole(this,'admin')"><span class="ro-emoji">👑</span><span class="ro-name">Admin</span></div>
                     </div>
                 </div>
-                <!-- FIXED ADMIN PASS GROUP -->
                 <div class="f-group" id="adminPassGroup" style="display:none;">
                     <label><i class="fas fa-key"></i>Admin Secret Key</label>
                     <div class="f-input-wrap">
@@ -388,7 +413,6 @@
                 <button class="auth-btn" onclick="doForgotPassword()"><span class="btn-text"><i class="fas fa-paper-plane"></i> Send Reset Link</span></button>
             </div>
             
-            <!-- AUTH FOOTER -->
             <div class="app-footer auth-footer">
                 <p>© 2026 Wash2Door. All rights reserved.</p>
                 <p class="owner-title">Owner : Divyansh Arora</p>
@@ -406,42 +430,92 @@
             <div class="header-top">
                 <div class="greeting"><h2 id="greetText">Good Morning 👋</h2><h1 id="userName">...</h1><span class="role-badge customer" id="roleBadge">CUSTOMER</span></div>
                 <div class="header-actions">
+                    <button class="lang-switch-btn" onclick="toggleLanguage()"><i class="fa-solid fa-globe"></i><span id="lang-label">हिंदी</span></button>
                     <button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge" id="notifCount">0</span></button>
                     <button class="header-btn" onclick="showPage('profilePage')"><i class="fas fa-user"></i></button>
                 </div>
             </div>
             <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search services, packages..."></div>
         </div>
-        <div class="promo-section"><div class="promo-banner" onclick="showPage('bookingPage')"><div class="promo-tag">🎉 FIRST WASH OFFER</div><h3>Flat 20% OFF!</h3><p>Use code at checkout</p><div class="promo-code-chip">FIRST20W2D</div></div></div>
-        <div class="section-title"><h3>Our Services</h3><a href="#" onclick="showPage('bookingPage')">See All</a></div>
+        <div class="promo-section"><div class="promo-banner" onclick="showPage('bookingPage')"><div class="promo-tag">🎉 FIRST WASH OFFER</div><h3 data-i18n="promo_title">Flat 20% OFF!</h3><p data-i18n="promo_desc">Use code at checkout</p><div class="promo-code-chip">FIRST20W2D</div></div></div>
+        <div class="section-title"><h3 data-i18n="services_title">Our Services</h3><a href="#" onclick="showPage('bookingPage')" data-i18n="see_all">See All</a></div>
         <div class="services-grid">
-            <div class="service-item" onclick="selectServiceAndBook('Basic Wash')"><div class="service-icon si-blue">🧽</div><span>Basic Wash</span></div>
-            <div class="service-item" onclick="selectServiceAndBook('Premium Wash')"><div class="service-icon si-green">✨</div><span>Premium</span></div>
-            <div class="service-item" onclick="selectServiceAndBook('Premium Plus')"><div class="service-icon si-orange">💎</div><span>Premium Plus</span></div>
-            <div class="service-item" onclick="selectServiceAndBook('Interior Clean')"><div class="service-icon si-purple">🪥</div><span>Interior</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Basic Wash')"><div class="service-icon si-blue">🧽</div><span data-i18n="srv_basic">Basic Wash</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Premium Wash')"><div class="service-icon si-green">✨</div><span data-i18n="srv_premium">Premium</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Premium Plus')"><div class="service-icon si-orange">💎</div><span data-i18n="srv_plus">Premium Plus</span></div>
+            <div class="service-item" onclick="selectServiceAndBook('Interior Clean')"><div class="service-icon si-purple">🪥</div><span data-i18n="srv_interior">Interior</span></div>
         </div>
-        <div class="section-title"><h3>Popular Packages</h3></div>
+        <div class="section-title"><h3 data-i18n="packages_title">Popular Packages</h3></div>
         <div class="packages-scroll">
-            <div class="package-card" onclick="selectServiceAndBook('Basic Wash')"><div class="package-emoji">🧽</div><div class="package-name">Basic Wash</div><div class="package-desc">Exterior hand wash + tyre clean</div><ul class="package-features"><li>Hand wash exterior</li><li>Tyre cleaning</li><li>Window wipe</li></ul><div class="package-bottom"><div class="package-price">₹249<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Basic Wash')">Book</button></div></div>
-            <div class="package-card popular" onclick="selectServiceAndBook('Premium Wash')"><div class="popular-tag">POPULAR</div><div class="package-emoji">✨</div><div class="package-name">Premium Wash</div><div class="package-desc">Full interior & exterior</div><ul class="package-features"><li>Full exterior wash</li><li>Interior vacuum</li><li>Dashboard polish</li><li>Air freshener</li></ul><div class="package-bottom"><div class="package-price">₹499<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Premium Wash')">Book</button></div></div>
-            <div class="package-card" onclick="selectServiceAndBook('Premium Plus')"><div class="package-emoji">💎</div><div class="package-name">Premium Plus</div><div class="package-desc">Ultimate detailing</div><ul class="package-features"><li>Everything in Premium</li><li>Trim wax coating</li><li>Door hinge greasing</li><li>Leather seats cleaning</li></ul><div class="package-bottom"><div class="package-price">₹699<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Premium Plus')">Book</button></div></div>
+            <div class="package-card" onclick="selectServiceAndBook('Basic Wash')"><div class="package-emoji">🧽</div><div class="package-name" data-i18n="pkg_basic_name">Basic Wash</div><div class="package-desc" data-i18n="pkg_basic_desc">Exterior hand wash + tyre clean</div><ul class="package-features"><li data-i18n="pkg_basic_f1">Hand wash exterior</li><li data-i18n="pkg_basic_f2">Tyre cleaning</li><li data-i18n="pkg_basic_f3">Window wipe</li></ul><div class="package-bottom"><div class="package-price">₹249<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Basic Wash')" data-i18n="btn_book">Book</button></div></div>
+            <div class="package-card popular" onclick="selectServiceAndBook('Premium Wash')"><div class="popular-tag">POPULAR</div><div class="package-emoji">✨</div><div class="package-name" data-i18n="pkg_prem_name">Premium Wash</div><div class="package-desc" data-i18n="pkg_prem_desc">Full interior & exterior</div><ul class="package-features"><li data-i18n="pkg_prem_f1">Full exterior wash</li><li data-i18n="pkg_prem_f2">Interior vacuum</li><li data-i18n="pkg_prem_f3">Dashboard polish</li><li data-i18n="pkg_prem_f4">Air freshener</li></ul><div class="package-bottom"><div class="package-price">₹499<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Premium Wash')" data-i18n="btn_book">Book</button></div></div>
+            <div class="package-card" onclick="selectServiceAndBook('Premium Plus')"><div class="package-emoji">💎</div><div class="package-name" data-i18n="pkg_plus_name">Premium Plus</div><div class="package-desc" data-i18n="pkg_plus_desc">Ultimate detailing</div><ul class="package-features"><li data-i18n="pkg_plus_f1">Everything in Premium</li><li data-i18n="pkg_plus_f2">Trim wax coating</li><li data-i18n="pkg_plus_f3">Door hinge greasing</li><li data-i18n="pkg_plus_f4">Leather seats cleaning</li></ul><div class="package-bottom"><div class="package-price">₹699<small>/wash</small></div><button class="book-btn" onclick="event.stopPropagation();selectServiceAndBook('Premium Plus')" data-i18n="btn_book">Book</button></div></div>
         </div>
-        <div class="section-title"><h3>Recent Bookings</h3><a href="#" onclick="showPage('myBookingsPage')">View All</a></div>
+        <div class="section-title"><h3 data-i18n="recent_bookings">Recent Bookings</h3><a href="#" onclick="showPage('myBookingsPage')" data-i18n="view_all">View All</a></div>
         <div class="bookings-list" id="recentBookings"></div>
         
-        <!-- DASHBOARD FOOTER -->
         <div class="app-footer">
             <p>© 2026 Wash2Door. All rights reserved.</p>
             <p class="owner-title">Owner : Divyansh Arora</p>
         </div>
     </div>
 
+    <!-- SUBSCRIPTIONS PAGE -->
+    <div class="page" id="subscriptionsPage">
+        <div class="booking-page-header">
+            <button class="back-btn" onclick="showPage('homePage')"><i class="fas fa-arrow-left"></i></button>
+            <h2 data-i18n="sub_title_page">Monthly Subscriptions</h2>
+        </div>
+        <div style="padding: 16px 0;">
+            <div class="section-title"><h3 data-i18n="sub_choose_plan">Choose Your Monthly Plan</h3></div>
+
+            <!-- Hatchback & Sedan Plan -->
+            <div class="subscription-card">
+                <span class="sub-badge">POPULAR</span>
+                <div class="sub-title" data-i18n="plan_hatch_title">Hatchback & Sedan</div>
+                <div class="sub-price">₹1,500 <span data-i18n="per_month">/ month</span></div>
+                <ul class="sub-features">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_1">30 Days Basic Wash</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_2">30 Days Basic Interior Clean</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_3">3 Times Premium Wash in a month</span></li>
+                </ul>
+                <button class="sub-btn" onclick="requestSubscription('Hatchback & Sedan', '1500')" data-i18n="btn_subscribe">Subscribe Now</button>
+            </div>
+
+            <!-- Compact SUV Plan -->
+            <div class="subscription-card popular">
+                <span class="sub-badge">BEST VALUE</span>
+                <div class="sub-title" data-i18n="plan_csuv_title">Compact SUV</div>
+                <div class="sub-price">₹1,649 <span data-i18n="per_month">/ month</span></div>
+                <ul class="sub-features">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_1">30 Days Basic Wash</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_2">30 Days Basic Interior Clean</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_3">3 Times Premium Wash in a month</span></li>
+                </ul>
+                <button class="sub-btn" onclick="requestSubscription('Compact SUV', '1649')" data-i18n="btn_subscribe">Subscribe Now</button>
+            </div>
+
+            <!-- Big-Size SUV Plan -->
+            <div class="subscription-card">
+                <span class="sub-badge">PREMIUM</span>
+                <div class="sub-title" data-i18n="plan_bsuv_title">Big-Size SUV</div>
+                <div class="sub-price">₹1,829 <span data-i18n="per_month">/ month</span></div>
+                <ul class="sub-features">
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_1">30 Days Basic Wash</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_2">30 Days Basic Interior Clean</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-i18n="plan_feat_3">3 Times Premium Wash in a month</span></li>
+                </ul>
+                <button class="sub-btn" onclick="requestSubscription('Big-Size SUV', '1829')" data-i18n="btn_subscribe">Subscribe Now</button>
+            </div>
+        </div>
+    </div>
+
     <!-- BOOKING PAGE -->
     <div class="page" id="bookingPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2>Book a Wash</h2></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="book_a_wash">Book a Wash</h2></div>
         <div class="step-indicator"><div class="step-dot active" id="step1"></div><div class="step-dot" id="step2"></div><div class="step-dot" id="step3"></div><div class="step-dot" id="step4"></div></div>
         <div class="form-section">
-            <div class="form-group"><label><i class="fas fa-car-side"></i>Vehicle Type</label>
+            <div class="form-group"><label><i class="fas fa-car-side"></i><span data-i18n="lbl_vehicle_type">Vehicle Type</span></label>
                 <div class="vehicle-types">
                     <div class="vehicle-type" onclick="selectVehicle(this,'Sedan')"><svg class="v-svg" width="60" height="30" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-sedan"/></svg><span class="v-name">Sedan</span></div>
                     <div class="vehicle-type" onclick="selectVehicle(this,'Hatchback')"><svg class="v-svg" width="60" height="30" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-hatchback"/></svg><span class="v-name">Hatchback</span></div>
@@ -450,7 +524,7 @@
                     <div class="vehicle-type" onclick="selectVehicle(this,'Bike')"><svg class="v-svg" width="60" height="34" style="color:#aaa;display:block;margin:0 auto 6px;"><use href="#icon-bike"/></svg><span class="v-name">Bike</span></div>
                 </div>
             </div>
-            <div class="form-group"><label><i class="fas fa-concierge-bell"></i>Select Service</label>
+            <div class="form-group"><label><i class="fas fa-concierge-bell"></i><span data-i18n="lbl_select_service">Select Service</span></label>
                 <div class="service-options">
                     <div class="service-option" data-base="249" onclick="selectService(this,'Basic Wash')"><span class="s-emoji">🧽</span><div class="s-info"><div class="s-name">Basic Wash</div><div class="s-desc">Exterior hand wash + tyre clean</div></div><span class="s-price">₹249</span></div>
                     <div class="service-option" data-base="499" onclick="selectService(this,'Premium Wash')"><span class="s-emoji">✨</span><div class="s-info"><div class="s-name">Premium Wash</div><div class="s-desc">Interior + Exterior full clean</div></div><span class="s-price">₹499</span></div>
@@ -458,14 +532,14 @@
                     <div class="service-option" data-base="349" onclick="selectService(this,'Interior Clean')"><span class="s-emoji">🪥</span><div class="s-info"><div class="s-name">Interior Only</div><div class="s-desc">Deep interior vacuum & wipe</div></div><span class="s-price">₹349</span></div>
                 </div>
             </div>
-            <div class="form-group"><label><i class="fas fa-plus-circle"></i>Add-ons (Optional)</label>
+            <div class="form-group"><label><i class="fas fa-plus-circle"></i><span data-i18n="lbl_addons">Add-ons (Optional)</span></label>
                 <div class="addon-options">
                     <div class="addon-option" onclick="toggleAddon(this,'Air Freshener',65)"><div class="a-check"><i class="fas fa-check" style="font-size:.62rem"></i></div><div class="a-info"><div class="a-name">🌸 Air Freshener</div></div><span class="a-price">+₹65</span></div>
                     <div class="addon-option" onclick="toggleAddon(this,'Tyre Shine',20)"><div class="a-check"><i class="fas fa-check" style="font-size:.62rem"></i></div><div class="a-info"><div class="a-name">🛞 Tyre Shine</div></div><span class="a-price">+₹20</span></div>
                 </div>
             </div>
-            <div class="form-group"><label><i class="fas fa-calendar-alt"></i>Select Date</label><input type="date" id="bookingDate" onchange="updateSteps()"></div>
-            <div class="form-group"><label><i class="fas fa-clock"></i>Select Time</label>
+            <div class="form-group"><label><i class="fas fa-calendar-alt"></i><span data-i18n="lbl_select_date">Select Date</span></label><input type="date" id="bookingDate" onchange="updateSteps()"></div>
+            <div class="form-group"><label><i class="fas fa-clock"></i><span data-i18n="lbl_select_time">Select Time</span></label>
                 <div class="time-slots">
                     <div class="time-slot" onclick="selectTime(this,'8:00 AM')">8:00 AM</div><div class="time-slot" onclick="selectTime(this,'9:00 AM')">9:00 AM</div><div class="time-slot" onclick="selectTime(this,'10:00 AM')">10:00 AM</div>
                     <div class="time-slot" onclick="selectTime(this,'11:00 AM')">11:00 AM</div><div class="time-slot" onclick="selectTime(this,'12:00 PM')">12:00 PM</div><div class="time-slot disabled">1:00 PM</div>
@@ -473,42 +547,42 @@
                     <div class="time-slot" onclick="selectTime(this,'5:00 PM')">5:00 PM</div><div class="time-slot disabled">6:00 PM</div><div class="time-slot" onclick="selectTime(this,'7:00 PM')">7:00 PM</div>
                 </div>
             </div>
-            <div class="form-group"><label><i class="fas fa-bolt"></i>Instant Wash (Emergency)</label>
+            <div class="form-group"><label><i class="fas fa-bolt"></i><span data-i18n="lbl_instant_wash">Instant Wash (Emergency)</span></label>
                 <div class="instant-wash-box available" id="instantWashBox" onclick="toggleInstantWash()">
-                    <div class="instant-wash-header"><span class="instant-wash-title">⚡ Instant Wash</span><span class="instant-badge" id="instantBadge">Checking...</span></div>
-                    <div class="instant-wash-desc">Skip schedule — worker reaches ASAP</div><div class="instant-wash-price">+₹70 Emergency</div>
+                    <div class="instant-wash-header"><span class="instant-wash-title" data-i18n="instant_title">⚡ Instant Wash</span><span class="instant-badge" id="instantBadge">Checking...</span></div>
+                    <div class="instant-wash-desc" data-i18n="instant_desc">Skip schedule — worker reaches ASAP</div><div class="instant-wash-price">+₹70 Emergency</div>
                 </div>
             </div>
             <div class="form-group">
-                <label><i class="fas fa-map-marker-alt"></i>Your Address</label>
+                <label><i class="fas fa-map-marker-alt"></i><span data-i18n="lbl_address">Your Address</span></label>
                 <div id="savedAddressChips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;"></div>
                 <textarea id="bookingAddress" placeholder="Enter your full address or select a saved address above..." onkeyup="updateSteps()"></textarea>
             </div>
-            <div class="form-group"><label><i class="fas fa-phone"></i>Phone Number</label><input type="tel" id="bookingPhone" placeholder="Enter phone number" onkeyup="updateSteps()"></div>
-            <div class="form-group"><label><i class="fas fa-sticky-note"></i>Notes (Optional)</label><textarea id="bookingNotes" placeholder="Special instructions..."></textarea></div>
+            <div class="form-group"><label><i class="fas fa-phone"></i><span data-i18n="lbl_phone">Phone Number</span></label><input type="tel" id="bookingPhone" placeholder="Enter phone number" onkeyup="updateSteps()"></div>
+            <div class="form-group"><label><i class="fas fa-sticky-note"></i><span data-i18n="lbl_notes">Notes (Optional)</span></label><textarea id="bookingNotes" placeholder="Special instructions..."></textarea></div>
         </div>
-        <div class="coupon-box"><label class="coupon-label"><i class="fas fa-tag"></i>Coupon Code</label><div class="coupon-row"><input type="text" id="couponInput" placeholder="e.g. FIRST20W2D" maxlength="20"><button class="apply-btn" onclick="applyCoupon()">Apply</button></div><div class="coupon-msg" id="couponMsg"></div></div>
+        <div class="coupon-box"><label class="coupon-label"><i class="fas fa-tag"></i><span data-i18n="lbl_coupon">Coupon Code</span></label><div class="coupon-row"><input type="text" id="couponInput" placeholder="e.g. FIRST20W2D" maxlength="20"><button class="apply-btn" onclick="applyCoupon()" data-i18n="btn_apply">Apply</button></div><div class="coupon-msg" id="couponMsg"></div></div>
         <div class="price-summary">
-            <div class="price-row"><span>Service</span><span id="summaryService">₹0</span></div>
-            <div class="price-row" id="addonsRow" style="display:none"><span>Add-ons</span><span id="summaryAddons">₹0</span></div>
-            <div class="price-row" id="instantRow" style="display:none"><span>⚡ Instant</span><span>₹70</span></div>
-            <div class="price-row"><span>Convenience Fee</span><span>₹30</span></div>
-            <div class="price-row discount" id="discountRow" style="display:none"><span>🎉 Discount</span><span id="discountAmt">-₹0</span></div>
-            <div class="price-row total"><span>Total</span><span id="summaryTotal">₹30</span></div>
+            <div class="price-row"><span data-i18n="sum_service">Service</span><span id="summaryService">₹0</span></div>
+            <div class="price-row" id="addonsRow" style="display:none"><span data-i18n="sum_addons">Add-ons</span><span id="summaryAddons">₹0</span></div>
+            <div class="price-row" id="instantRow" style="display:none"><span data-i18n="sum_instant">⚡ Instant</span><span>₹70</span></div>
+            <div class="price-row"><span data-i18n="sum_fee">Convenience Fee</span><span>₹30</span></div>
+            <div class="price-row discount" id="discountRow" style="display:none"><span data-i18n="sum_discount">🎉 Discount</span><span id="discountAmt">-₹0</span></div>
+            <div class="price-row total"><span data-i18n="sum_total">Total</span><span id="summaryTotal">₹30</span></div>
         </div>
-        <button class="submit-btn" onclick="confirmBooking()"><i class="fas fa-check-circle"></i> Confirm Booking</button>
+        <button class="submit-btn" onclick="confirmBooking()"><i class="fas fa-paper-plane"></i> <span data-i18n="btn_request_book">Request to Book</span></button>
     </div>
 
     <!-- MY BOOKINGS -->
     <div class="page" id="myBookingsPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2>My Bookings</h2></div>
-        <div class="tabs" style="margin-top:13px;"><button class="tab active" onclick="filterBookings('all',this)">All</button><button class="tab" onclick="filterBookings('upcoming',this)">Upcoming</button><button class="tab" onclick="filterBookings('completed',this)">Completed</button><button class="tab" onclick="filterBookings('cancelled',this)">Cancelled</button></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="my_bookings_title">My Bookings</h2></div>
+        <div class="tabs" style="margin-top:13px;"><button class="tab active" onclick="filterBookings('all',this)" data-i18n="tab_all">All</button><button class="tab" onclick="filterBookings('upcoming',this)" data-i18n="tab_upcoming">Upcoming</button><button class="tab" onclick="filterBookings('completed',this)" data-i18n="tab_completed">Completed</button><button class="tab" onclick="filterBookings('cancelled',this)" data-i18n="tab_cancelled">Cancelled</button></div>
         <div id="bookingsList"></div>
     </div>
 
     <!-- NOTIFICATIONS -->
     <div class="page" id="notificationsPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2>Notifications</h2></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="notif_title">Notifications</h2></div>
         <div id="notifList"></div>
     </div>
 
@@ -518,14 +592,13 @@
             <div class="profile-avatar" id="profileAvatar">👤</div>
             <h2 id="profileName">...</h2><p id="profileEmail">...</p>
             <div class="profile-stats">
-                <div class="stat-item"><div class="stat-num" id="totalWashes">0</div><div class="stat-label">Washes</div></div>
-                <div class="stat-item"><div class="stat-num" id="profileRating">⭐ --</div><div class="stat-label">Rating</div></div>
-                <div class="stat-item"><div class="stat-num" id="savedAmount">₹0</div><div class="stat-label">Saved</div></div>
+                <div class="stat-item"><div class="stat-num" id="totalWashes">0</div><div class="stat-label" data-i18n="stat_washes">Washes</div></div>
+                <div class="stat-item"><div class="stat-num" id="profileRating">⭐ --</div><div class="stat-label" data-i18n="stat_rating">Rating</div></div>
+                <div class="stat-item"><div class="stat-num" id="savedAmount">₹0</div><div class="stat-label" data-i18n="stat_saved">Saved</div></div>
             </div>
         </div>
         <div class="profile-menu" id="profileMenuDiv"></div>
         
-        <!-- PROFILE FOOTER -->
         <div class="app-footer">
             <p>© 2026 Wash2Door. All rights reserved.</p>
             <p class="owner-title">Owner : Divyansh Arora</p>
@@ -534,9 +607,9 @@
 
     <!-- SAVED ADDRESSES -->
     <div class="page" id="addressesPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2>Saved Addresses</h2></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="saved_addr_title">Saved Addresses</h2></div>
         <div style="padding:16px 20px;">
-            <button onclick="showAddAddressForm()" style="width:100%;padding:14px;background:var(--primary-light);color:var(--primary);border:2px dashed var(--primary);border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:15px;">
+            <button onclick="showAddAddressForm()" style="width:100%;padding:14px;background:var(--primary-light);color:var(--primary);border:2px dashed var(--primary);border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:15px;" data-i18n="btn_add_addr">
                 <i class="fas fa-plus-circle"></i> Add New Address
             </button>
             <div id="addAddressForm" style="display:none;margin-bottom:18px;background:var(--light-gray);border-radius:var(--radius);padding:18px;">
@@ -563,50 +636,35 @@
 
     <!-- PAYMENT METHODS -->
     <div class="page" id="paymentPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2>Payment Methods</h2></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="payment_title">Payment Methods</h2></div>
         <div style="padding:16px 20px;">
             <div style="background:var(--white);border:2px solid var(--secondary);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;">
                 <div style="width:48px;height:48px;border-radius:14px;background:#E6FFF5;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">💵</div>
-                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">Cash After Wash</div><div style="font-size:.72rem;color:var(--gray);">Pay in cash after your wash is completed</div></div>
+                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;" data-i18n="pay_cash">Cash After Wash</div><div style="font-size:.72rem;color:var(--gray);" data-i18n="pay_cash_desc">Pay in cash after your wash is completed</div></div>
                 <div style="background:#E6FFF5;color:#00C9A7;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:700;">ACTIVE</div>
             </div>
-            <div style="background:var(--white);border:2px solid var(--light-gray);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;opacity:.45;pointer-events:none;">
-                <div style="width:48px;height:48px;border-radius:14px;background:#F0E6FF;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">📱</div>
-                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">UPI Payment</div><div style="font-size:.72rem;color:var(--gray);">Google Pay, PhonePe, Paytm</div></div>
-                <div style="background:var(--light-gray);color:var(--gray);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;">SOON</div>
-            </div>
-            <div style="background:var(--white);border:2px solid var(--light-gray);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;opacity:.45;pointer-events:none;">
-                <div style="width:48px;height:48px;border-radius:14px;background:#E6F0FF;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">💳</div>
-                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">Credit / Debit Card</div><div style="font-size:.72rem;color:var(--gray);">Visa, Mastercard, RuPay</div></div>
-                <div style="background:var(--light-gray);color:var(--gray);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;">SOON</div>
-            </div>
-            <div style="background:var(--white);border:2px solid var(--light-gray);border-radius:var(--radius);padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;opacity:.45;pointer-events:none;">
-                <div style="width:48px;height:48px;border-radius:14px;background:#FFF3E6;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">👛</div>
-                <div style="flex:1;"><div style="font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:2px;">Wallet</div><div style="font-size:.72rem;color:var(--gray);">Paytm Wallet, Amazon Pay</div></div>
-                <div style="background:var(--light-gray);color:var(--gray);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;">SOON</div>
-            </div>
             <div style="background:#f8fbff;border:1.5px solid #ddeeff;border-radius:var(--radius-sm);padding:14px;margin-top:5px;">
-                <p style="font-size:.78rem;color:var(--gray);line-height:1.7;margin:0;"><i class="fas fa-info-circle" style="color:var(--primary);margin-right:5px;"></i><strong>Currently only Cash After Wash is available.</strong><br>UPI, Cards and Wallet options are coming soon!</p>
+                <p style="font-size:.78rem;color:var(--gray);line-height:1.7;margin:0;" data-i18n="pay_note"><i class="fas fa-info-circle" style="color:var(--primary);margin-right:5px;"></i><strong>Currently only Cash After Wash is available.</strong><br>UPI, Cards and Wallet options are coming soon!</p>
             </div>
         </div>
     </div>
 
     <!-- WORKER JOB HISTORY PAGE -->
     <div class="page" id="workerJobHistoryPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2>Job History</h2></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="job_history_title">Job History</h2></div>
         <div style="padding:16px 20px;">
             <div id="workerJobHistoryList">
-                <div class="empty-state"><p style="font-size:.8rem;color:var(--gray);">Loading job history...</p></div>
+                <div class="empty-state"><p style="font-size:.80rem;color:var(--gray);" data-i18n="loading_jobs">Loading job history...</p></div>
             </div>
         </div>
     </div>
 
     <!-- MANAGE WORKERS PAGE -->
     <div class="page" id="manageWorkersPage">
-        <div class="booking-page-header"><button class="back-btn" onclick="showPage('adminHomePage')"><i class="fas fa-arrow-left"></i></button><h2>Manage Workers</h2></div>
+        <div class="booking-page-header"><button class="back-btn" onclick="showPage('adminHomePage')"><i class="fas fa-arrow-left"></i></button><h2 data-i18n="manage_workers_title">Manage Workers</h2></div>
         <div style="padding:16px 20px;">
             <div id="manageWorkersList">
-                <div class="empty-state"><p style="font-size:.8rem;color:var(--gray);">Loading workers...</p></div>
+                <div class="empty-state"><p style="font-size:.80rem;color:var(--gray);" data-i18n="loading_workers">Loading workers...</p></div>
             </div>
         </div>
     </div>
@@ -614,31 +672,47 @@
     <!-- ADMIN HOME -->
     <div class="page" id="adminHomePage">
         <div class="header" style="background:linear-gradient(135deg,#6C3483,#5B2C6F);">
-            <div class="header-top"><div class="greeting"><h2>Admin Panel</h2><h1>Wash2Door HQ</h1><span class="role-badge admin">ADMIN</span></div>
-                <div class="header-actions"><button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge">0</span></button></div>
+            <div class="header-top">
+                <div class="greeting"><h2 data-i18n="admin_panel_sub">Admin Panel</h2><h1>Wash2Door HQ</h1><span class="role-badge admin">ADMIN</span></div>
+                <div class="header-actions">
+                    <button class="lang-switch-btn" onclick="toggleLanguage()"><i class="fa-solid fa-globe"></i><span id="lang-label-admin">हिंदी</span></button>
+                    <button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge" id="adminNotifBadge">0</span></button>
+                </div>
             </div>
         </div>
         
-        <!-- PENDING APPROVALS TAB -->
         <div class="admin-section" style="margin-top:16px;">
-            <h3>⏳ Pending Approvals</h3>
+            <h3 data-i18n="pending_approvals">⏳ Pending Approvals</h3>
             <div id="adminApprovalsList">
                 <div class="empty-state" style="padding:15px 0;">
-                    <p style="font-size:.8rem;color:var(--gray);">No pending requests</p>
+                    <p style="font-size:.8rem;color:var(--gray);" data-i18n="no_pending">No pending requests</p>
                 </div>
             </div>
         </div>
 
-        <div style="padding:0 20px 8px;"><div class="revenue-card"><h3>Total Revenue</h3><div class="rev-amt" id="adminRevenue">₹0</div><p>📈 From all bookings</p></div></div>
+        <div style="padding:0 20px 8px;"><div class="revenue-card"><h3 data-i18n="total_revenue">Total Revenue</h3><div class="rev-amt" id="adminRevenue">₹0</div><p data-i18n="rev_subtitle">📈 From all bookings</p></div></div>
         <div class="admin-stats-grid">
-            <div class="admin-stat-card"><div class="admin-stat-icon si-blue">📋</div><div class="admin-stat-num" id="statTotal">0</div><div class="admin-stat-label">Total Bookings</div></div>
-            <div class="admin-stat-card"><div class="admin-stat-icon si-orange">⏳</div><div class="admin-stat-num" id="statUpcoming">0</div><div class="admin-stat-label">Upcoming</div></div>
-            <div class="admin-stat-card"><div class="admin-stat-icon si-green">✅</div><div class="admin-stat-num" id="statCompleted">0</div><div class="admin-stat-label">Completed</div></div>
-            <div class="admin-stat-card" style="cursor:pointer;" onclick="showPage('manageWorkersPage');renderManageWorkers();"><div class="admin-stat-icon si-purple">👷</div><div class="admin-stat-num" id="statWorkers">0</div><div class="admin-stat-label">Workers</div></div>
+            <div class="admin-stat-card"><div class="admin-stat-icon si-blue">📋</div><div class="admin-stat-num" id="statTotal">0</div><div class="admin-stat-label" data-i18n="stat_total_bookings">Total Bookings</div></div>
+            <div class="admin-stat-card"><div class="admin-stat-icon si-orange">⏳</div><div class="admin-stat-num" id="statUpcoming">0</div><div class="admin-stat-label" data-i18n="stat_upcoming">Upcoming</div></div>
+            <div class="admin-stat-card"><div class="admin-stat-icon si-green">✅</div><div class="admin-stat-num" id="statCompleted">0</div><div class="admin-stat-label" data-i18n="stat_completed">Completed</div></div>
+            <div class="admin-stat-card" style="cursor:pointer;" onclick="showPage('manageWorkersPage');renderManageWorkers();"><div class="admin-stat-icon si-purple">👷</div><div class="admin-stat-num" id="statWorkers">0</div><div class="admin-stat-label" data-i18n="stat_workers">Workers</div></div>
         </div>
-        <div class="admin-section"><h3>📋 All Bookings</h3><div id="adminBookingsList"><div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3><p>Customer bookings appear here</p></div></div></div>
         
-        <!-- DASHBOARD FOOTER -->
+        <!-- Admin Bookings Control Switches -->
+        <div class="admin-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                <h3 data-i18n="manage_bookings">📋 Manage Bookings</h3>
+                <div style="display:flex; gap:5px;">
+                    <button class="tab active" style="padding:4px 10px; font-size:0.68rem;" onclick="filterAdminBookings('pending', this)" data-i18n="admin_tab_pending">Pending</button>
+                    <button class="tab" style="padding:4px 10px; font-size:0.68rem;" onclick="filterAdminBookings('upcoming', this)" data-i18n="admin_tab_upcoming">Upcoming</button>
+                    <button class="tab" style="padding:4px 10px; font-size:0.68rem;" onclick="filterAdminBookings('completed', this)" data-i18n="admin_tab_completed">Completed</button>
+                </div>
+            </div>
+            <div id="adminBookingsList">
+                <div class="empty-state"><div class="empty-emoji">📋</div><h3 data-i18n="no_bookings_yet">No bookings yet</h3><p data-i18n="customer_bookings_here">Customer bookings appear here</p></div>
+            </div>
+        </div>
+        
         <div class="app-footer">
             <p>© 2026 Wash2Door. All rights reserved.</p>
             <p class="owner-title">Owner : Divyansh Arora</p>
@@ -648,22 +722,25 @@
     <!-- WORKER HOME -->
     <div class="page" id="workerHomePage">
         <div class="header" style="background:linear-gradient(135deg,#117A65,#0E6655);">
-            <div class="header-top"><div class="greeting"><h2>Worker Dashboard</h2><h1 id="workerName">...</h1><span class="role-badge worker">WORKER</span></div>
-                <div class="header-actions"><button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge">0</span></button></div>
+            <div class="header-top">
+                <div class="greeting"><h2 data-i18n="worker_dashboard">Worker Dashboard</h2><h1 id="workerName">...</h1><span class="role-badge worker">WORKER</span></div>
+                <div class="header-actions">
+                    <button class="lang-switch-btn" onclick="toggleLanguage()"><i class="fa-solid fa-globe"></i><span id="lang-label-worker">हिंदी</span></button>
+                    <button class="header-btn" onclick="showPage('notificationsPage')"><i class="fas fa-bell"></i><span class="notification-badge">0</span></button>
+                </div>
             </div>
         </div>
-        <div style="padding:16px 20px 8px;"><div class="worker-earnings"><h3>Today's Earnings</h3><div class="earn-amount">₹0</div><p>0 jobs completed today</p></div></div>
-        <div class="worker-status-card"><h3>My Availability</h3>
+        <div style="padding:16px 20px 8px;"><div class="worker-earnings"><h3 data-i18n="todays_earnings">Today's Earnings</h3><div class="earn-amount" id="workerEarningsAmt">₹0</div><p data-i18n="jobs_completed_today">0 jobs completed today</p></div></div>
+        <div class="worker-status-card"><h3 data-i18n="my_availability">My Availability</h3>
             <div class="status-options">
-                <div class="status-option active-available" id="optAvailable" onclick="setWorkerStatus(this,'available')">🟢 Available</div>
-                <div class="status-option" id="optBusy" onclick="setWorkerStatus(this,'busy')">🟡 Busy</div>
-                <div class="status-option" id="optOffline" onclick="setWorkerStatus(this,'offline')">⚫ Offline</div>
+                <div class="status-option active-available" id="optAvailable" onclick="setWorkerStatus(this,'available')" data-i18n="status_available">🟢 Available</div>
+                <div class="status-option" id="optBusy" onclick="setWorkerStatus(this,'busy')" data-i18n="status_busy">🟡 Busy</div>
+                <div class="status-option" id="optOffline" onclick="setWorkerStatus(this,'offline')" data-i18n="status_offline">⚫ Offline</div>
             </div>
         </div>
-        <div style="padding:0 20px;"><div class="section-title" style="padding:0;margin-bottom:11px;"><h3>Assigned Jobs</h3></div></div>
-        <div id="workerJobsList"><div class="empty-state"><div class="empty-emoji">📋</div><h3>No jobs yet</h3><p>Jobs will appear when admin assigns them</p></div></div>
+        <div style="padding:0 20px;"><div class="section-title" style="padding:0;margin-bottom:11px;"><h3 data-i18n="assigned_jobs">Assigned Jobs</h3></div></div>
+        <div id="workerJobsList"><div class="empty-state"><div class="empty-emoji">📋</div><h3 data-i18n="no_jobs_yet">No jobs yet</h3><p data-i18n="jobs_appear_admin">Jobs will appear when admin assigns them</p></div></div>
         
-        <!-- DASHBOARD FOOTER -->
         <div class="app-footer">
             <p>© 2026 Wash2Door. All rights reserved.</p>
             <p class="owner-title">Owner : Divyansh Arora</p>
@@ -677,10 +754,10 @@
 <div class="modal-overlay" id="successModal">
     <div class="modal">
         <div class="success-icon"><i class="fas fa-check"></i></div>
-        <h2>Booking Confirmed! 🎉</h2><p>Your car wash has been scheduled</p>
+        <h2>Booking Request Sent! 🎉</h2><p>Your request has been forwarded to Admin & Worker</p>
         <div class="booking-id-chip" id="modalBookingId">Booking ID: #W2D-0001</div>
-        <p style="font-size:.75rem;margin-bottom:5px;color:var(--gray);">Our washer will arrive on time!</p>
-        <div class="email-status sending" id="emailStatus"><i class="fas fa-paper-plane"></i> Sending confirmation email...</div>
+        <p style="font-size:.75rem;margin-bottom:5px;color:var(--gray);">Awaiting confirmation!</p>
+        <div class="email-status sending" id="emailStatus"><i class="fas fa-paper-plane"></i> Sending notification...</div>
         <br>
         <button class="modal-btn" onclick="closeModal()"><i class="fas fa-home"></i> Back to Home</button>
     </div>
@@ -709,12 +786,22 @@
 <script type="module">
     import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail,updateProfile,deleteUser}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import{getFirestore,doc,setDoc,getDoc,updateDoc,deleteDoc,collection,query,where,getDocs,onSnapshot}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import{getFirestore,doc,setDoc,getDoc,updateDoc,deleteDoc,collection,query,where,getDocs,addDoc,onSnapshot}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig={apiKey:"AIzaSyBwjJ6gMf4l2q5_JFQ5zcOwrmFApphhb8M",authDomain:"wash2door-b3849.firebaseapp.com",projectId:"wash2door-b3849",storageBucket:"wash2door-b3849.firebasestorage.app",messagingSenderId:"414893596739",appId:"1:414893596739:web:6e75e66e11c8480351b4f6",measurementId:"G-6YCXL63Q7N"};
     const app=initializeApp(firebaseConfig);
     const auth=getAuth(app);
     const db=getFirestore(app);
+
+    window.db = db;
+    window.collection = collection;
+    window.getDocs = getDocs;
+    window.query = query;
+    window.where = where;
+    window.addDoc = addDoc;
+    window.doc = doc;
+    window.updateDoc = updateDoc;
+    window.onSnapshot = onSnapshot;
 
     window.doLogin=async function(){
         const email=document.getElementById('loginEmail').value.trim(),pass=document.getElementById('loginPassword').value;
@@ -838,8 +925,8 @@
                         <p>${data.email}</p>
                     </div>
                     <div class="approval-actions">
-                        <button class="approve-btn" onclick="approveUser('${data.uid}')"><i class="fas fa-check"></i> Approve</button>
-                        <button class="reject-btn" onclick="rejectUser('${data.uid}')"><i class="fas fa-times"></i> Reject</button>
+                        <button class="approve-btn" onclick="approveUser('${docSnap.id}')"><i class="fas fa-check"></i> Approve</button>
+                        <button class="reject-btn" onclick="rejectUser('${docSnap.id}')"><i class="fas fa-times"></i> Reject</button>
                     </div>
                 </div>`;
             });
@@ -849,13 +936,13 @@
         }
     };
 
-    window.approveUser=async function(uid){
+    window.approveUser=async function(docId){
         try{
-            const userDoc=await getDoc(doc(db,"users",uid));
+            const userDoc=await getDoc(doc(db,"users",docId));
             if(!userDoc.exists())return;
             const userData=userDoc.data();
 
-            await updateDoc(doc(db,"users",uid),{status:'active'});
+            await updateDoc(doc(db,"users",docId),{status:'active'});
             showToast('User approved! ✅','success');
             loadPendingApprovals();
 
@@ -868,9 +955,9 @@
         }
     };
 
-    window.rejectUser=async function(uid){
+    window.rejectUser=async function(docId){
         try{
-            await updateDoc(doc(db,"users",uid),{status:'rejected'});
+            await updateDoc(doc(db,"users",docId),{status:'rejected'});
             showToast('User rejected ❌','info');
             loadPendingApprovals();
         }catch(e){
@@ -878,7 +965,6 @@
         }
     };
 
-    // WORKER AVAILABILITY FUNCTION
     window.setWorkerStatus = async function(el, status) {
         document.querySelectorAll('.status-option').forEach(s=>s.className='status-option');
         if(el) el.classList.add(`active-${status}`);
@@ -886,7 +972,11 @@
         const uid = window._currentUID;
         if(uid){
             try{
-                await updateDoc(doc(db, "users", uid), { workerStatus: status });
+                const q = query(collection(db, "users"), where("uid", "==", uid));
+                const snap = await getDocs(q);
+                if(!snap.empty){
+                    await updateDoc(doc(db, "users", snap.docs[0].id), { workerStatus: status });
+                }
                 showToast(`Status updated to ${status.toUpperCase()}!`, 'success');
             }catch(e){
                 console.error("Worker status update error:", e);
@@ -894,12 +984,9 @@
         }
     };
 
-    // RENDER WORKER JOB HISTORY
     window.renderWorkerJobHistory = function(){
         const container = document.getElementById('workerJobHistoryList');
         if(!container) return;
-
-        const uid = window._currentUID;
         const historyBookings = window.bookings || [];
 
         if(!historyBookings.length){
@@ -907,7 +994,7 @@
             return;
         }
 
-        container.innerHTML = historyBookings.map(b => `
+        container.innerHTML = historyBookings.filter(b => b.status === 'completed').map(b => `
             <div class="detail-booking-card">
                 <div class="dbc-header">
                     <span class="dbc-id">#${b.id}${b.instant?' ⚡':''}</span>
@@ -926,7 +1013,6 @@
         `).join('');
     };
 
-    // MANAGE WORKERS FUNCTION FOR ADMIN
     window.renderManageWorkers = async function(){
         const container = document.getElementById('manageWorkersList');
         if(!container) return;
@@ -954,8 +1040,8 @@
                         <span class="worker-status-badge ${st}">${st.toUpperCase()}</span>
                     </div>
                     <div style="display:flex;flex-direction:column;gap:5px;">
-                        <button onclick="toggleWorkerStatus('${w.uid}', '${st}')" style="padding:5px 10px;background:var(--primary-light);color:var(--primary);border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Toggle Status</button>
-                        <button onclick="removeWorker('${w.uid}')" style="padding:5px 10px;background:#FFE6E6;color:#FF4757;border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Remove</button>
+                        <button onclick="toggleWorkerStatus('${docSnap.id}', '${st}')" style="padding:5px 10px;background:var(--primary-light);color:var(--primary);border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Toggle Status</button>
+                        <button onclick="removeWorker('${docSnap.id}')" style="padding:5px 10px;background:#FFE6E6;color:#FF4757;border:none;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;">Remove</button>
                     </div>
                 </div>`;
             });
@@ -965,10 +1051,10 @@
         }
     };
 
-    window.toggleWorkerStatus = async function(uid, currentSt){
+    window.toggleWorkerStatus = async function(docId, currentSt){
         const nextSt = currentSt === 'available' ? 'busy' : (currentSt === 'busy' ? 'offline' : 'available');
         try{
-            await updateDoc(doc(db, "users", uid), { workerStatus: nextSt });
+            await updateDoc(doc(db, "users", docId), { workerStatus: nextSt });
             showToast(`Worker status updated to ${nextSt.toUpperCase()}`, 'success');
             window.renderManageWorkers();
         }catch(e){
@@ -976,10 +1062,10 @@
         }
     };
 
-    window.removeWorker = async function(uid){
+    window.removeWorker = async function(docId){
         if(!confirm('Remove this worker account?')) return;
         try{
-            await updateDoc(doc(db, "users", uid), { status: 'rejected', workerStatus: 'offline' });
+            await updateDoc(doc(db, "users", docId), { status: 'rejected', workerStatus: 'offline' });
             showToast('Worker removed', 'info');
             window.renderManageWorkers();
         }catch(e){
@@ -987,7 +1073,6 @@
         }
     };
 
-    // LIVE INSTANT WASH WORKER AVAILABILITY LISTENER
     window.listenWorkerAvailability = function(){
         try{
             const q = query(collection(db, "users"), where("role", "==", "worker"), where("status", "==", "active"), where("workerStatus", "==", "available"));
@@ -1077,11 +1162,27 @@
             window._currentName = name;
             window._currentEmail = email;
 
-            loadUserData(user.uid);
             document.getElementById('authScreen').classList.remove('show');
             document.getElementById('appContainer').classList.add('visible');
             setupApp(role, name, email, user.uid);
             window.listenWorkerAvailability();
+            
+            // Real-time Firestore Booking Stream
+            onSnapshot(collection(db, "bookings"), (snapshot) => {
+                let fetchedBookings = [];
+                snapshot.forEach((docSnap) => {
+                    fetchedBookings.push({ docId: docSnap.id, ...docSnap.data() });
+                });
+                fetchedBookings.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+                window.bookings = fetchedBookings;
+                
+                if(typeof updateRecentBookings === 'function') updateRecentBookings();
+                if(typeof updateAdminStats === 'function') updateAdminStats();
+                if(typeof updateProfileStats === 'function') updateProfileStats();
+                if(typeof buildNotifications === 'function') buildNotifications();
+                if(typeof renderWorkerJobs === 'function') renderWorkerJobs();
+            });
+
         } else {
             document.getElementById('authScreen').classList.add('show');
             document.getElementById('appContainer').classList.remove('visible');
@@ -1095,6 +1196,245 @@
     const EJS_TEMPLATE = 'template_y44y6lw';
     const EJS_KEY      = 'ilGad_8jFWvCKm8HP';
     emailjs.init(EJS_KEY);
+
+    const translations = {
+        en: {
+            promo_title: "Flat 20% OFF!",
+            promo_desc: "Use code at checkout",
+            services_title: "Our Services",
+            see_all: "See All",
+            srv_basic: "Basic Wash",
+            srv_premium: "Premium",
+            srv_plus: "Premium Plus",
+            srv_interior: "Interior",
+            packages_title: "Popular Packages",
+            pkg_basic_name: "Basic Wash",
+            pkg_basic_desc: "Exterior hand wash + tyre clean",
+            pkg_basic_f1: "Hand wash exterior",
+            pkg_basic_f2: "Tyre cleaning",
+            pkg_basic_f3: "Window wipe",
+            pkg_prem_name: "Premium Wash",
+            pkg_prem_desc: "Full interior & exterior",
+            pkg_prem_f1: "Full exterior wash",
+            pkg_prem_f2: "Interior vacuum",
+            pkg_prem_f3: "Dashboard polish",
+            pkg_prem_f4: "Air freshener",
+            pkg_plus_name: "Premium Plus",
+            pkg_plus_desc: "Ultimate detailing",
+            pkg_plus_f1: "Everything in Premium",
+            pkg_plus_f2: "Trim wax coating",
+            pkg_plus_f3: "Door hinge greasing",
+            pkg_plus_f4: "Leather seats cleaning",
+            btn_book: "Book",
+            recent_bookings: "Recent Bookings",
+            view_all: "View All",
+            sub_title_page: "Monthly Subscriptions",
+            sub_choose_plan: "Choose Your Monthly Plan",
+            plan_hatch_title: "Hatchback & Sedan",
+            plan_csuv_title: "Compact SUV",
+            plan_bsuv_title: "Big-Size SUV",
+            per_month: "/ month",
+            plan_feat_1: "30 Days Basic Wash",
+            plan_feat_2: "30 Days Basic Interior Clean",
+            plan_feat_3: "3 Times Premium Wash in a month",
+            btn_subscribe: "Subscribe Now",
+            book_a_wash: "Book a Wash",
+            lbl_vehicle_type: "Vehicle Type",
+            lbl_select_service: "Select Service",
+            lbl_addons: "Add-ons (Optional)",
+            lbl_select_date: "Select Date",
+            lbl_select_time: "Select Time",
+            lbl_instant_wash: "Instant Wash (Emergency)",
+            instant_title: "⚡ Instant Wash",
+            instant_desc: "Skip schedule — worker reaches ASAP",
+            lbl_address: "Your Address",
+            lbl_phone: "Phone Number",
+            lbl_notes: "Notes (Optional)",
+            lbl_coupon: "Coupon Code",
+            btn_apply: "Apply",
+            sum_service: "Service",
+            sum_addons: "Add-ons",
+            sum_instant: "⚡ Instant",
+            sum_fee: "Convenience Fee",
+            sum_discount: "🎉 Discount",
+            sum_total: "Total",
+            btn_request_book: "Request to Book",
+            my_bookings_title: "My Bookings",
+            tab_all: "All",
+            tab_upcoming: "Upcoming",
+            tab_completed: "Completed",
+            tab_cancelled: "Cancelled",
+            notif_title: "Notifications",
+            stat_washes: "Washes",
+            stat_rating: "Rating",
+            stat_saved: "Saved",
+            saved_addr_title: "Saved Addresses",
+            btn_add_addr: "Add New Address",
+            payment_title: "Payment Methods",
+            pay_cash: "Cash After Wash",
+            pay_cash_desc: "Pay in cash after your wash is completed",
+            pay_note: "Currently only Cash After Wash is available.<br>UPI, Cards and Wallet options are coming soon!",
+            job_history_title: "Job History",
+            loading_jobs: "Loading job history...",
+            manage_workers_title: "Manage Workers",
+            loading_workers: "Loading workers...",
+            admin_panel_sub: "Admin Panel",
+            pending_approvals: "⏳ Pending Approvals",
+            no_pending: "No pending requests",
+            total_revenue: "Total Revenue",
+            rev_subtitle: "📈 From all bookings",
+            stat_total_bookings: "Total Bookings",
+            stat_upcoming: "Upcoming",
+            stat_completed: "Completed",
+            stat_workers: "Workers",
+            manage_bookings: "📋 Manage Bookings",
+            admin_tab_pending: "Pending",
+            admin_tab_upcoming: "Upcoming",
+            admin_tab_completed: "Completed",
+            no_bookings_yet: "No bookings yet",
+            customer_bookings_here: "Customer bookings appear here",
+            worker_dashboard: "Worker Dashboard",
+            todays_earnings: "Today's Earnings",
+            jobs_completed_today: "0 jobs completed today",
+            my_availability: "My Availability",
+            status_available: "🟢 Available",
+            status_busy: "🟡 Busy",
+            status_offline: "⚫ Offline",
+            assigned_jobs: "Assigned Jobs",
+            no_jobs_yet: "No jobs yet",
+            jobs_appear_admin: "Jobs will appear when admin assigns them",
+            lang_toggle_btn: "हिंदी"
+        },
+        hi: {
+            promo_title: "फ्लैट 20% छूट!",
+            promo_desc: "चेकआउट के समय कोड का उपयोग करें",
+            services_title: "हमारी सेवाएं",
+            see_all: "सभी देखें",
+            srv_basic: "बेसिक वॉश",
+            srv_premium: "प्रीमियम",
+            srv_plus: "प्रीमियम प्लस",
+            srv_interior: "इंटीरियर",
+            packages_title: "लोकप्रिय पैकेज",
+            pkg_basic_name: "बेसिक वॉश",
+            pkg_basic_desc: "बाहरी हैंड वॉश + टायर सफाई",
+            pkg_basic_f1: "बाहरी हैंड वॉश",
+            pkg_basic_f2: "टायर की सफाई",
+            pkg_basic_f3: "खिड़की की सफाई",
+            pkg_prem_name: "प्रीमियम वॉश",
+            pkg_prem_desc: "पूर्ण इंटीरियर और एक्सटीरियर",
+            pkg_prem_f1: "पूर्ण बाहरी धुलाई",
+            pkg_prem_f2: "इंटीरियर वैक्यूम",
+            pkg_prem_f3: "डैशबोर्ड पॉलिश",
+            pkg_prem_f4: "एयर फ्रेशनर",
+            pkg_plus_name: "प्रीमियम प्लस",
+            pkg_plus_desc: "अल्टीमेट डिटेलिंग",
+            pkg_plus_f1: "प्रीमियम में सब कुछ",
+            pkg_plus_f2: "ट्रिम वैक्स कोटिंग",
+            pkg_plus_f3: "डोर हिंज ग्रीसिंग",
+            pkg_plus_f4: "लेदर सीट की सफाई",
+            btn_book: "बुक करें",
+            recent_bookings: "हाल की बुकिंग",
+            view_all: "सभी देखें",
+            sub_title_page: "मासिक सब्सक्रिप्शन",
+            sub_choose_plan: "अपना मासिक प्लान चुनें",
+            plan_hatch_title: "हैचबैक और सेडान",
+            plan_csuv_title: "कॉम्पैक्ट एसयूवी",
+            plan_bsuv_title: "बड़ी एसयूवी",
+            per_month: "/ महीना",
+            plan_feat_1: "30 दिन बेसिक वॉश",
+            plan_feat_2: "30 दिन बेसिक इंटीरियर सफाई",
+            plan_feat_3: "महीने में 3 बार प्रीमियम वॉश",
+            btn_subscribe: "अभी सब्सक्रिप्शन लें",
+            book_a_wash: "वाश बुक करें",
+            lbl_vehicle_type: "वाहन का प्रकार",
+            lbl_select_service: "सेवा चुनें",
+            lbl_addons: "अतिरिक्त सुविधाएं (वैकल्पिक)",
+            lbl_select_date: "दिनांक चुनें",
+            lbl_select_time: "समय चुनें",
+            lbl_instant_wash: "तत्काल वॉश (आपातकालीन)",
+            instant_title: "⚡ इंस्टेंट वॉश",
+            instant_desc: "शेड्यूल छोड़ें — वर्कर तुरंत पहुंचेगा",
+            lbl_address: "आपका पता",
+            lbl_phone: "फ़ोन नंबर",
+            lbl_notes: "नोट्स (वैकल्पिक)",
+            lbl_coupon: "कूपन कोड",
+            btn_apply: "लागू करें",
+            sum_service: "सेवा",
+            sum_addons: "अतिरिक्त",
+            sum_instant: "⚡ तत्काल",
+            sum_fee: "सुविधा शुल्क",
+            sum_discount: "🎉 छूट",
+            sum_total: "कुल",
+            btn_request_book: "बुकिंग का अनुरोध करें",
+            my_bookings_title: "मेरी बुकिंग",
+            tab_all: "सभी",
+            tab_upcoming: "आगामी",
+            tab_completed: "पूर्ण",
+            tab_cancelled: "रद्द",
+            notif_title: "सूचनाएं",
+            stat_washes: "वॉश",
+            stat_rating: "रेटिंग",
+            stat_saved: "बचत",
+            saved_addr_title: "सहेजे गए पते",
+            btn_add_addr: "नया पता जोड़ें",
+            payment_title: "भुगतान के तरीके",
+            pay_cash: "वाश के बाद नकद भुगतान",
+            pay_cash_desc: "वॉश पूरा होने के बाद नकद भुगतान करें",
+            pay_note: "वर्तमान में केवल वाश के बाद नकद भुगतान उपलब्ध है।<br>UPI, कार्ड और वॉलेट विकल्प जल्द आ रहे हैं!",
+            job_history_title: "जॉब इतिहास",
+            loading_jobs: "जॉब इतिहास लोड हो रहा है...",
+            manage_workers_title: "वर्कर प्रबंधित करें",
+            loading_workers: "वर्कर लोड हो रहे हैं...",
+            admin_panel_sub: "एडमिन पैनल",
+            pending_approvals: "⏳ लंबित अनुमोदन",
+            no_pending: "कोई लंबित अनुरोध नहीं",
+            total_revenue: "कुल राजस्व",
+            rev_subtitle: "📈 सभी बुकिंग से",
+            stat_total_bookings: "कुल बुकिंग",
+            stat_upcoming: "आगामी",
+            stat_completed: "पूर्ण",
+            stat_workers: "वर्कर",
+            manage_bookings: "📋 बुकिंग प्रबंधित करें",
+            admin_tab_pending: "लंबित",
+            admin_tab_upcoming: "आगामी",
+            admin_tab_completed: "पूर्ण",
+            no_bookings_yet: "अभी तक कोई बुकिंग नहीं",
+            customer_bookings_here: "ग्राहक बुकिंग यहाँ दिखाई देंगी",
+            worker_dashboard: "वर्कर डैशबोर्ड",
+            todays_earnings: "आज की कमाई",
+            jobs_completed_today: "आज 0 जॉब पूरे किए गए",
+            my_availability: "मेरी उपलब्धता",
+            status_available: "🟢 उपलब्ध",
+            status_busy: "🟡 व्यस्त",
+            status_offline: "⚫ ऑफ़लाइन",
+            assigned_jobs: "सौंपे गए जॉब",
+            no_jobs_yet: "कोई जॉब नहीं है",
+            jobs_appear_admin: "एडमिन द्वारा जॉब सौंपने पर यहां दिखाई देंगे",
+            lang_toggle_btn: "English"
+        }
+    };
+
+    let currentLang = 'en';
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'en' ? 'hi' : 'en';
+        
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[currentLang][key]) {
+                el.innerHTML = translations[currentLang][key];
+            }
+        });
+
+        const langLabels = ['lang-label', 'lang-label-admin', 'lang-label-worker'];
+        langLabels.forEach(id => {
+            const lbl = document.getElementById(id);
+            if(lbl) lbl.innerText = translations[currentLang].lang_toggle_btn;
+        });
+        
+        showToast(currentLang === 'hi' ? "हिंदी भाषा सक्रिय की गई" : "Language switched to English", "info");
+    }
+    window.toggleLanguage = toggleLanguage;
 
     async function sendWelcomeEmail(name,email,role){
         let msg='';
@@ -1118,25 +1458,16 @@
     async function sendBookingEmail(booking){
         const emailEl=document.getElementById('emailStatus');
         try{
-            if(emailEl){emailEl.className='email-status sending';emailEl.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending confirmation email...';}
-            const addons=booking.addons&&booking.addons.length?booking.addons.map(a=>a.name).join(', '):'None';
-            const msg=`Booking Confirmed! 🎉\n\nID: #${booking.id}\nService: ${booking.service}\nVehicle: ${booking.vehicle}\nDate: ${booking.date}\nTime: ${booking.time}\nAddress: ${booking.address}\nAdd-ons: ${addons}\nTotal: ₹${booking.total}\n\nTeam Wash2Door 🚗✨`;
+            if(emailEl){emailEl.className='email-status sending';emailEl.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending booking request...';}
+            const msg=`🚨 *NEW BOOKING REQUEST - Wash2Door*\n\n👤 *Customer:* ${window._currentName}\n📞 *Phone:* ${booking.phone}\n🚗 *Vehicle:* ${booking.vehicle}\n🧼 *Service:* ${booking.service}\n📍 *Address:* ${booking.address}\n\nPlease review in Admin Panel.`;
+            
             await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:window._currentName,to_email:window._currentEmail,message:msg});
-            if(emailEl){emailEl.className='email-status sent';emailEl.innerHTML='<i class="fas fa-check-circle"></i> Confirmation sent to '+window._currentEmail;}
+            if(emailEl){emailEl.className='email-status sent';emailEl.innerHTML='<i class="fas fa-check-circle"></i> Request sent successfully!';}
         }catch(err){
-            if(emailEl){emailEl.className='email-status failed';emailEl.innerHTML='<i class="fas fa-exclamation-circle"></i> Email notification skipped';}
+            if(emailEl){emailEl.className='email-status failed';emailEl.innerHTML='<i class="fas fa-exclamation-circle"></i> Notification sent via app';}
         }
     }
 
-    async function sendCancellationEmail(booking){
-        try{
-            const msg=`Your booking #${booking.id} has been cancelled.\n\nTeam Wash2Door 🚗✨`;
-            await emailjs.send(EJS_SERVICE,EJS_TEMPLATE,{to_name:window._currentName,to_email:window._currentEmail,message:msg});
-            showToast('Cancellation email sent ✉️','info');
-        }catch(err){}
-    }
-
-    // STATE VARIABLES
     let bookings=[],bookingCounter=0;
     let selectedVehicle='',selectedServiceName='',selectedServicePrice=0;
     let selectedTime='',selectedAddons=[],addonsTotal=0;
@@ -1147,19 +1478,6 @@
     const BASE_PRICES={'Basic Wash':249,'Premium Wash':499,'Premium Plus':699,'Interior Clean':349};
     const SURCHARGE={'Sedan':0,'Hatchback':0,'Compact SUV':100,'Big-size SUV':200,'Bike':0};
     const COUPONS={'FIRST20W2D':{type:'percent',value:20,label:'20% OFF — First Booking'}};
-
-    function loadUserData(uid){
-        bookings=JSON.parse(localStorage.getItem('w2d_bookings_'+uid)||'[]');
-        bookingCounter=parseInt(localStorage.getItem('w2d_counter_'+uid)||'0');
-        window.bookings = bookings;
-    }
-    function saveUserData(){
-        const uid=window._currentUID;
-        if(!uid)return;
-        localStorage.setItem('w2d_bookings_'+uid,JSON.stringify(bookings));
-        localStorage.setItem('w2d_counter_'+uid,bookingCounter);
-        window.bookings = bookings;
-    }
 
     function setupApp(role,name,email,uid){
         const nav=document.getElementById('bottomNav');
@@ -1174,7 +1492,7 @@
             document.getElementById('roleBadge').textContent='CUSTOMER';
             nav.innerHTML=`
                 <button class="nav-item active" onclick="navTo('homePage',this)"><i class="fas fa-home"></i><span>Home</span></button>
-                <button class="nav-item" onclick="navTo('myBookingsPage',this)"><i class="fas fa-calendar-alt"></i><span>Bookings</span></button>
+                <button class="nav-item" onclick="navTo('subscriptionsPage',this)"><i class="fas fa-calendar-check"></i><span>Plans</span></button>
                 <button class="nav-center" onclick="navTo('bookingPage',this)"><i class="fas fa-plus"></i></button>
                 <button class="nav-item" onclick="navTo('notificationsPage',this)"><i class="fas fa-bell"></i><span>Alerts</span></button>
                 <button class="nav-item" onclick="navTo('profilePage',this)"><i class="fas fa-user"></i><span>Profile</span></button>`;
@@ -1207,6 +1525,7 @@
         if(role==='customer'){
             html=`
             <div class="menu-item" onclick="showPage('myBookingsPage')"><div class="menu-icon si-green"><i class="fas fa-calendar-check" style="color:#00C9A7"></i></div><div class="menu-text"><h4>My Bookings</h4><p>View all bookings</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>
+            <div class="menu-item" onclick="showPage('subscriptionsPage')"><div class="menu-icon si-blue"><i class="fas fa-calendar-star" style="color:var(--primary)"></i></div><div class="menu-text"><h4>Monthly Subscriptions</h4><p>Explore car wash plans</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>
             <div class="menu-item" onclick="showPage('addressesPage');renderAddresses();"><div class="menu-icon si-orange"><i class="fas fa-map-marker-alt" style="color:#FF9F43"></i></div><div class="menu-text"><h4>Saved Addresses</h4><p>Manage your locations</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>
             <div class="menu-item" onclick="showPage('paymentPage')"><div class="menu-icon si-purple"><i class="fas fa-credit-card" style="color:#764ba2"></i></div><div class="menu-text"><h4>Payment Methods</h4><p>Cash after wash • More coming soon</p></div><i class="fas fa-chevron-right menu-arrow"></i></div>`;
         }else if(role==='admin'){
@@ -1229,8 +1548,9 @@
     function buildNotifications(){
         const div=document.getElementById('notifList');if(!div)return;
         if(!bookings.length){div.innerHTML='<div class="empty-state"><div class="empty-emoji">🔔</div><h3>No notifications yet</h3><p>Your booking updates will appear here</p></div>';return;}
-        div.innerHTML=bookings.slice(0,10).map(b=>`<div class="notification-item unread"><div class="notif-icon ${b.status==='cancelled'?'si-red':'si-green'}"><i class="${b.status==='cancelled'?'fas fa-times-circle':'fas fa-check-circle'}" style="color:${b.status==='cancelled'?'#FF4757':'#00C9A7'}"></i></div><div class="notif-content"><h4>${b.status==='cancelled'?'Booking Cancelled':'Booking Confirmed'}</h4><p>${b.service} • ${b.vehicle} • ₹${b.total}</p></div></div>`).join('');
-        const badge=document.getElementById('notifCount');if(badge)badge.textContent=bookings.filter(b=>b.status==='upcoming').length||'';
+        div.innerHTML=bookings.slice(0,10).map(b=>`<div class="notification-item unread"><div class="notif-icon ${b.status==='cancelled'?'si-red':'si-green'}"><i class="${b.status==='cancelled'?'fas fa-times-circle':'fas fa-check-circle'}" style="color:${b.status==='cancelled'?'#FF4757':'#00C9A7'}"></i></div><div class="notif-content"><h4>${b.status==='cancelled'?'Booking Cancelled':'Booking Request Logged'}</h4><p>${b.service} • ${b.vehicle} • ₹${b.total}</p></div></div>`).join('');
+        const badge=document.getElementById('notifCount');if(badge)badge.textContent=bookings.filter(b=>b.status==='upcoming'||b.status==='pending').length||'';
+        const adminBadge=document.getElementById('adminNotifBadge');if(adminBadge)adminBadge.textContent=bookings.filter(b=>b.status==='pending').length||'';
     }
 
     function updateProfileStats(){
@@ -1261,7 +1581,6 @@
     function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');window.scrollTo(0,0);}if(id==='myBookingsPage')renderBookings();if(id==='adminHomePage')updateAdminStats();}
     function navTo(id,btn){showPage(id);document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(btn&&!btn.classList.contains('nav-center'))btn.classList.add('active');}
 
-    // INSTANT WASH FUNCTION WITH DYNAMIC WORKER STATUS
     function setupInstantWash(){
         const box=document.getElementById('instantWashBox');if(!box)return;
         const badge=document.getElementById('instantBadge');
@@ -1281,7 +1600,6 @@
 
     function toggleInstantWash(){instantWash=!instantWash;document.getElementById('instantWashBox').classList.toggle('selected',instantWash);document.getElementById('instantRow').style.display=instantWash?'flex':'none';if(instantWash){document.querySelectorAll('.time-slot').forEach(t=>t.classList.remove('selected'));selectedTime='ASAP';}else selectedTime='';updatePriceSummary();updateSteps();}
 
-    // VEHICLE & SERVICES
     function selectVehicle(el,type){document.querySelectorAll('.vehicle-type').forEach(v=>{v.classList.remove('selected');const s=v.querySelector('.v-svg');if(s)s.style.color='#aaa';});el.classList.add('selected');const svg=el.querySelector('.v-svg');if(svg)svg.style.color='var(--primary)';selectedVehicle=type;updateServicePricesUI();handleBikeRestriction();updateSteps();}
     function updateServicePricesUI(){const s=SURCHARGE[selectedVehicle]||0;document.querySelectorAll('.service-option').forEach(opt=>{const b=parseInt(opt.dataset.base);opt.querySelector('.s-price').textContent=`₹${b+s}`;});if(selectedServiceName){selectedServicePrice=BASE_PRICES[selectedServiceName]+(SURCHARGE[selectedVehicle]||0);updatePriceSummary();}}
     function handleBikeRestriction(){document.querySelectorAll('.service-option').forEach(opt=>{const n=opt.querySelector('.s-name').textContent;if(selectedVehicle==='Bike'&&n!=='Basic Wash'){opt.classList.add('disabled');if(opt.classList.contains('selected')){opt.classList.remove('selected');selectedServiceName='';selectedServicePrice=0;updatePriceSummary();}}else opt.classList.remove('disabled');});}
@@ -1308,43 +1626,176 @@
         const id=`W2D-${String(bookingCounter).padStart(4,'0')}`;
         const sub=selectedServicePrice+addonsTotal+(instantWash?INSTANT_FEE:0)+CONVENIENCE_FEE;
         const total=Math.max(0,sub-discountAmount);
-        const booking={id,vehicle:selectedVehicle,service:selectedServiceName,servicePrice:selectedServicePrice,addons:[...selectedAddons],addonsTotal,instant:instantWash,coupon:couponApplied?'FIRST20W2D':'',discount:discountAmount,total,date,time:selectedTime,address,phone,notes,status:'upcoming',createdAt:new Date().toISOString()};
-        bookings.unshift(booking);saveUserData();
-        document.getElementById('modalBookingId').textContent=`Booking ID: #${id}`;
-        document.getElementById('successModal').classList.add('show');
-        resetBookingForm();updateRecentBookings();updateAdminStats();updateProfileStats();buildNotifications();
-        await sendBookingEmail(booking);
+        
+        const booking={
+            id,
+            uid: window._currentUID,
+            customerName: window._currentName || 'Customer',
+            vehicle:selectedVehicle,
+            service:selectedServiceName,
+            servicePrice:selectedServicePrice,
+            addons:[...selectedAddons],
+            addonsTotal,
+            instant:instantWash,
+            coupon:couponApplied?'FIRST20W2D':'',
+            discount:discountAmount,
+            total,
+            date,
+            time:selectedTime,
+            address,
+            phone,
+            notes,
+            status:'pending',
+            assignedWorker: 'Unassigned',
+            createdAt:new Date().toISOString()
+        };
+        
+        try {
+            await window.addDoc(window.collection(window.db, "bookings"), booking);
+            document.getElementById('modalBookingId').textContent=`Booking ID: #${id}`;
+            document.getElementById('successModal').classList.add('show');
+            resetBookingForm();
+            await sendBookingEmail(booking);
+        } catch(e) {
+            showToast("Failed to submit booking request", "error");
+        }
     }
 
     function resetBookingForm(){selectedVehicle='';selectedServiceName='';selectedServicePrice=0;selectedTime='';selectedAddons=[];addonsTotal=0;instantWash=false;couponApplied=false;discountAmount=0;document.querySelectorAll('.vehicle-type,.service-option,.addon-option,.time-slot').forEach(el=>el.classList.remove('selected'));document.querySelectorAll('.vehicle-type .v-svg').forEach(s=>s.style.color='#aaa');const ib=document.getElementById('instantWashBox');if(ib)ib.classList.remove('selected');['bookingDate','bookingAddress','bookingPhone','bookingNotes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const ci=document.getElementById('couponInput');if(ci)ci.value='';const cm=document.getElementById('couponMsg');if(cm){cm.className='coupon-msg';cm.textContent='';}['instantRow','addonsRow','discountRow'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});updateServicePricesUI();updatePriceSummary();updateSteps();}
     function closeModal(){document.getElementById('successModal').classList.remove('show');goHome();}
 
-    function updateRecentBookings(){const c=document.getElementById('recentBookings');if(!c)return;const r=bookings.slice(0,2);if(!r.length){c.innerHTML='<div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3><p>Book your first doorstep wash!</p></div>';return;}c.innerHTML=r.map(b=>`<div class="booking-card"><div class="booking-icon si-blue">🧽</div><div class="booking-info"><h4>${b.service}${b.instant?' ⚡':''}</h4><p>${b.date} • ${b.time}</p></div><span class="booking-status ${b.status==='completed'?'status-completed':b.status==='upcoming'?'status-upcoming':'status-cancelled'}">${b.status}</span></div>`).join('');}
+    function updateRecentBookings(){
+        const c=document.getElementById('recentBookings');if(!c)return;
+        const userBookings = bookings.filter(b => b.uid === window._currentUID);
+        const r = userBookings.slice(0, 2);
+        if(!r.length){c.innerHTML='<div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3><p>Book your first doorstep wash!</p></div>';return;}
+        c.innerHTML=r.map(b=>`<div class="booking-card"><div class="booking-icon si-blue">🧽</div><div class="booking-info"><h4>${b.service}${b.instant?' ⚡':''}</h4><p>${b.date} • ${b.time}</p></div><span class="booking-status status-${b.status}">${b.status}</span></div>`).join('');
+    }
     
-    function renderBookings(filter='all'){const c=document.getElementById('bookingsList');if(!c)return;let f=filter==='all'?bookings:bookings.filter(b=>b.status===filter);if(!f.length){c.innerHTML=`<div class="empty-state"><div class="empty-emoji">📋</div><h3>No ${filter==='all'?'':filter} bookings</h3></div>`;return;}c.innerHTML=f.map(b=>`<div class="detail-booking-card"><div class="dbc-header"><span class="dbc-id">#${b.id}</span><span class="booking-status status-${b.status}">${b.status}</span></div><div class="dbc-body"><div class="dbc-row"><i class="fas fa-concierge-bell"></i><span><strong>${b.service}</strong> • ${b.vehicle}</span></div><div class="dbc-row"><i class="fas fa-calendar"></i><span>${b.date} at ${b.time}</span></div><div class="dbc-row"><i class="fas fa-map-marker-alt"></i><span>${b.address}</span></div></div><div class="dbc-footer"><span class="dbc-price">₹${b.total}</span>${b.status==='upcoming'?`<button class="cancel-btn" onclick="cancelBooking('${b.id}')">Cancel</button>`:''}</div></div>`).join('');}
+    function renderBookings(filter='all'){
+        const c=document.getElementById('bookingsList');if(!c)return;
+        const userBookings = bookings.filter(b => b.uid === window._currentUID);
+        let f=filter==='all'?userBookings:userBookings.filter(b=>b.status===filter);
+        if(!f.length){c.innerHTML=`<div class="empty-state"><div class="empty-emoji">📋</div><h3>No ${filter==='all'?'':filter} bookings</h3></div>`;return;}
+        c.innerHTML=f.map(b=>`<div class="detail-booking-card"><div class="dbc-header"><span class="dbc-id">#${b.id}</span><span class="booking-status status-${b.status}">${b.status}</span></div><div class="dbc-body"><div class="dbc-row"><i class="fas fa-concierge-bell"></i><span><strong>${b.service}</strong> • ${b.vehicle}</span></div><div class="dbc-row"><i class="fas fa-calendar"></i><span>${b.date} at ${b.time}</span></div><div class="dbc-row"><i class="fas fa-map-marker-alt"></i><span>${b.address}</span></div><div class="dbc-row"><i class="fas fa-user-shield"></i><span>Assigned Worker: <strong>${b.assignedWorker || 'Unassigned'}</strong></span></div></div><div class="dbc-footer"><span class="dbc-price">₹${b.total}</span>${b.status==='upcoming'||b.status==='pending'?`<button class="cancel-btn" onclick="cancelBooking('${b.docId}')">Cancel</button>`:''}</div></div>`).join('');
+    }
     function filterBookings(f,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderBookings(f);}
 
-    async function cancelBooking(id){
+    async function cancelBooking(docId){
         if(!confirm('Cancel this booking?'))return;
-        const booking=bookings.find(b=>b.id===id);
-        bookings=bookings.map(b=>b.id===id?{...b,status:'cancelled'}:b);
-        saveUserData();renderBookings();updateRecentBookings();updateAdminStats();updateProfileStats();buildNotifications();
-        showToast('Booking cancelled','info');
-        if(booking)await sendCancellationEmail(booking);
+        try {
+            await window.updateDoc(window.doc(window.db, "bookings", docId), { status: 'cancelled' });
+            showToast('Booking cancelled','info');
+        } catch(e) {
+            showToast('Failed to cancel booking', 'error');
+        }
     }
+    window.cancelBooking = cancelBooking;
+
+    // --- FULL ADMIN BOOKING APPROVAL & WORKER ASSIGNMENT ---
+    let currentAdminFilter = 'pending';
+    function filterAdminBookings(status, btn) {
+        currentAdminFilter = status;
+        if(btn) {
+            btn.parentElement.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        updateAdminStats();
+    }
+    window.filterAdminBookings = filterAdminBookings;
+
+    window.approveAndAssignBooking = async function(docId, id) {
+        const workerName = prompt("Enter Worker Name to assign (e.g., Ramesh, Amit):");
+        if(!workerName) return;
+
+        try {
+            await window.updateDoc(window.doc(window.db, "bookings", docId), { 
+                status: 'upcoming', 
+                assignedWorker: workerName 
+            });
+            showToast(`Booking #${id} accepted and assigned to ${workerName}!`, "success");
+        } catch(e) {
+            showToast("Failed to approve booking", "error");
+        }
+    };
+
+    window.markBookingCompleted = async function(docId, id) {
+        try {
+            await window.updateDoc(window.doc(window.db, "bookings", docId), { status: 'completed' });
+            showToast(`Booking #${id} marked as completed!`, "success");
+        } catch(e) {
+            showToast("Failed to complete booking", "error");
+        }
+    };
 
     function updateAdminStats(){
-        const total=bookings.length,upcoming=bookings.filter(b=>b.status==='upcoming').length,completed=bookings.filter(b=>b.status==='completed').length,rev=bookings.filter(b=>b.status!=='cancelled').reduce((s,b)=>s+b.total,0);
+        const total=bookings.length,upcoming=bookings.filter(b=>b.status==='upcoming').length,completed=bookings.filter(b=>b.status==='completed').length,pending=bookings.filter(b=>b.status==='pending').length,rev=bookings.filter(b=>b.status!=='cancelled').reduce((s,b)=>s+b.total,0);
+        
         const st=document.getElementById('statTotal');if(st)st.textContent=total;
         const su=document.getElementById('statUpcoming');if(su)su.textContent=upcoming;
         const sc=document.getElementById('statCompleted');if(sc)sc.textContent=completed;
         const ar=document.getElementById('adminRevenue');if(ar)ar.textContent=`₹${rev}`;
+        
         const abl=document.getElementById('adminBookingsList');
         if(abl){
-            if(!bookings.length){abl.innerHTML='<div class="empty-state"><div class="empty-emoji">📋</div><h3>No bookings yet</h3></div>';return;}
-            abl.innerHTML=bookings.slice(0,20).map(b=>`<div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:13px;margin-bottom:9px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;"><h4 style="font-size:.85rem;font-weight:600;">${b.service} — ${b.vehicle}</h4><span class="booking-status status-${b.status}">${b.status}</span></div><div style="font-size:.72rem;color:var(--gray);">📅 ${b.date} ${b.time} | 📍 ${b.address} | ₹${b.total}</div></div>`).join('');
+            const filtered = bookings.filter(b => b.status === currentAdminFilter);
+            if(!filtered.length){
+                abl.innerHTML=`<div class="empty-state"><div class="empty-emoji">📋</div><h3>No ${currentAdminFilter} bookings</h3></div>`;
+                return;
+            }
+            abl.innerHTML=filtered.map(b=>`
+                <div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:14px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="font-size:.88rem;font-weight:700;">${b.service} — ${b.vehicle} (${b.id})</h4>
+                        <span class="booking-status status-${b.status}">${b.status.toUpperCase()}</span>
+                    </div>
+                    <div style="font-size:.75rem;color:var(--gray);line-height:1.5;margin-bottom:10px;">
+                        👤 <strong>${b.customerName || 'Customer'}</strong> | 📞 ${b.phone}<br>
+                        📅 ${b.date} at ${b.time} | 📍 ${b.address}<br>
+                        👷 Assigned Worker: <span style="color:var(--primary);font-weight:600;">${b.assignedWorker || 'Unassigned'}</span> | 💰 ₹${b.total}
+                    </div>
+                    <div style="display:flex;gap:6px;">
+                        ${b.status === 'pending' ? `<button onclick="approveAndAssignBooking('${b.docId}', '${b.id}')" style="padding:6px 12px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer;"><i class="fas fa-user-check"></i> Accept & Assign Worker</button>` : ''}
+                        ${b.status === 'upcoming' ? `<button onclick="markBookingCompleted('${b.docId}', '${b.id}')" style="padding:6px 12px; background:var(--secondary); color:#fff; border:none; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer;"><i class="fas fa-check-circle"></i> Mark Completed</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
         }
     }
+
+    // WORKER JOBS RENDERER
+    function renderWorkerJobs() {
+        const listEl = document.getElementById('workerJobsList');
+        const earnEl = document.getElementById('workerEarningsAmt');
+        if(!listEl) return;
+
+        const workerAssignedBookings = bookings.filter(b => b.status === 'upcoming');
+        const completedToday = bookings.filter(b => b.status === 'completed');
+        
+        if(earnEl) earnEl.textContent = `₹${completedToday.reduce((s,b)=>s+b.total, 0)}`;
+
+        if(!workerAssignedBookings.length){
+            listEl.innerHTML = '<div class="empty-state"><div class="empty-emoji">📋</div><h3>No active jobs</h3><p>Assigned jobs will appear here</p></div>';
+            return;
+        }
+
+        listEl.innerHTML = workerAssignedBookings.map(b => `
+            <div class="detail-booking-card" style="margin:0 20px 10px;">
+                <div class="dbc-header"><span class="dbc-id">#${b.id}</span><span class="booking-status status-${b.status}">${b.status.toUpperCase()}</span></div>
+                <div class="dbc-body">
+                    <div class="dbc-row"><i class="fas fa-concierge-bell"></i><span><strong>${b.service}</strong> • ${b.vehicle}</span></div>
+                    <div class="dbc-row"><i class="fas fa-calendar"></i><span>${b.date} at ${b.time}</span></div>
+                    <div class="dbc-row"><i class="fas fa-map-marker-alt"></i><span>${b.address}</span></div>
+                    <div class="dbc-row"><i class="fas fa-user"></i><span>Customer: ${b.customerName} (${b.phone})</span></div>
+                </div>
+                <div class="dbc-footer">
+                    <span class="dbc-price">₹${b.total}</span>
+                    <button onclick="markBookingCompleted('${b.docId}', '${b.id}')" style="padding:6px 12px; background:var(--secondary); color:#fff; border:none; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer;">Mark Completed</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    window.renderWorkerJobs = renderWorkerJobs;
 
     // ADDRESS MANAGEMENT
     function getSavedAddresses(){const uid=window._currentUID;if(!uid)return[];return JSON.parse(localStorage.getItem('w2d_addresses_'+uid)||'[]');}
@@ -1384,7 +1835,6 @@
     function showDeleteModal(){document.getElementById('deleteConfirmInput').value='';document.getElementById('deleteModal').classList.add('show');}
     function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('show');}
 
-    // EXPOSE GLOBAL FUNCTIONS
     window.switchAuthTab=switchAuthTab;
     window.showForgot=showForgot;
     window.hideForgot=hideForgot;
@@ -1399,7 +1849,6 @@
     window.confirmBooking=confirmBooking;
     window.closeModal=closeModal;
     window.filterBookings=filterBookings;
-    window.cancelBooking=cancelBooking;
     window.showAddAddressForm=showAddAddressForm;
     window.hideAddAddressForm=hideAddAddressForm;
     window.saveNewAddress=saveNewAddress;
